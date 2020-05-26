@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "yarn build && start-server-and-test 'yarn start' http://localhost:3000 'yarn cy:run'",
+    "test": "./cypress/run-tests.sh",
     "cypress:open": "cypress open",
     "cy:run": "cypress run --spec 'cypress/integration/real/**/*'"
   },
@@ -16,7 +16,6 @@
     "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "cypress": "^4.6.0",
-    "start-server-and-test": "^1.11.0"
+    "cypress": "^4.6.0"
   }
 }
