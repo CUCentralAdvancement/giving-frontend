@@ -4,19 +4,23 @@ node_js:
 addons:
   apt:
     packages:
-      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+deploy:
+  provider: heroku
+  api_key:
+    secure: HEROKU_API_KEY
 cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
   npm: true
   directories:
-    # we also need to cache folder with Cypress binary
-    - ~/.cache
+    - "~/.cache"
 install:
   - yarn
 script:
   - yarn build
   - NODE_ENV=testing node server.js -p 3000 > /dev/null 2>&1 &
-  - nc -zvv 127.0.0.1 3000; out=$?; while [[ $out -ne 0 ]]; do echo "Retry hit port 3000..."; nc -zvv localhost 3000; out=$?; sleep 5; done
+  - nc -zvv 127.0.0.1 3000; out=$?; while [[ $out -ne 0 ]]; do echo "Retry hit port
+    3000..."; nc -zvv localhost 3000; out=$?; sleep 5; done
   - yarn cy:run
+env:
+  global:
+    secure: PjzIJGVTh+bfoZEFm1SOPQrHR5TkXeW30K4hHhWuuDEmW51u3ilo14yVvWDN2DyUZMXFUSq7bzd7YxUBYPkulaPOnZ7+6cRVzvXvU8miA1KQpJKu39nURrqN71jPRHsFui9ZH/tpDUvfMK/HLIIMVhEpsg2YCFXeo3Ol4U9ubJV3PC30MbBDh9gWHp0HvIMcHGSJQ/MfRNBPbvTbxmhFI32QeW9emarqGyaN9JDWwvzZdusJHqSS9oUyQAKRT4Ws/Hq/nXe7Xr9R6zXMn9k1865kG8oRv2jLa2h5/JUFCWZ9JeTG1tx1sONopMXBMddzuMV7HD+dvl0VwqfJa1/Cl7e3UBYvJ7JJILRVMH6LCvLFg7ZyP6904wZ5ycdxuYkZO4ug3OPJvi63QaQNU9zATes4jYBSHqJCJRuy4I5a3Yd0ctXXW/G7uybPd0XOrexOveCQ4kZh0LbuwbUnSSjfT02uQYetbCnH8Eue424oyS+Mzb6PiOExaer2ROkRMUBqO/nx+sYVbvPzBBWsEgEcUSPCbWICYOjZeL4y7ATYySMxA0Wuec2/ZyMIh9LdgFei9eQFE39NEnq8MKRVC2v01SZSZ2jA2aiVCZE23TYiYZZUE9YrjVEj+9g+L/FL2Ahn2bU+w6pjn9GL/oZmXDAYR2BRlaOge7qEElO6SFpKKsc=
