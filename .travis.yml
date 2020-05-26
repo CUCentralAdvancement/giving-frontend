@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - 12
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
+install:
+  - yarn
+script:
+  - yarn build
+  - yarn test:server > /dev/null 2>&1
+  - nc -zvv 127.0.0.1 3000; out=$?; while [[ $out -ne 0 ]]; do echo "Retry hit port 3000..."; nc -zvv localhost 3000; out=$?; sleep 5; done
+  - yarn cy:run
