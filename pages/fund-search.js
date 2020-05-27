@@ -4,6 +4,7 @@ import { apiBaseURL } from "../data/app";
 export default function FundSearch({ searchData }) {
   return (
     <div className="container">
+      <h1>Foop!</h1>
       <ul>
         {searchData.map((result) => {
           return <li key={result.title}>{result.title}</li>;
