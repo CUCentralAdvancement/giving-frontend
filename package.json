@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "cypress": "^4.7.0"
-  }
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ]
 }
