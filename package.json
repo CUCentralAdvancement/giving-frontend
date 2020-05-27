@@ -6,7 +6,6 @@
     "dev": "node server.js -p $PORT",
     "build": "next build",
     "start": "NODE_ENV=production node server.js -p $PORT",
-    "test:server": "NODE_ENV=testing node server.js -p 3000",
     "cypress:open": "cypress open",
     "cy:run": "cypress run --spec 'cypress/integration/real/**/*'"
   },
