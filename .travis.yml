@@ -8,10 +8,6 @@ addons:
 branches:
   only:
     - master
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: "e248TcUQEbYrG0ButZu51V9a/Frue4dk2kuEtSBQmQ/Fjob/A6oCgTaOQza0pmtIWAqwR6oU5y/PswC59jT4JCLKE/2VB90SW61/T2JTZSXR07x4ZbUy1iV7WKz4mkPKe4jRWgFiYynjs7Okp3m7/0h4H66/vVmYx8QJwMfW46NdopYeM6PQb4rLlfIOiZ9FQdXdzJ+M315iKaaXaGURWS4/7bWYIMbWNG0WgazjSUmzzluYcwYWHPcy3ysrR5UEQrZhajI+lVjf0D3SDp5Szs/0Cg3wpBSzkPd+Wtvzb/XGPrPRnps6Jr2FB4k9vQWjZUUS2ha2WRWk1vD9BnnUdOEyEpt1KrnlRdOeN8dOWK1kCVNCtMVYtcZJOFqBAlmqe+tbWUkSzRBctEsJE3QHHpehdAs8pu86G9kqDCdjyvYOUJ2wlOj8FsNXUVuyV0wE8LnkuS2h5JWmV2yYoLTieB6TL+OBWL68SJbTJGIeCzZ87fGL0wIa0tfBkJBb/OuYvvOoVV4e22JOGWZiYeVD9jhTsmhHrIhKbYJjCNALjFx///q9fqTkei+D4YZ3sJcSfERn+zvI5MymHnOknPj0RaUB0FrKEQk/V+GI0e9kzlDppD0m1YcOGKk8FCuEuVd4GomvHrLU24NPPYDsCLZXFo5Du/mvtVht93l98eKeltk="
 cache:
   npm: true
   directories:
