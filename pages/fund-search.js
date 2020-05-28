@@ -1,5 +1,4 @@
 // import Head from "next/head";
-import { apiBaseURL } from "../data/app";
 
 export default function FundSearch({ searchData }) {
   return (
