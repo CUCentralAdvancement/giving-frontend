@@ -1,17 +1,28 @@
 // import Head from "next/head";
-import { Button } from "@cu-advancement/component-library";
+import { Button, Flex } from "@cu-advancement/component-library";
+import Layout from "../components/Layout";
 
 export default function FundSearch({ searchData }) {
   return (
-    <div className="container">
-      <h1>Doop!</h1>
-      <ul>
-        {searchData.map((result) => {
-          return <li key={result.title}>{result.title}</li>;
-        })}
-      </ul>
-      <Button style={{ backgroundColor: "black" }}>A Button</Button>
-    </div>
+    <Layout>
+      <Flex
+        sx={{
+          maxWidth: "960px",
+          mx: "auto",
+          flexDirection: "column",
+          justifyContent: "center",
+          justifyItems: "center",
+        }}
+      >
+        <h1>Doop!</h1>
+        <ul>
+          {searchData.map((result) => {
+            return <li key={result.title}>{result.title}</li>;
+          })}
+        </ul>
+        <Button style={{ backgroundColor: "black" }}>A Button</Button>
+      </Flex>
+    </Layout>
   );
 }
 
