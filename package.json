@@ -10,6 +10,7 @@
     "cy:run": "cypress run --spec 'cypress/integration/real/**/*'"
   },
   "dependencies": {
+    "@cu-advancement/component-library": "^0.2.2",
     "express": "^4.17.1",
     "next": "9.4.4",
     "react": "16.13.1",
