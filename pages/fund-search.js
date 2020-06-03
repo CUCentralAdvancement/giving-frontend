@@ -1,4 +1,5 @@
 // import Head from "next/head";
+import { Button } from "@cu-advancement/component-library";
 
 export default function FundSearch({ searchData }) {
   return (
@@ -9,6 +10,7 @@ export default function FundSearch({ searchData }) {
           return <li key={result.title}>{result.title}</li>;
         })}
       </ul>
+      <Button style={{ backgroundColor: "black" }}>A Button</Button>
     </div>
   );
 }
