@@ -1,5 +1,4 @@
 // import Head from "next/head";
-import { apiBaseURL } from "../data/app";
 
 export default function FundSearch({ searchData }) {
   return (
@@ -21,7 +20,7 @@ export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(
-    // `http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
+    //`http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
     `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
   );
   const searchData = await res.json();

@@ -1,5 +1,4 @@
 // import Head from "next/head";
-import { apiBaseURL } from "../data/app";
 
 export default function Home({ message }) {
   return (
