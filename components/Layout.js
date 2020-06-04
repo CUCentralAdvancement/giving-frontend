@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { ThemeProvider } from "theme-ui";
 import { Box, Flex, theme } from "@cu-advancement/component-library";
 
@@ -21,3 +22,8 @@ const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
 });
 
 export default Layout;
+
+Layout.propTypes = {
+  children: PropTypes.element.isRequired,
+  mainBg: PropTypes.string,
+};

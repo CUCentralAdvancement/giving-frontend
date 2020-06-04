@@ -17,7 +17,8 @@
     "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "cypress": "^4.7.0"
+    "cypress": "^4.7.0",
+    "prop-types": "^15.7.2"
   },
   "cacheDirectories": [
     ".next/cache"
