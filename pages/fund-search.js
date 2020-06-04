@@ -1,4 +1,5 @@
 // import Head from "next/head";
+import PropTypes from "prop-types";
 import { Button, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/Layout";
 
@@ -52,3 +53,31 @@ export async function getStaticProps() {
   // Pass data to the page via props
   return { props: { searchData: realSearchData } };
 }
+
+FundSearch.propTypes = {
+  searchData: PropTypes.arrayOf(
+    PropTypes.exact({
+      alloc_code: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      fund_type: PropTypes.string,
+      featured: PropTypes.string.isRequired,
+      campus: PropTypes.string.isRequired,
+      interests: PropTypes.string.isRequired,
+    })
+  ),
+};
+
+FundSearch.defaultProps = {
+  searchData: [
+    {
+      alloc_code: "",
+      title: "",
+      description: "",
+      fund_type: "",
+      featured: "",
+      campus: "",
+      interests: "",
+    },
+  ],
+};
