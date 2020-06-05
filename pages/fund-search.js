@@ -18,7 +18,14 @@ export default function FundSearch({ searchData }) {
         <h1>Doop!</h1>
         <ul>
           {searchData.map((result) => {
-            return <li key={result.title}>{result.title}</li>;
+            return (
+              <li
+                data-testid={`search-result-${result.alloc_code}`}
+                key={result.title}
+              >
+                {result.title}
+              </li>
+            );
           })}
         </ul>
         <Button style={{ backgroundColor: "black" }}>A Button</Button>

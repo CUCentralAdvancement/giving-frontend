@@ -10,8 +10,16 @@ describe("Smoke Test Critical Paths", () => {
     });
   });
 
-  it("Loads fund search page with correct results", () => {
+  it("Loads fund search page with at least one result and navigated to fund", () => {
     cy.visit("http://localhost:3000/fund-search");
     cy.contains("Resident Emergency Relief Fund");
+
+    // @todo Add navigation to fund.
   });
+
+  // it("Loads fund page", () => {
+  //   // Need to get allocation route with replacement to fund name in path shown to users.
+  //   cy.visit("http://localhost:3000/fund/0123456");
+  //   cy.contains("Resident Emergency Relief Fund");
+  // });
 });
