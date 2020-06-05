@@ -1,10 +1,6 @@
 // import Head from "next/head";
 import PropTypes from "prop-types";
-<<<<<<< HEAD
 import { Button, Flex, Heading } from "@cu-advancement/component-library";
-=======
-import { Button, Flex } from "@cu-advancement/component-library";
->>>>>>> master
 import Layout from "../components/Layout";
 
 export default function FundSearch({ searchData }) {
