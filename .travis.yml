@@ -4,19 +4,21 @@ node_js:
 addons:
   apt:
     packages:
-      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+branches:
+  only:
+    - master
 cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
   npm: true
   directories:
-    # we also need to cache folder with Cypress binary
-    - ~/.cache
+    - "~/.cache"
+    - ".next/cache"
 install:
   - yarn
 script:
+  # Wake up API for testing
+  - nc -zvv 385-i-cu-giving.pantheonsite.io 80; out=$?; while [[ $out -ne 0 ]]; do echo "Retry waking up 385-i-cu-giving.pantheonsite.io..."; nc -zvv 385-i-cu-giving.pantheonsite.io 80; out=$?; sleep 5; done
   - yarn build
-  - NODE_ENV=testing node server.js -p 3000 > /dev/null 2>&1 &
+  - yarn start > /dev/null 2>&1 &
   - nc -zvv 127.0.0.1 3000; out=$?; while [[ $out -ne 0 ]]; do echo "Retry hit port 3000..."; nc -zvv localhost 3000; out=$?; sleep 5; done
   - yarn cy:run
