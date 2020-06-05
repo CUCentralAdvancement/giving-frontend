@@ -1,6 +1,6 @@
 // import Head from "next/head";
 import PropTypes from "prop-types";
-import { Button, Flex } from "@cu-advancement/component-library";
+import { Button, Flex, Heading } from "@cu-advancement/component-library";
 import Layout from "../components/Layout";
 
 export default function FundSearch({ searchData }) {
@@ -15,20 +15,36 @@ export default function FundSearch({ searchData }) {
           justifyItems: "center",
         }}
       >
-        <h1>Doop!</h1>
+        <Heading as="h1">Search Results</Heading>
+        <Heading
+          data-testid="search-result-count"
+          as="h2"
+        >{`Results Count: ${searchData.length}`}</Heading>
         <ul>
           {searchData.map((result) => {
             return (
-              <li
-                data-testid={`search-result-${result.alloc_code}`}
-                key={result.title}
-              >
-                {result.title}
+              <li data-testid="search-result" key={result.title}>
+                {`${result.title} - ${
+                  result.featured === "1" ? "Featured Fund" : ""
+                }`}
               </li>
             );
           })}
         </ul>
-        <Button style={{ backgroundColor: "black" }}>A Button</Button>
+        <Button
+          variant="button.outline"
+          sx={{ color: "secondary" }}
+          data-testid="load-more-button"
+        >
+          Load more funds...
+        </Button>
+        <Button
+          variant="button.outline"
+          sx={{ color: "secondary" }}
+          data-testid="refine-search-button"
+        >
+          Refine my search
+        </Button>
       </Flex>
     </Layout>
   );
