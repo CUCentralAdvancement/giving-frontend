@@ -6,7 +6,7 @@
     "dev": "node server.js -p $PORT",
     "build": "next build",
     "start": "NODE_ENV=production node server.js -p $PORT",
-    "cypress:open": "cypress open",
+    "cy:open": "cypress open",
     "cy:run": "cypress run --spec 'cypress/integration/real/**/*'"
   },
   "dependencies": {

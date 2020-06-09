@@ -1,52 +1,49 @@
 // import Head from "next/head";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Flex, Heading } from "@cu-advancement/component-library";
+import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/Layout";
+// import SearchForm from "../components/fund-search/SearchForm";
+import SearchResults from "../components/fund-search/SearchResults";
 
 export default function FundSearch({ searchData }) {
+  const [results, setResults] = useState(searchData);
+  function submitHandler(values) {
+    const newResults = searchData.filter((res) => {
+      if (values.campus !== "All") {
+        return res.campus === values.campus;
+      }
+      if (values.interest !== "All") {
+        return res.interests === values.interest;
+      }
+      if (values.fundType !== "All") {
+        return res.fund_type === values.fundType;
+      }
+      if (values.search !== "") {
+        return res.title.toLowerCase().includes(values.search.toLowerCase());
+      }
+      return true;
+    });
+    setResults(newResults);
+  }
   return (
-    <Layout>
-      <Flex
-        sx={{
-          maxWidth: "960px",
-          mx: "auto",
-          flexDirection: "column",
-          justifyContent: "center",
-          justifyItems: "center",
-        }}
-      >
-        <Heading as="h1">Search Results</Heading>
-        <Heading
-          data-testid="search-result-count"
-          as="h2"
-        >{`Results Count: ${searchData.length}`}</Heading>
-        <ul>
-          {searchData.map((result) => {
-            return (
-              <li data-testid="search-result" key={result.title}>
-                {`${result.title} - ${
-                  result.featured === "1" ? "Featured Fund" : ""
-                }`}
-              </li>
-            );
-          })}
-        </ul>
-        <Button
-          variant="button.outline"
-          sx={{ color: "secondary" }}
-          data-testid="load-more-button"
-        >
-          Load more funds...
-        </Button>
-        <Button
-          variant="button.outline"
-          sx={{ color: "secondary" }}
-          data-testid="refine-search-button"
-        >
-          Refine my search
-        </Button>
-      </Flex>
-    </Layout>
+    <>
+      <Layout>
+        <Flex sx={{ flexDirection: "column" }}>
+          {/* <Box sx={{ bg: "gray", width: "100%" }}>
+            <Box sx={{ p: 3, maxWidth: "960px", mx: "auto" }}>
+              <SearchForm
+                submitHandler={submitHandler}
+                resetHandler={() => setResults(searchData)}
+              />
+            </Box>
+          </Box> */}
+          <Box sx={{ p: 3, maxWidth: "1080px", mx: "auto" }}>
+            <SearchResults results={results} />
+          </Box>
+        </Flex>
+      </Layout>
+    </>
   );
 }
 
