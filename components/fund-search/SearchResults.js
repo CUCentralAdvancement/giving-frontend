@@ -84,7 +84,10 @@ export default function SearchResults({ results, ...props }) {
                 color="background"
               >
                 <Flex>
-                  <Text sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}>
+                  <Text
+                    sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
+                    data-testid="result-campus"
+                  >
                     {campusNames[res.campus]}
                   </Text>
                   {res.featured == true && (
@@ -92,7 +95,10 @@ export default function SearchResults({ results, ...props }) {
                   )}
                 </Flex>
               </Box>
-              <Heading sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}>
+              <Heading
+                sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
+                data-testid="result-title"
+              >
                 {res.title}
               </Heading>
               <Text
@@ -103,6 +109,7 @@ export default function SearchResults({ results, ...props }) {
                   color: "#4D5259",
                   lineHeight: 1.2,
                 }}
+                data-testid="result-interest"
               >
                 {interests[res.interests]}
               </Text>
@@ -120,14 +127,19 @@ export default function SearchResults({ results, ...props }) {
       >
         <Button
           variant="button.outline"
-          sx={{ color: "secondary", mr: 2 }}
+          sx={{
+            color: "secondary",
+            mr: 2,
+            border: "1px solid",
+            fontWeight: 500,
+          }}
           data-testid="load-more-button"
         >
           Load more funds...
         </Button>
         <Button
           variant="button.outline"
-          sx={{ color: "secondary" }}
+          sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
           data-testid="refine-search-button"
         >
           Refine my search
@@ -182,7 +194,11 @@ SearchResults.defaultProps = {
 
 function FeaturedFund({ res }) {
   return (
-    <Box bg="black" sx={{ mr: -2, my: 2, height: "38px" }}>
+    <Box
+      bg="black"
+      sx={{ mr: -2, my: 2, height: "38px" }}
+      data-testid="featured-fund"
+    >
       <Flex sx={{ flexDirection: "row" }}>
         <Box sx={{ height: "100%" }}>
           <RightArrow fillColor={campusColors[res.campus]} />
@@ -209,8 +225,9 @@ function Header({ results }) {
             fontStyle: "italic",
             textDecoration: "none",
             color: "#298FCE",
-            ":hover": { textDecoration: "underline" },
+            ":hover": 'text-decoration: "underline"',
           }}
+          data-testid="write-in-link"
         >
           Click here to use our write-in fund option.
         </a>
