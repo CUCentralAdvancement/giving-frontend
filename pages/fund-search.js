@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Flex } from "@cu-advancement/component-library";
-import Layout from "../components/Layout";
+import Layout from "../components/global/Layout";
 // import SearchForm from "../components/fund-search/SearchForm";
 import SearchResults from "../components/fund-search/SearchResults";
 
