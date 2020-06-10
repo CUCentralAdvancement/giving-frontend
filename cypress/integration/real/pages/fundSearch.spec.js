@@ -10,7 +10,7 @@ describe("Fund Search Tests", () => {
     cy.contains("Resident Emergency Relief Fund");
 
     // Make sure there is at least one result from each campus in the results.
-    cy.contains("CU Anschutz");
+    cy.contains("CU Anschutz"); // maybe add a .get() for targeting where the text should be...if .get()
     cy.contains("CU Boulder");
     cy.contains("CU Denver");
     cy.contains("UCCS");
@@ -29,7 +29,7 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-result"]')
       .first()
       .within((firstResult) => {
-        cy.get('[data-testid="featured-fund"]').should("exist");
+        cy.get('[data-testid="featured-fund"]').should("exist"); // change this to .should('be.visible');
         cy.get('[data-testid="result-title"]').should("exist");
         cy.get('[data-testid="result-campus"]').should("exist");
         cy.get('[data-testid="result-interest"]').should("exist");

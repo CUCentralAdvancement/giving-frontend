@@ -15,7 +15,7 @@ import {
 import { campusColors, campusNames, interests } from "../../data/fundMeta";
 // import Portal from "../Portal";
 // import FundCard from "./FundCard";
-import RightArrow from "../RightArrow";
+import RightArrow from "../global/RightArrow";
 // import { useWindowDimensions } from "../../utils/hooks";
 
 /**
