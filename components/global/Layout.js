@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ThemeProvider } from "theme-ui";
 import { Box, Flex, theme } from "@cu-advancement/component-library";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
   return (
@@ -33,6 +34,7 @@ const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
         >
           {children}
         </Box>
+        <Footer />
       </Flex>
     </ThemeProvider>
   );

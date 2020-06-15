@@ -2,7 +2,7 @@ describe("Header Component Test", () => {
   it("shows logo, menu, gift basket, and give now button are visible", () => {
     cy.visit("/fund-search");
 
-    cy.get("#header").within((header) => {
+    cy.get("#header").within(() => {
       cy.get("#logo").should("be.visible");
 
       cy.contains("a", "Guide to Giving").should(
