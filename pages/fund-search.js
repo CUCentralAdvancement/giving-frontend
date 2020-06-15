@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/global/Layout";
-// import SearchForm from "../components/fund-search/SearchForm";
+import SearchForm from "../components/fund-search/SearchForm";
 import SearchResults from "../components/fund-search/SearchResults";
 
 export default function FundSearch({ searchData }) {
   const [results, setResults] = useState(searchData);
   function submitHandler(values) {
+    console.log(values);
     const newResults = searchData.filter((res) => {
       if (values.campus !== "All") {
         return res.campus === values.campus;
@@ -30,15 +31,18 @@ export default function FundSearch({ searchData }) {
     <>
       <Layout>
         <Flex sx={{ flexDirection: "column" }}>
-          {/* <Box sx={{ bg: "gray", width: "100%" }}>
+          <Box sx={{ bg: "gray", width: "100%" }}>
             <Box sx={{ p: 3, maxWidth: "960px", mx: "auto" }}>
               <SearchForm
                 submitHandler={submitHandler}
                 resetHandler={() => setResults(searchData)}
               />
             </Box>
-          </Box> */}
-          <Box sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}>
+          </Box>
+          <Box
+            sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}
+            data-testid="search-results"
+          >
             <SearchResults results={results} />
           </Box>
         </Flex>
@@ -94,10 +98,10 @@ FundSearch.defaultProps = {
       alloc_code: "",
       title: "",
       description: "",
-      fund_type: "",
+      fund_type: "All",
       featured: "",
-      campus: "",
-      interests: "",
+      campus: "All",
+      interests: "All",
     },
   ],
 };
