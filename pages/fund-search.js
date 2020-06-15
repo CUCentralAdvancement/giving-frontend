@@ -38,7 +38,7 @@ export default function FundSearch({ searchData }) {
               />
             </Box>
           </Box> */}
-          <Box sx={{ p: 3, maxWidth: "1080px", mx: "auto" }}>
+          <Box sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}>
             <SearchResults results={results} />
           </Box>
         </Flex>

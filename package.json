@@ -9,6 +9,7 @@
     "test": "lint && cy:run",
     "cy:open": "cypress open",
     "cy:run": "cypress run --spec 'cypress/integration/real/**/*'",
+    "cypress": "cypress",
     "lint": "eslint ."
   },
   "dependencies": {

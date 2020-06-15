@@ -56,13 +56,12 @@ export default function SearchResults({ results, ...props }) {
         <Header results={results} />
       </Box>
       <Grid gap={3} columns={[1, 2, 3, 4]}>
-        {results.map((res, index) => (
+        {results.map((res) => (
           <Card
             data-testid="search-result"
             key={res.alloc_code.toString()}
-            sx={{ width: ["70%", "85%", "100%"], mx: ["auto", 0] }}
-            onClick={(e) => {
-              // e.preventDefault();
+            sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
+            onClick={() => {
               if (!open) {
                 setOpen(true);
               }
