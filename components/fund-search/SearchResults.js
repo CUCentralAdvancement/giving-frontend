@@ -111,6 +111,11 @@ export default function SearchResults({ results, ...props }) {
                 data-testid="result-interest"
               >
                 {interests[res.interests]}
+                <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
+                  {res.keywords.length >= 1 && res.keywords.join(", ")}
+                  {res.additional_keywords.length >= 1 &&
+                    `, ${res.additional_keywords.join(", ")}`}
+                </Box>
               </Text>
             </Flex>
           </Card>
@@ -173,6 +178,9 @@ SearchResults.propTypes = {
       featured: PropTypes.string.isRequired,
       campus: PropTypes.string.isRequired,
       interests: PropTypes.string.isRequired,
+      keywords: PropTypes.arrayOf(PropTypes.string),
+      additional_keywords: PropTypes.arrayOf(PropTypes.string),
+      path: PropTypes.string.isRequired,
     })
   ),
 };
@@ -187,6 +195,9 @@ SearchResults.defaultProps = {
       featured: "",
       campus: "",
       interests: "",
+      keywords: [],
+      additional_keywords: [],
+      path: "",
     },
   ],
 };
