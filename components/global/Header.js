@@ -57,7 +57,7 @@ export default function Header() {
         mx: "auto",
         justifyContent: "space-between",
         alignItems: "center",
-        pt: 4,
+        pt: 3,
       }}
     >
       <Box sx={{ p: 2, mr: 2 }}>
