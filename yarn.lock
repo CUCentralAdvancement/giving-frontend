@@ -1201,6 +1201,37 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@fortawesome/fontawesome-common-types@^0.2.28":
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.28.tgz#1091bdfe63b3f139441e9cba27aa022bff97d8b2"
+  integrity sha512-gtis2/5yLdfI6n0ia0jH7NJs5i/Z/8M/ZbQL6jXQhCthEOe5Cr5NcQPhgTvFxNOtURE03/ZqUcEskdn2M+QaBg==
+
+"@fortawesome/fontawesome-pro@^5.13.0":
+  version "5.13.0"
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-pro/-/5.13.0/fontawesome-pro-5.13.0.tgz#fde32ed4d9933c4c9b60b8a74a79c67eba58d984"
+  integrity sha512-97Su0vmIuCdxrklVbjTzY1i16nvyKaqFmFBgrTsgeCVmyIWXNydiS62jhKlkwH9sMb8Tw4wYQ+J1EKbRILowxw==
+
+"@fortawesome/fontawesome-svg-core@^1.2.28":
+  version "1.2.28"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.28.tgz#e5b8c8814ef375f01f5d7c132d3c3a2f83a3abf9"
+  integrity sha512-4LeaNHWvrneoU0i8b5RTOJHKx7E+y7jYejplR7uSVB34+mp3Veg7cbKk7NBCLiI4TyoWS1wh9ZdoyLJR8wSAdg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.28"
+
+"@fortawesome/pro-regular-svg-icons@^5.13.0":
+  version "5.13.0"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/5.13.0/pro-regular-svg-icons-5.13.0.tgz#f6a74484e1e20a8e8cfcc4e41c0c81c505e0d5dd"
+  integrity sha512-yYQV729ECEtpT+39KF7oRTDtAS7OxkAfj8kUjuE7AoxaVwcK/Mw9B6x3klpzXGJFc6gL+/CTxFCPRMbtIjNo+w==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.28"
+
+"@fortawesome/react-fontawesome@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.10.tgz#7ba2bd300036f95e2ac084000ba8ba26cd269c96"
+  integrity sha512-UGdpJiLBIqR/8xcLrCarf2pChqQFKjDTD02C7ZS/odpOVVl2YuHYRCLEOQ0GpfOk6jtYhmouSFOFoC8qNCe5cg==
+  dependencies:
+    prop-types "^15.7.2"
+
 "@mdx-js/react@^1.0.0":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.6.5.tgz#70380f25209b62ef69349b7eef09fad7e1103824"

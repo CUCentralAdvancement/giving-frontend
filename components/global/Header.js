@@ -10,6 +10,8 @@ import {
   Text,
 } from "@cu-advancement/component-library";
 // import { store } from "../data/store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingBasket } from "@fortawesome/pro-regular-svg-icons";
 
 function StyledLink({ children, sx, url }) {
   return (
@@ -94,7 +96,7 @@ export default function Header() {
             justifyContent: "center",
           }}
         >
-          <Text sx={{}}>
+          <Text sx={{ ml: "20px" }}>
             <Link href="/cart">
               <a
                 className="cart-items-total"
@@ -104,6 +106,9 @@ export default function Header() {
                   fontWeight: 700,
                 }}
               >
+                <Box sx={{ mr: "6px", display: "inline", fontSize: 4 }}>
+                  <FontAwesomeIcon icon={faShoppingBasket} />
+                </Box>
                 Gift Basket
                 <Badge
                   sx={{
@@ -127,7 +132,8 @@ export default function Header() {
                   textTransform: "uppercase",
                   color: "text",
                   fontWeight: "bold",
-                  mb: "26px",
+                  mb: "36px",
+                  mt: 1,
                   cursor: "pointer",
                 }}
               >
