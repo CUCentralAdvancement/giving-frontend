@@ -42,7 +42,6 @@ function StyledLink({ children, sx, url }) {
 export default function Header() {
   // const { state } = useContext(store);
   const [cartItems, setCartItems] = useState(0);
-
   // useEffect(() => {
   //   setCartItems(parseInt(state.cart.length));
   // }, [state.cart]);
