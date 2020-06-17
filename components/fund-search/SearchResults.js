@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 // import { useSpring, animated, config } from "react-spring";
 import {
   Card,
@@ -13,10 +14,14 @@ import {
   Button,
 } from "@cu-advancement/component-library";
 import { campusColors, campusNames, interests } from "../../data/fundMeta";
-// import Portal from "../Portal";
 // import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
 // import { useWindowDimensions } from "../../utils/hooks";
+
+// The portal can't render server-side.
+const Portal = dynamic(() => import("../global/Portal"), {
+  ssr: false,
+});
 
 /**
  * Description of the search results component.
@@ -150,8 +155,8 @@ export default function SearchResults({ results, ...props }) {
         </Button>
       </Flex>
 
-      {/* <Portal>
-        <animated.div style={contentProps}>
+      <Portal>
+        {/* <animated.div style={contentProps}>
           <FundCard
             result={fundCardResult}
             close={() => {
@@ -162,8 +167,8 @@ export default function SearchResults({ results, ...props }) {
               // });
             }}
           />
-        </animated.div>
-      </Portal> */}
+        </animated.div> */}
+      </Portal>
     </>
   );
 }
