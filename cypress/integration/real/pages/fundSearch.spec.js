@@ -1,5 +1,5 @@
 describe("Fund Search Tests", () => {
-  xit("Shows proper inputs on search form and handles search input", () => {
+  it("Shows proper inputs on search form and handles search input", () => {
     cy.visit("/fund-search");
     cy.contains("24 Results");
 
@@ -40,7 +40,7 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("All Interests").click();
     cy.contains("Science, Research & Innovation").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("4 Results");
+    cy.contains("3 Results");
     cy.get('[data-testid="search-result"]')
       .first()
       .within(() => {
@@ -49,7 +49,7 @@ describe("Fund Search Tests", () => {
         cy.contains("CU Anschutz");
       });
     cy.get('[data-testid="search-result"]').within(() => {
-      cy.contains("CU Boulder").should("be.visible");
+      cy.contains("CU Boulder").should("not.exist");
     });
 
     cy.get('[data-testid="search-reset"]').click();
@@ -58,7 +58,7 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("Fund Type").click();
     cy.contains("Academic Program Funds").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("4 Results");
+    cy.contains("5 Results");
     cy.get('[data-testid="search-result"]').within(() => {
       cy.contains("CU Boulder");
       cy.contains("CU Denver");
@@ -70,7 +70,7 @@ describe("Fund Search Tests", () => {
     cy.contains("24 Results");
   });
 
-  xit("Loads fund search page with correct results", () => {
+  it("Loads fund search page with correct results", () => {
     cy.visit("/fund-search");
 
     // I think this fund will always be on the default search results?
@@ -174,7 +174,27 @@ describe("Fund Search Tests", () => {
         cy.get('[data-testid="fund-card-title"]').should("not.exist");
         cy.get('[data-testid="fund-card-description"]').should("not.exist");
       });
+  });
 
-    // @todo add click to see that user goes to proper fund page.
+  // @todo add click to see that user goes to proper fund page.
+  it("Can open and close a fund card", () => {
+    cy.visit("/fund-search");
+
+    cy.get('[data-testid="search-result"]')
+      .first()
+      .then((result) => {
+        const title = result.find('[data-testid="result-title"]').text();
+        const campus = result.find('[data-testid="result-campus"]').text();
+
+        cy.get('[data-testid="search-result"]').first().click();
+
+        cy.get('[data-testid="fund-card-container"]').within(() => {
+          cy.get('[data-testid="fund-card-description"]').should("be.visible");
+          cy.contains("Make a Gift").click();
+
+          cy.contains(title);
+          cy.contains(campus);
+        });
+      });
   });
 });
