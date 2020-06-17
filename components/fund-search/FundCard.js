@@ -9,7 +9,7 @@ import {
   Button,
   Image,
 } from "@cu-advancement/component-library";
-import { campusColors, campusLogos } from "../../data/fundMeta";
+import { campusColors, campusLogos, campusNames } from "../../data/fundMeta";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
@@ -17,15 +17,20 @@ import { motion, AnimatePresence } from "framer-motion";
  */
 export default function FundCard({ result, close }) {
   return (
-    <Flex sx={{ flexDirection: "column", bg: "white" }}>
+    <Flex
+      sx={{ flexDirection: "column", bg: "white" }}
+      data-testid="fund-card-container"
+    >
       <Flex
         sx={{
           flexDirection: "row",
           justifyContent: "flex-end",
+          alignItems: "baseline",
           bg: campusColors[result.campus],
           color: "background",
           p: 3,
         }}
+        data-testid="fund-card-close"
         onClick={close}
       >
         <Text sx={{ fontSize: 5, cursor: "pointer", mr: 2 }}>X</Text>
@@ -38,11 +43,18 @@ export default function FundCard({ result, close }) {
           exit={{ opacity: 0 }}
         >
           <Box sx={{ px: 3, py: 4, bg: "gray" }}>
-            <Image src={campusLogos[result.campus]} sx={{ height: "60px" }} />
+            <Image
+              data-testid="fund-card-campus"
+              src={campusLogos[result.campus]}
+              alt={`${campusNames[result.campus]} Logo`}
+              sx={{ height: "60px" }}
+            />
           </Box>
           <Box sx={{ p: 4 }}>
-            <Heading>{result.title}</Heading>
-            <Text my={4}>{result.description}</Text>
+            <Heading data-testid="fund-card-title">{result.title}</Heading>
+            <Text data-testid="fund-card-description" my={4}>
+              {result.description}
+            </Text>
             <Link href={result.path}>
               <a>
                 <Button variant="button.secondary">Make a Gift</Button>

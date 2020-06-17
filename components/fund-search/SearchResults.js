@@ -64,56 +64,7 @@ export default function SearchResults({ results }) {
               setFundCardResult(res);
             }}
           >
-            <Flex
-              sx={{
-                flexDirection: "column",
-                minHeight: 231,
-                color: "text",
-                cursor: "pointer",
-              }}
-            >
-              <Box
-                bg={campusColors[res.campus]}
-                mx={-2}
-                mt={-2}
-                color="background"
-              >
-                <Flex>
-                  <Text
-                    sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
-                    data-testid="result-campus"
-                  >
-                    {campusNames[res.campus]}
-                  </Text>
-                  {res.featured == true && (
-                    <FeaturedFund res={res}></FeaturedFund>
-                  )}
-                </Flex>
-              </Box>
-              <Heading
-                sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
-                data-testid="result-title"
-              >
-                {res.title}
-              </Heading>
-              <Text
-                sx={{
-                  p: 2,
-                  fontSize: 2,
-                  fontWeight: 700,
-                  color: "#4D5259",
-                  lineHeight: 1.2,
-                }}
-                data-testid="result-interest"
-              >
-                {interests[res.interests]}
-                <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-                  {res.keywords.length >= 1 && res.keywords.join(", ")}
-                  {res.additional_keywords.length >= 1 &&
-                    `, ${res.additional_keywords.join(", ")}`}
-                </Box>
-              </Text>
-            </Flex>
+            <CardContents res={res} />
           </Card>
         ))}
       </Grid>
@@ -248,5 +199,53 @@ function Header({ results }) {
         </a>
       </Link>
     </>
+  );
+}
+
+function CardContents({ res }) {
+  return (
+    <Flex
+      sx={{
+        flexDirection: "column",
+        minHeight: 231,
+        color: "text",
+        cursor: "pointer",
+      }}
+    >
+      <Box bg={campusColors[res.campus]} mx={-2} mt={-2} color="background">
+        <Flex>
+          <Text
+            sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
+            data-testid="result-campus"
+          >
+            {campusNames[res.campus]}
+          </Text>
+          {res.featured == true && <FeaturedFund res={res}></FeaturedFund>}
+        </Flex>
+      </Box>
+      <Heading
+        sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
+        data-testid="result-title"
+      >
+        {res.title}
+      </Heading>
+      <Text
+        sx={{
+          p: 2,
+          fontSize: 2,
+          fontWeight: 700,
+          color: "#4D5259",
+          lineHeight: 1.2,
+        }}
+        data-testid="result-interest"
+      >
+        {interests[res.interests]}
+        <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
+          {res.keywords.length >= 1 && res.keywords.join(", ")}
+          {res.additional_keywords.length >= 1 &&
+            `, ${res.additional_keywords.join(", ")}`}
+        </Box>
+      </Text>
+    </Flex>
   );
 }
