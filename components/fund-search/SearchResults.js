@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-// import { useSpring, animated, config } from "react-spring";
+import dynamic from "next/dynamic";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
   Text,
@@ -13,42 +14,37 @@ import {
   Button,
 } from "@cu-advancement/component-library";
 import { campusColors, campusNames, interests } from "../../data/fundMeta";
-// import Portal from "../Portal";
-// import FundCard from "./FundCard";
+import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
-// import { useWindowDimensions } from "../../utils/hooks";
+import { useWindowDimensions } from "../../utils/hooks";
+
+// The portal can't render server-side.
+const Portal = dynamic(() => import("../global/Portal"), {
+  ssr: false,
+});
 
 /**
  * Description of the search results component.
  */
-export default function SearchResults({ results, ...props }) {
+export default function SearchResults({ results }) {
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
     campus: "UCCS",
   });
   const [open, setOpen] = useState(false);
-  // const containerWidthRef = useRef();
-  // const dimensions = useWindowDimensions();
+  const dimensions = useWindowDimensions();
 
-  // useEffect(() => {
-  //   console.log(containerWidthRef.current.offsetWidth);
-  //   // setContainerHeight(intervalRef.current.offsetHeight - 60);
-  // }, []);
-
-  // const contentProps = useSpring({
-  //   // config: config.stiff,
-  //   transform: open ? "translateX(-100%)" : "translateX(0%)",
-  //   opacity: open ? 1 : 0,
-  //   height: "100%",
-  //   position: "fixed",
-  //   top: 0,
-  //   left: "100%",
-  //   zIndex: 1000,
-  //   width: dimensions.width < 1000 ? "100%" : "40%",
-  //   overflowY: "scroll",
-  //   background: "#fff",
-  //   boxShadow: "-3px 0 10px rgba(20,20,20,.1)",
-  // });
+  const styleProps = {
+    height: "100%",
+    position: "fixed",
+    top: 0,
+    left: "100%",
+    zIndex: 1000,
+    width: dimensions.width < 1000 ? "100%" : "40%",
+    overflowY: "scroll",
+    background: "#fff",
+    boxShadow: "-3px 0 10px rgba(20,20,20,.1)",
+  };
 
   return (
     <>
@@ -68,56 +64,7 @@ export default function SearchResults({ results, ...props }) {
               setFundCardResult(res);
             }}
           >
-            <Flex
-              sx={{
-                flexDirection: "column",
-                minHeight: 231,
-                color: "text",
-                cursor: "pointer",
-              }}
-            >
-              <Box
-                bg={campusColors[res.campus]}
-                mx={-2}
-                mt={-2}
-                color="background"
-              >
-                <Flex>
-                  <Text
-                    sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
-                    data-testid="result-campus"
-                  >
-                    {campusNames[res.campus]}
-                  </Text>
-                  {res.featured == true && (
-                    <FeaturedFund res={res}></FeaturedFund>
-                  )}
-                </Flex>
-              </Box>
-              <Heading
-                sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
-                data-testid="result-title"
-              >
-                {res.title}
-              </Heading>
-              <Text
-                sx={{
-                  p: 2,
-                  fontSize: 2,
-                  fontWeight: 700,
-                  color: "#4D5259",
-                  lineHeight: 1.2,
-                }}
-                data-testid="result-interest"
-              >
-                {interests[res.interests]}
-                <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-                  {res.keywords.length >= 1 && res.keywords.join(", ")}
-                  {res.additional_keywords.length >= 1 &&
-                    `, ${res.additional_keywords.join(", ")}`}
-                </Box>
-              </Text>
-            </Flex>
+            <CardContents res={res} />
           </Card>
         ))}
       </Grid>
@@ -149,21 +96,30 @@ export default function SearchResults({ results, ...props }) {
           Refine my search
         </Button>
       </Flex>
-
-      {/* <Portal>
-        <animated.div style={contentProps}>
-          <FundCard
-            result={fundCardResult}
-            close={() => {
-              setOpen(false);
-              // setFundCardResult({
-              //   title: "",
-              //   campus: "UCCS",
-              // });
-            }}
-          />
-        </animated.div>
-      </Portal> */}
+      <Portal>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              style={styleProps}
+              key={1}
+              initial={{ opacity: 0, transform: "translateX(0%)" }}
+              animate={{ opacity: 1, transform: "translateX(-100%)" }}
+              exit={{
+                opacity: 0,
+                transform: "translateX(0%)",
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <FundCard
+                result={fundCardResult}
+                close={() => {
+                  setOpen(false);
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Portal>
     </>
   );
 }
@@ -243,5 +199,53 @@ function Header({ results }) {
         </a>
       </Link>
     </>
+  );
+}
+
+function CardContents({ res }) {
+  return (
+    <Flex
+      sx={{
+        flexDirection: "column",
+        minHeight: 231,
+        color: "text",
+        cursor: "pointer",
+      }}
+    >
+      <Box bg={campusColors[res.campus]} mx={-2} mt={-2} color="background">
+        <Flex>
+          <Text
+            sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
+            data-testid="result-campus"
+          >
+            {campusNames[res.campus]}
+          </Text>
+          {res.featured == true && <FeaturedFund res={res}></FeaturedFund>}
+        </Flex>
+      </Box>
+      <Heading
+        sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
+        data-testid="result-title"
+      >
+        {res.title}
+      </Heading>
+      <Text
+        sx={{
+          p: 2,
+          fontSize: 2,
+          fontWeight: 700,
+          color: "#4D5259",
+          lineHeight: 1.2,
+        }}
+        data-testid="result-interest"
+      >
+        {interests[res.interests]}
+        <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
+          {res.keywords.length >= 1 && res.keywords.join(", ")}
+          {res.additional_keywords.length >= 1 &&
+            `, ${res.additional_keywords.join(", ")}`}
+        </Box>
+      </Text>
+    </Flex>
   );
 }

@@ -13,32 +13,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/pro-regular-svg-icons";
 
-function StyledLink({ children, sx, url }) {
-  return (
-    <CULink
-      sx={{
-        ...sx,
-        p: 3,
-        textDecoration: "none",
-        color: "text",
-      }}
-      url={url}
-    >
-      <Text
-        sx={{
-          display: "inline",
-          ":hover": {
-            borderBottom: "4px solid",
-            borderBottomColor: "primary",
-          },
-        }}
-      >
-        {children}
-      </Text>
-    </CULink>
-  );
-}
-
 export default function Header() {
   // const { state } = useContext(store);
   const [cartItems, setCartItems] = useState(0);
@@ -143,5 +117,31 @@ export default function Header() {
         </Flex>
       </Box>
     </Flex>
+  );
+}
+
+function StyledLink({ children, sx, url }) {
+  return (
+    <CULink
+      sx={{
+        ...sx,
+        p: 3,
+        textDecoration: "none",
+        color: "text",
+      }}
+      url={url}
+    >
+      <Text
+        sx={{
+          display: "inline",
+          ":hover": {
+            borderBottom: "4px solid",
+            borderBottomColor: "primary",
+          },
+        }}
+      >
+        {children}
+      </Text>
+    </CULink>
   );
 }
