@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -26,7 +26,7 @@ const Portal = dynamic(() => import("../global/Portal"), {
 /**
  * Description of the search results component.
  */
-export default function SearchResults({ results, ...props }) {
+export default function SearchResults({ results }) {
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
     campus: "UCCS",
@@ -147,23 +147,26 @@ export default function SearchResults({ results, ...props }) {
       </Flex>
       <Portal>
         <AnimatePresence>
-          <motion.div
-            style={styleProps}
-            initial={{ opacity: 0, transform: "translateX(0%)" }}
-            animate={{ opacity: 1, transform: "translateX(-100%)" }}
-            exit={{ opacity: 0 }}
-          >
-            <FundCard
-              result={fundCardResult}
-              close={() => {
-                setOpen(false);
-                // setFundCardResult({
-                //   title: "",
-                //   campus: "UCCS",
-                // });
+          {open && (
+            <motion.div
+              style={styleProps}
+              key={1}
+              initial={{ opacity: 0, transform: "translateX(0%)" }}
+              animate={{ opacity: 1, transform: "translateX(-100%)" }}
+              exit={{
+                opacity: 0,
+                transform: "translateX(0%)",
               }}
-            />
-          </motion.div>
+              transition={{ duration: 0.5 }}
+            >
+              <FundCard
+                result={fundCardResult}
+                close={() => {
+                  setOpen(false);
+                }}
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
       </Portal>
     </>

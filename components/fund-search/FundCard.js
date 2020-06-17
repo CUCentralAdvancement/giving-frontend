@@ -43,7 +43,7 @@ export default function FundCard({ result, close }) {
           <Box sx={{ p: 4 }}>
             <Heading>{result.title}</Heading>
             <Text my={4}>{result.description}</Text>
-            <Link href={`/fund/${result.path}`}>
+            <Link href={result.path}>
               <a>
                 <Button variant="button.secondary">Make a Gift</Button>
               </a>
