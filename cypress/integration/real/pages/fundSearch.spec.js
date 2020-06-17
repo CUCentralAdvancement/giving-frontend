@@ -40,7 +40,7 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("All Interests").click();
     cy.contains("Science, Research & Innovation").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("3 Results");
+    cy.contains("4 Results");
     cy.get('[data-testid="search-result"]')
       .first()
       .within(() => {
@@ -49,7 +49,7 @@ describe("Fund Search Tests", () => {
         cy.contains("CU Anschutz");
       });
     cy.get('[data-testid="search-result"]').within(() => {
-      cy.contains("CU Boulder").should("not.exist");
+      cy.contains("CU Boulder").should("be.visible");
     });
 
     cy.get('[data-testid="search-reset"]').click();
@@ -58,7 +58,7 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("Fund Type").click();
     cy.contains("Academic Program Funds").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("5 Results");
+    cy.contains("4 Results");
     cy.get('[data-testid="search-result"]').within(() => {
       cy.contains("CU Boulder");
       cy.contains("CU Denver");
