@@ -58,7 +58,7 @@ export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(
-    //`http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
+    // `http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
     `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
   );
   const searchData = await res.json();
@@ -88,6 +88,9 @@ FundSearch.propTypes = {
       featured: PropTypes.string.isRequired,
       campus: PropTypes.string.isRequired,
       interests: PropTypes.string.isRequired,
+      keywords: PropTypes.arrayOf(PropTypes.string),
+      additional_keywords: PropTypes.arrayOf(PropTypes.string),
+      path: PropTypes.string.isRequired,
     })
   ),
 };
@@ -102,6 +105,9 @@ FundSearch.defaultProps = {
       featured: "",
       campus: "All",
       interests: "All",
+      keywords: [],
+      additional_keywords: [],
+      path: "",
     },
   ],
 };
