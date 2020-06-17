@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-// import { useSpring, animated, config } from "react-spring";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
   Text,
@@ -14,9 +14,9 @@ import {
   Button,
 } from "@cu-advancement/component-library";
 import { campusColors, campusNames, interests } from "../../data/fundMeta";
-// import FundCard from "./FundCard";
+import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
-// import { useWindowDimensions } from "../../utils/hooks";
+import { useWindowDimensions } from "../../utils/hooks";
 
 // The portal can't render server-side.
 const Portal = dynamic(() => import("../global/Portal"), {
@@ -32,28 +32,19 @@ export default function SearchResults({ results, ...props }) {
     campus: "UCCS",
   });
   const [open, setOpen] = useState(false);
-  // const containerWidthRef = useRef();
-  // const dimensions = useWindowDimensions();
+  const dimensions = useWindowDimensions();
 
-  // useEffect(() => {
-  //   console.log(containerWidthRef.current.offsetWidth);
-  //   // setContainerHeight(intervalRef.current.offsetHeight - 60);
-  // }, []);
-
-  // const contentProps = useSpring({
-  //   // config: config.stiff,
-  //   transform: open ? "translateX(-100%)" : "translateX(0%)",
-  //   opacity: open ? 1 : 0,
-  //   height: "100%",
-  //   position: "fixed",
-  //   top: 0,
-  //   left: "100%",
-  //   zIndex: 1000,
-  //   width: dimensions.width < 1000 ? "100%" : "40%",
-  //   overflowY: "scroll",
-  //   background: "#fff",
-  //   boxShadow: "-3px 0 10px rgba(20,20,20,.1)",
-  // });
+  const styleProps = {
+    height: "100%",
+    position: "fixed",
+    top: 0,
+    left: "100%",
+    zIndex: 1000,
+    width: dimensions.width < 1000 ? "100%" : "40%",
+    overflowY: "scroll",
+    background: "#fff",
+    boxShadow: "-3px 0 10px rgba(20,20,20,.1)",
+  };
 
   return (
     <>
@@ -154,20 +145,26 @@ export default function SearchResults({ results, ...props }) {
           Refine my search
         </Button>
       </Flex>
-
       <Portal>
-        {/* <animated.div style={contentProps}>
-          <FundCard
-            result={fundCardResult}
-            close={() => {
-              setOpen(false);
-              // setFundCardResult({
-              //   title: "",
-              //   campus: "UCCS",
-              // });
-            }}
-          />
-        </animated.div> */}
+        <AnimatePresence>
+          <motion.div
+            style={styleProps}
+            initial={{ opacity: 0, transform: "translateX(0%)" }}
+            animate={{ opacity: 1, transform: "translateX(-100%)" }}
+            exit={{ opacity: 0 }}
+          >
+            <FundCard
+              result={fundCardResult}
+              close={() => {
+                setOpen(false);
+                // setFundCardResult({
+                //   title: "",
+                //   campus: "UCCS",
+                // });
+              }}
+            />
+          </motion.div>
+        </AnimatePresence>
       </Portal>
     </>
   );
