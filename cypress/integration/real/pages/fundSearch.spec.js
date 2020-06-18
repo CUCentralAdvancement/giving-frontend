@@ -177,7 +177,7 @@ describe("Fund Search Tests", () => {
   });
 
   // @todo add click to see that user goes to proper fund page.
-  it("Can open and close a fund card", () => {
+  it("Navigates to a fund detail page from a FundCard", () => {
     cy.visit("/fund-search");
 
     cy.get('[data-testid="search-result"]')
