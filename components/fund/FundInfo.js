@@ -27,7 +27,12 @@ export default function FundInfo({ fund }) {
       <Box sx={{ pt: 2 }}>
         <Text sx={{ display: "inline-block" }}>Campus:&nbsp;</Text>
         <Link href={`/fund-search?field_campus=${fund.campus}`}>
-          <a data-testid="fund-campus" style={{ color: theme.colors.primary }}>
+          <a
+            data-testid="fund-campus"
+            style={{
+              color: theme.colors.primary,
+            }}
+          >
             {campusNames[fund.campus]}
           </a>
         </Link>

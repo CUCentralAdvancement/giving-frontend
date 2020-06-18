@@ -7,6 +7,8 @@ describe("Fund Search Tests", () => {
     });
 
     cy.get('[data-testid="fund-description"]').should("be.visible");
+    // @todo Maybe add a test to see that the content is more than a certain number of characters.
+    // This fund should always have some marketing content rather than it being blank.
     cy.get('[data-testid="fund-marketing-content"]').should("be.visible");
     cy.get('[data-testid="fund-campus"]').should("be.visible");
     cy.get('[data-testid="fund-allocation-code"]').should("be.visible");

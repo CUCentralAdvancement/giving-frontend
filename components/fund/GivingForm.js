@@ -7,12 +7,12 @@ import {
   Heading,
   Text,
   Grid,
-  Radio,
+  // Radio,
   TextInput,
   SelectInput,
   Button,
 } from "@cu-advancement/component-library";
-import { Checkbox, Label } from "theme-ui";
+import { Checkbox, Label, Radio } from "theme-ui";
 // import { store } from "../../data/store";
 import { campusNames, interestsOptions } from "../../data/fundMeta";
 
@@ -26,7 +26,7 @@ export default function GivingForm({ fund }) {
       inHonorOf: 0,
     },
   });
-  const amount = watch("giving-amount");
+  const givingAmount = watch("giving-amount");
   const inHonorOf = watch("inHonorOf");
   const pledgePayment = watch("pledgePayment");
   const givingAmounts = [50, 100, 250, 500];
@@ -74,36 +74,44 @@ export default function GivingForm({ fund }) {
           <Heading as="h3" mb={2}>
             I would like to give:
           </Heading>
-          <Grid gap={0} columns={[1, 2, 4]}>
+          <Grid gap={2} columns={[1, 2, 4]} sx={{ mb: 2 }}>
             {givingAmounts.map((amount, index) => {
               return (
-                <Radio
+                <DonationRadio
                   key={index}
                   name="giving-amount"
-                  label={`$${amount}`}
                   value={amount}
-                  defaultChecked={amount === 50 ? true : false}
-                  onChange={(e) => setValue("giving-amount", e.target.value)}
-                  sx={{ color: "#fff", bg: "#fff" }}
+                  label={`$${amount}`}
+                  trackedValue={givingAmount}
+                  setter={setValue}
                 />
               );
             })}
-          </Grid>
-          <Radio
-            name="giving-amount"
-            label="Other"
-            value="other"
-            onChange={(e) => setValue("giving-amount", e.target.value)}
-            sx={{ color: "#fff", bg: "#fff" }}
-          />
-          {amount === "other" && (
-            <TextInput
-              name="other-amount"
-              onChange={(e) => setValue("other-amount", e.target.value)}
+            <DonationRadio
+              name="giving-amount"
+              value="other"
+              label="Other"
+              trackedValue={givingAmount}
+              setter={setValue}
             />
+          </Grid>
+          {givingAmount === "other" && (
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <TextInput
+                  name="other-amount"
+                  placeholder="Other Amount"
+                  onChange={(e) => setValue("other-amount", e.target.value)}
+                />
+              </motion.div>
+            </AnimatePresence>
           )}
         </Box>
-        <Box>
+        <Box sx={{ my: 2 }}>
           <Label>
             <Checkbox
               name="reocurringGift"
@@ -112,33 +120,50 @@ export default function GivingForm({ fund }) {
                 setValue("reocurringGift", !reocurringGift);
                 setReocurringGift(!reocurringGift);
               }}
-              sx={{ color: "#fff", bg: "#fff" }}
+              sx={{
+                color: "#fff",
+                bg: "#fff",
+                border: "#A0A3A6 solid 2px",
+                borderRadius: "none",
+              }}
             />
             Make this a recurring gift
           </Label>
           {reocurringGift && (
-            <>
-              <SelectInput
-                name="reocurringGiftFrequency"
-                // label="Address Type"
-                value={reocurringGiftFrequency}
-                options={[
-                  { value: "_none", label: "How Often?" },
-                  { value: "monthly", label: "Monthly" },
-                  { value: "quarterly", label: "Quarterly (every 3 months)" },
-                  { value: "annually", label: "Annually" },
-                ]}
-                onChange={(selectedOption) => {
-                  setValue("reocurringGiftFrequency", selectedOption.value);
-                  setReocurringGiftFrequency(selectedOption);
-                }}
-              />
-              <Text sx={{ fontStyle: "italic", fontSize: 1 }}>
-                Please note: This will apply to all gifts in your Gift Basket.
-                To make a separate one-time gift, or one with a different
-                recurring schedule, you will need to complete this gift first.
-              </Text>
-            </>
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Box sx={{ mt: 2 }}>
+                  <SelectInput
+                    name="reocurringGiftFrequency"
+                    // label="Address Type"
+                    value={reocurringGiftFrequency}
+                    options={[
+                      { value: "_none", label: "How Often?" },
+                      { value: "monthly", label: "Monthly" },
+                      {
+                        value: "quarterly",
+                        label: "Quarterly (every 3 months)",
+                      },
+                      { value: "annually", label: "Annually" },
+                    ]}
+                    onChange={(selectedOption) => {
+                      setValue("reocurringGiftFrequency", selectedOption.value);
+                      setReocurringGiftFrequency(selectedOption);
+                    }}
+                  />
+                  <Text sx={{ fontStyle: "italic", fontSize: 1, mt: 2 }}>
+                    Please note: This will apply to all gifts in your Gift
+                    Basket. To make a separate one-time gift, or one with a
+                    different recurring schedule, you will need to complete this
+                    gift first.
+                  </Text>
+                </Box>
+              </motion.div>
+            </AnimatePresence>
           )}
         </Box>
         <Label>
@@ -148,7 +173,12 @@ export default function GivingForm({ fund }) {
             onChange={(e) => {
               setValue("pledgePayment", !pledgePayment);
             }}
-            sx={{ color: "#fff", bg: "#fff" }}
+            sx={{
+              color: "#fff",
+              bg: "#fff",
+              border: "#A0A3A6 solid 2px",
+              borderRadius: "none",
+            }}
           />
           This is a pledge payment
         </Label>
@@ -159,21 +189,21 @@ export default function GivingForm({ fund }) {
           <Label htmlFor="inHonorOf">
             Is this gift in honor of or in memory of someone?
           </Label>
-          <Grid columns={2}>
-            <Radio
+          <Grid gap={2} columns={(2, 4)} sx={{ mt: 2 }}>
+            <DonationRadio
               name="inHonorOf"
               label="No"
-              value="0"
+              value={0}
               defaultChecked={true}
-              onChange={(e) => setValue("inHonorOf", e.target.value)}
-              sx={{ color: "#fff", bg: "#fff" }}
+              trackedValue={inHonorOf}
+              setter={setValue}
             />
-            <Radio
+            <DonationRadio
               name="inHonorOf"
               label="Yes"
-              value="1"
-              onChange={(e) => setValue("inHonorOf", e.target.value)}
-              sx={{ color: "#fff", bg: "#fff" }}
+              value={1}
+              trackedValue={inHonorOf}
+              setter={setValue}
             />
           </Grid>
           <AnimatePresence>
@@ -195,7 +225,7 @@ export default function GivingForm({ fund }) {
             )}
           </AnimatePresence>
         </Box>
-        <Grid columns={[1, 2]} sx={{ mt: 2 }}>
+        <Grid columns={[1, 2]} sx={{ mt: 3 }}>
           <Button
             variant="button.secondary"
             onClick={() => {
@@ -215,5 +245,43 @@ export default function GivingForm({ fund }) {
         </Grid>
       </Grid>
     </form>
+  );
+}
+
+function DonationRadio({ name, label, value, trackedValue, setter, ...props }) {
+  return (
+    <Label
+      sx={{
+        border:
+          trackedValue == value ? "#231F20 solid 2px" : "#A0A3A6 solid 2px",
+        color: trackedValue == value ? "#231F20" : "#A0A3A6",
+        display: "inline-block",
+        textAlign: "center",
+        bg: trackedValue == value ? "#D4D5D5" : "white",
+        py: 1,
+        fontWeight: 500,
+        ":hover": {
+          border: "#231F20 solid 2px",
+          color: "#231F20",
+        },
+      }}
+    >
+      <Radio
+        name={name}
+        value={value}
+        defaultChecked={value === 50 ? true : false}
+        onChange={(e) => {
+          // console.log(e.target.value);
+          setter(name, e.target.value);
+        }}
+        sx={{
+          position: "absolute",
+          clip: "rect(0,0,0,0)",
+          pointerEvents: "none",
+        }}
+        {...props}
+      />
+      {label}
+    </Label>
   );
 }
