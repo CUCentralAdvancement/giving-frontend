@@ -11,10 +11,18 @@ import {
   TextInput,
   SelectInput,
   Button,
+  Flex,
 } from "@cu-advancement/component-library";
 import { Checkbox, Label, Radio } from "theme-ui";
 // import { store } from "../../data/store";
-import { campusNames, interestsOptions } from "../../data/fundMeta";
+import { campusNames } from "../../data/fundMeta";
+import {
+  giftNamePrefixOptions,
+  givingAmounts,
+  reocurringGiftFrequencyOptions,
+  honorMemorySelectorOptions,
+  giftStateOptions,
+} from "../../data/donationForm";
 
 export default function GivingForm({ fund }) {
   // const { state, dispatch } = useContext(store);
@@ -29,11 +37,22 @@ export default function GivingForm({ fund }) {
   const givingAmount = watch("giving-amount");
   const inHonorOf = watch("inHonorOf");
   const pledgePayment = watch("pledgePayment");
-  const givingAmounts = [50, 100, 250, 500];
   const [reocurringGift, setReocurringGift] = useState(false);
   const [reocurringGiftFrequency, setReocurringGiftFrequency] = useState({
     value: "_none",
     label: "How Often?",
+  });
+  const [honorMemorySelector, setHonorMemorySelector] = useState({
+    value: "memory",
+    label: "In Memory Of",
+  });
+  const [giftNamePrefix, setGiftNamePrefix] = useState({
+    value: "_none",
+    label: "Prefix",
+  });
+  const [giftState, setGiftState] = useState({
+    value: "none",
+    label: "State",
   });
 
   function submitHandler(action) {
@@ -65,6 +84,17 @@ export default function GivingForm({ fund }) {
     register({ name: "reocurringGiftFrequency" });
     register({ name: "pledgePayment" });
     register({ name: "inHonorOf" });
+    register({ name: "honorMemorySelector" });
+    register({ name: "honoreeName" });
+    register({ name: "giftNamePrefix" });
+    register({ name: "giftFirstName" });
+    register({ name: "giftLastName" });
+    register({ name: "giftAddressOne" });
+    register({ name: "giftAddressTwo" });
+    register({ name: "giftCity" });
+    register({ name: "giftState" });
+    register({ name: "giftZipCode" });
+    register({ name: "giftEmail" });
   }, [register]);
 
   return (
@@ -81,6 +111,7 @@ export default function GivingForm({ fund }) {
                   key={index}
                   name="giving-amount"
                   value={amount}
+                  defaultChecked={amount === 50 ? true : false}
                   label={`$${amount}`}
                   trackedValue={givingAmount}
                   setter={setValue}
@@ -95,8 +126,8 @@ export default function GivingForm({ fund }) {
               setter={setValue}
             />
           </Grid>
-          {givingAmount === "other" && (
-            <AnimatePresence>
+          <AnimatePresence>
+            {givingAmount === "other" && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -108,8 +139,8 @@ export default function GivingForm({ fund }) {
                   onChange={(e) => setValue("other-amount", e.target.value)}
                 />
               </motion.div>
-            </AnimatePresence>
-          )}
+            )}
+          </AnimatePresence>
         </Box>
         <Box sx={{ my: 2 }}>
           <Label>
@@ -129,8 +160,8 @@ export default function GivingForm({ fund }) {
             />
             Make this a recurring gift
           </Label>
-          {reocurringGift && (
-            <AnimatePresence>
+          <AnimatePresence>
+            {reocurringGift && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -141,15 +172,7 @@ export default function GivingForm({ fund }) {
                     name="reocurringGiftFrequency"
                     // label="Address Type"
                     value={reocurringGiftFrequency}
-                    options={[
-                      { value: "_none", label: "How Often?" },
-                      { value: "monthly", label: "Monthly" },
-                      {
-                        value: "quarterly",
-                        label: "Quarterly (every 3 months)",
-                      },
-                      { value: "annually", label: "Annually" },
-                    ]}
+                    options={reocurringGiftFrequencyOptions}
                     onChange={(selectedOption) => {
                       setValue("reocurringGiftFrequency", selectedOption.value);
                       setReocurringGiftFrequency(selectedOption);
@@ -163,8 +186,8 @@ export default function GivingForm({ fund }) {
                   </Text>
                 </Box>
               </motion.div>
-            </AnimatePresence>
-          )}
+            )}
+          </AnimatePresence>
         </Box>
         <Label>
           <Checkbox
@@ -189,7 +212,7 @@ export default function GivingForm({ fund }) {
           <Label htmlFor="inHonorOf">
             Is this gift in honor of or in memory of someone?
           </Label>
-          <Grid gap={2} columns={(2, 4)} sx={{ mt: 2 }}>
+          <Grid gap={2} columns={(2, 4)} sx={{ my: 2 }}>
             <DonationRadio
               name="inHonorOf"
               label="No"
@@ -207,7 +230,7 @@ export default function GivingForm({ fund }) {
             />
           </Grid>
           <AnimatePresence>
-            {inHonorOf === 1 && (
+            {inHonorOf == 1 && (
               <motion.div
                 key={1}
                 initial={{ opacity: 0 }}
@@ -217,10 +240,96 @@ export default function GivingForm({ fund }) {
                 }}
                 transition={{ duration: 0.5 }}
               >
-                <TextInput
-                  name="other-amount"
-                  onChange={(e) => setValue("other-amount", e.target.value)}
+                <SelectInput
+                  name="honorMemorySelector"
+                  // label="Address Type"
+                  value={honorMemorySelector}
+                  options={honorMemorySelectorOptions}
+                  onChange={(selectedOption) => {
+                    setValue("honorMemorySelector", selectedOption.value);
+                    setHonorMemorySelector(selectedOption);
+                  }}
                 />
+                <Text sx={{ fontStyle: "italic", fontSize: 1, my: 2 }}>
+                  Only the honoree&apos;s name is required. All other fields
+                  below are optional, and allow us to notify the honoree, next
+                  of kin or contact.
+                </Text>
+                {honorMemorySelector.value == "memory" && (
+                  <TextInput
+                    name="honoreeName"
+                    placeholder="Honoree's Name"
+                    onChange={(e) => setValue("honoreeName", e.target.value)}
+                  />
+                )}
+                <Heading as="h3" my={2}>
+                  {honorMemorySelector.value == "honor"
+                    ? "Next of Kin/Contact Information"
+                    : "Honoree's Information"}
+                </Heading>
+                <Grid gap={2} columns={1} sx={{ my: 2 }}>
+                  <SelectInput
+                    name="giftNamePrefix"
+                    value={giftNamePrefix}
+                    options={giftNamePrefixOptions}
+                    onChange={(selectedOption) => {
+                      setValue("giftNamePrefix", selectedOption.value);
+                      setGiftNamePrefix(selectedOption);
+                    }}
+                  />
+                  <Grid gap={2} columns={2}>
+                    <TextInput
+                      sx={{ mr: 2 }}
+                      name="giftFirstName"
+                      placeholder="First Name"
+                      onChange={(e) =>
+                        setValue("giftFirstName", e.target.value)
+                      }
+                    />
+                    <TextInput
+                      name="giftLastName"
+                      placeholder="Last Name"
+                      onChange={(e) => setValue("giftLastName", e.target.value)}
+                    />
+                  </Grid>
+                  <Heading as="h4">Country Selector Placeholder</Heading>
+                  <TextInput
+                    name="giftAddresOne"
+                    placeholder="Address 1"
+                    onChange={(e) => setValue("giftAddresOne", e.target.value)}
+                  />
+                  <TextInput
+                    name="giftAddresTwo"
+                    placeholder="Address 2"
+                    onChange={(e) => setValue("giftAddresTwo", e.target.value)}
+                  />
+                  <TextInput
+                    name="giftCity"
+                    placeholder="City"
+                    onChange={(e) => setValue("giftCity", e.target.value)}
+                  />
+                  <Grid gap={2} columns={2}>
+                    <SelectInput
+                      name="giftState"
+                      value={giftState}
+                      options={giftStateOptions}
+                      onChange={(selectedOption) => {
+                        setValue("giftState", selectedOption.value);
+                        setGiftState(selectedOption);
+                      }}
+                    />
+                    <TextInput
+                      name="giftZipCode"
+                      placeholder="Zip Code"
+                      onChange={(e) => setValue("giftZipCode", e.target.value)}
+                    />
+                  </Grid>
+                  <TextInput
+                    name="giftEmail"
+                    placeholder="Email"
+                    onChange={(e) => setValue("giftEmail", e.target.value)}
+                  />
+                </Grid>
               </motion.div>
             )}
           </AnimatePresence>
@@ -269,7 +378,6 @@ function DonationRadio({ name, label, value, trackedValue, setter, ...props }) {
       <Radio
         name={name}
         value={value}
-        defaultChecked={value === 50 ? true : false}
         onChange={(e) => {
           // console.log(e.target.value);
           setter(name, e.target.value);
