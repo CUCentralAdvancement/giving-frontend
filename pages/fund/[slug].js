@@ -6,8 +6,8 @@ import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
 
-const baseURL = "http://cu-giving.lndo.site";
-// const baseURL = "https://385-i-cu-giving.pantheonsite.io";
+// const baseURL = "http://cu-giving.lndo.site";
+const baseURL = "https://385-i-cu-giving.pantheonsite.io";
 // const baseURL = "https://stormy-caverns-60033.herokuapp.com";
 
 export default function Fund({ fund }) {
