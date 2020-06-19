@@ -52,7 +52,16 @@ export default function FundInfo({ fund }) {
             data-testid="fund-interest"
             style={{ color: theme.colors.primary }}
           >
-            {interestsOptions.find((el) => el.value === fund.interest).label}
+            {(() => {
+              const inter = interestsOptions.find(
+                (el) => el.value === fund.interest
+              );
+              if (inter) {
+                return inter.label;
+              } else {
+                return fund.interest;
+              }
+            })()}
           </a>
         </Link>
       </Box>
