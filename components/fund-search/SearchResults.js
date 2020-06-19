@@ -26,7 +26,7 @@ const Portal = dynamic(() => import("../global/Portal"), {
 /**
  * Description of the search results component.
  */
-export default function SearchResults({ results }) {
+export default function SearchResults({ results, count }) {
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
     campus: "UCCS",
@@ -47,80 +47,87 @@ export default function SearchResults({ results }) {
   };
 
   return (
-    <>
-      <Box p={3}>
-        <Header results={results} />
-      </Box>
-      <Grid gap={3} columns={[1, 2, 3, 4]}>
-        {results.map((res) => (
-          <Card
-            data-testid="search-result"
-            key={res.alloc_code.toString()}
-            sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
-            onClick={() => {
-              if (!open) {
-                setOpen(true);
-              }
-              setFundCardResult(res);
-            }}
-          >
-            <CardContents res={res} />
-          </Card>
-        ))}
-      </Grid>
-      <Flex
-        sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          py: 4,
-        }}
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        <Button
-          variant="button.outline"
-          sx={{
-            color: "secondary",
-            mr: 2,
-            border: "1px solid",
-            fontWeight: 500,
-          }}
-          data-testid="load-more-button"
-        >
-          Load more funds...
-        </Button>
-        <Button
-          variant="button.outline"
-          sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
-          data-testid="refine-search-button"
-        >
-          Refine my search
-        </Button>
-      </Flex>
-      <Portal>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              style={styleProps}
-              key={1}
-              initial={{ opacity: 0, transform: "translateX(0%)" }}
-              animate={{ opacity: 1, transform: "translateX(-100%)" }}
-              exit={{
-                opacity: 0,
-                transform: "translateX(0%)",
+        <Box p={3}>
+          <Header count={count} />
+        </Box>
+        <Grid gap={3} columns={[1, 2, 3, 4]}>
+          {results.map((res) => (
+            <Card
+              data-testid="search-result"
+              key={res.alloc_code.toString()}
+              sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
+              onClick={() => {
+                if (!open) {
+                  setOpen(true);
+                }
+                setFundCardResult(res);
               }}
-              transition={{ duration: 0.5 }}
             >
-              <FundCard
-                result={fundCardResult}
-                close={() => {
-                  setOpen(false);
+              <CardContents res={res} />
+            </Card>
+          ))}
+        </Grid>
+        <Flex
+          sx={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            py: 4,
+          }}
+        >
+          <Button
+            variant="button.outline"
+            sx={{
+              color: "secondary",
+              mr: 2,
+              border: "1px solid",
+              fontWeight: 500,
+            }}
+            data-testid="load-more-button"
+          >
+            Load more funds...
+          </Button>
+          <Button
+            variant="button.outline"
+            sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
+            data-testid="refine-search-button"
+          >
+            Refine my search
+          </Button>
+        </Flex>
+        <Portal>
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                style={styleProps}
+                key={1}
+                initial={{ opacity: 0, transform: "translateX(0%)" }}
+                animate={{ opacity: 1, transform: "translateX(-100%)" }}
+                exit={{
+                  opacity: 0,
+                  transform: "translateX(0%)",
                 }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Portal>
-    </>
+                transition={{ duration: 0.5 }}
+              >
+                <FundCard
+                  result={fundCardResult}
+                  close={() => {
+                    setOpen(false);
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Portal>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -175,11 +182,11 @@ function FeaturedFund({ res }) {
   );
 }
 
-function Header({ results }) {
+function Header({ count }) {
   return (
     <>
       <Text data-testid="search-result-count" color="primary" mb={2}>
-        {results.length} Results
+        {count} Results
       </Text>
       <Text sx={{ display: "inline-block", fontStyle: "italic" }} mr={2}>
         Can't find what you're looking for?

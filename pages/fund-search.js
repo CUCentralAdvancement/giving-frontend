@@ -1,13 +1,26 @@
 // import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/global/Layout";
 import SearchForm from "../components/fund-search/SearchForm";
 import SearchResults from "../components/fund-search/SearchResults";
 
-export default function FundSearch({ searchData }) {
+export default function FundSearch({ searchData, count }) {
   const [results, setResults] = useState(searchData);
+
+  // useEffect(() => {
+  //   async function fetchFullResults() {
+  //     const res = await fetch(
+  //       `http://cu-giving.lndo.site/sites/default/files/all_fund_data.json`
+  //       // `https://385-i-cu-giving.pantheonsite.io/sites/default/files/all_fund_data.json`
+  //     );
+  //     const data = await res.json();
+  //     setResults(data);
+  //   }
+  //   fetchFullResults();
+  // }, []);
+
   function submitHandler(values) {
     console.log(values);
     const newResults = searchData.filter((res) => {
@@ -43,7 +56,7 @@ export default function FundSearch({ searchData }) {
             sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}
             data-testid="search-results"
           >
-            <SearchResults results={results} />
+            <SearchResults results={results} count={count} />
           </Box>
         </Flex>
       </Layout>
@@ -63,6 +76,12 @@ export async function getStaticProps() {
   );
   const searchData = await res.json();
 
+  const count = await fetch(
+    // `http://cu-giving.lndo.site/api/funds/count`
+    `https://385-i-cu-giving.pantheonsite.io/api/funds/count`
+  );
+  const fundsCount = await count.json();
+
   const realSearchData = [];
   Object.keys(searchData).forEach((key, index) => {
     if (searchData[key].featured == true) {
@@ -75,7 +94,7 @@ export async function getStaticProps() {
   });
 
   // Pass data to the page via props
-  return { props: { searchData: realSearchData } };
+  return { props: { searchData: realSearchData, count: fundsCount } };
 }
 
 FundSearch.propTypes = {
@@ -93,6 +112,7 @@ FundSearch.propTypes = {
       path: PropTypes.string.isRequired,
     })
   ),
+  count: PropTypes.string.isRequired,
 };
 
 FundSearch.defaultProps = {
@@ -110,4 +130,5 @@ FundSearch.defaultProps = {
       path: "",
     },
   ],
+  count: "1924",
 };

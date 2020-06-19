@@ -27,7 +27,7 @@ export default function Fund({ fund }) {
       >
         <Image
           src="https://giving.cu.edu/sites/all/themes/themekit/images/interior-banners/banner-mountains.jpg"
-          sx={{ mb: -1 }}
+          sx={{ mb: -1, height: "86px" }}
         />
         <Flex
           sx={{
