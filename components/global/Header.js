@@ -69,7 +69,7 @@ export default function Header() {
             justifyContent: "center",
           }}
         >
-          <Text sx={{ ml: "20px" }}>
+          <Text sx={{ ml: "20px", height: "40px" }}>
             <Link href="/cart">
               <a
                 className="cart-items-total"
@@ -80,7 +80,10 @@ export default function Header() {
                 }}
               >
                 <Box sx={{ mr: "6px", display: "inline", fontSize: 4 }}>
-                  <FontAwesomeIcon icon={faShoppingBasket} />
+                  <FontAwesomeIcon
+                    style={{ height: "20px" }}
+                    icon={faShoppingBasket}
+                  />
                 </Box>
                 Gift Basket
                 <Badge

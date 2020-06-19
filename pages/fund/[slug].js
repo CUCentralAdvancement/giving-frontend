@@ -10,6 +10,7 @@ const baseURL = "https://385-i-cu-giving.pantheonsite.io";
 // const baseURL = "https://stormy-caverns-60033.herokuapp.com";
 
 export default function Fund({ fund }) {
+  // console.log(fund);
   const intervalRef = useRef();
   const [containerHeight, setContainerHeight] = useState("100%");
 
@@ -26,7 +27,7 @@ export default function Fund({ fund }) {
       >
         <Image
           src="https://giving.cu.edu/sites/all/themes/themekit/images/interior-banners/banner-mountains.jpg"
-          sx={{ mb: -1 }}
+          sx={{ mb: -1, height: "86px" }}
         />
         <Flex
           sx={{
@@ -54,14 +55,37 @@ export default function Fund({ fund }) {
   );
 }
 
+export async function getStaticPaths() {
+  const res = await fetch(
+    // `http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
+    `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
+  );
+  const searchData = await res.json();
+
+  const paths = [];
+  Object.keys(searchData).forEach((key) => {
+    if (searchData[key].path.includes("alzheimer") === false) {
+      paths.push({ params: { slug: searchData[key].path.split("/")[1] } });
+    }
+  });
+
+  return {
+    paths: paths,
+    fallback: true,
+  };
+}
+
 // This gets called on every request
-export async function getServerSideProps(context) {
-  const slug = context.params.slug || null;
+export async function getStaticProps({ params }) {
+  console.log(params.slug);
+  // const slug = params.slug || null;
+
+  const realSlug = params.slug.replace("%E2%80%99", "'");
 
   // Fetch data from external API
-  const res = await fetch(`${baseURL}/api/fund/${slug}`);
+  const res = await fetch(`${baseURL}/api/fund/${realSlug}`);
   const fund = await res.json();
 
   // Pass data to the page via props
-  return { props: { fund } };
+  return { props: { fund }, unstable_revalidate: 60 };
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import Link from "next/link";
 import { campusNames, interestsOptions } from "../../data/fundMeta";
 import {
@@ -58,3 +59,25 @@ export default function FundInfo({ fund }) {
     </Flex>
   );
 }
+
+FundInfo.propTypes = {
+  fund: PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    marketingContent: PropTypes.string.isRequired,
+    campus: PropTypes.string.isRequired,
+    interest: PropTypes.string,
+    allocationCode: PropTypes.string.isRequired,
+  }),
+};
+
+FundInfo.defaultProps = {
+  fund: {
+    title: "",
+    description: "",
+    marketingContent: "",
+    campus: "",
+    interest: "950",
+    allocationCode: "",
+  },
+};
