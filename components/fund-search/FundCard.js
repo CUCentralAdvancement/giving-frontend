@@ -55,7 +55,7 @@ export default function FundCard({ result, close }) {
             <Text data-testid="fund-card-description" my={4}>
               {result.description}
             </Text>
-            <Link href={result.path}>
+            <Link as={result.path} href="fund/[slug]">
               <a>
                 <Button variant="button.secondary">Make a Gift</Button>
               </a>

@@ -112,7 +112,7 @@ FundSearch.propTypes = {
       path: PropTypes.string.isRequired,
     })
   ),
-  count: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
 FundSearch.defaultProps = {
@@ -130,5 +130,5 @@ FundSearch.defaultProps = {
       path: "",
     },
   ],
-  count: "1924",
+  count: 1924,
 };

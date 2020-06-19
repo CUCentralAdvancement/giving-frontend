@@ -15,7 +15,7 @@ export default function Fund({ fund }) {
   const [containerHeight, setContainerHeight] = useState("100%");
 
   useEffect(() => {
-    setContainerHeight(intervalRef.current.offsetHeight - 60);
+    setContainerHeight(intervalRef.current.offsetHeight - 40);
   }, []);
   return (
     <Layout ref={intervalRef}>
