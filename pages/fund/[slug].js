@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import Layout from "../../components/global/Layout";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
+import { URL } from "whatwg-url";
 import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
 
-// const baseURL = "http://cu-giving.lndo.site";
-const baseURL = "https://385-i-cu-giving.pantheonsite.io";
+const baseURL = "http://cu-giving.lndo.site";
+// const baseURL = "https://385-i-cu-giving.pantheonsite.io";
 // const baseURL = "https://stormy-caverns-60033.herokuapp.com";
 
 export default function Fund({ fund }) {
@@ -57,16 +58,16 @@ export default function Fund({ fund }) {
 
 export async function getStaticPaths() {
   const res = await fetch(
-    // `http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
-    `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
+    // `http://cu-giving.lndo.site/api/funds/paths`
+    `https://385-i-cu-giving.pantheonsite.io/api/funds/paths`
   );
-  const searchData = await res.json();
+  const pathsList = await res.json();
 
   const paths = [];
-  Object.keys(searchData).forEach((key) => {
-    if (searchData[key].path.includes("alzheimer") === false) {
-      paths.push({ params: { slug: searchData[key].path.split("/")[1] } });
-    }
+  Object.keys(pathsList).forEach((key) => {
+    paths.push({
+      params: { slug: pathsList[key] },
+    });
   });
 
   return {
@@ -77,13 +78,12 @@ export async function getStaticPaths() {
 
 // This gets called on every request
 export async function getStaticProps({ params }) {
-  console.log(params.slug);
-  // const slug = params.slug || null;
+  const slug = params.slug || null;
 
-  const realSlug = params.slug.replace("%E2%80%99", "'");
+  // const realSlug = params.slug.replace("%E2%80%99", "'");
 
   // Fetch data from external API
-  const res = await fetch(`${baseURL}/api/fund/${realSlug}`);
+  const res = await fetch(new URL(`${baseURL}/api/fund/${slug}`));
   const fund = await res.json();
 
   // Pass data to the page via props
