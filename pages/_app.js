@@ -1,15 +1,18 @@
 import React from "react";
 // import App from 'next/app'
 // import { StateProvider } from "../data/store";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }) {
   return (
-    // <StateProvider>
-    <>
-      <Component {...pageProps} />
-      <div id="portal-root"></div>
-    </>
-    // </StateProvider>
+    <React.StrictMode>
+      <RecoilRoot>
+        <>
+          <Component {...pageProps} />
+          <div id="portal-root"></div>
+        </>
+      </RecoilRoot>
+    </React.StrictMode>
   );
 }
 

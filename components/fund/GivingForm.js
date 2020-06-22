@@ -14,7 +14,8 @@ import {
   Flex,
 } from "@cu-advancement/component-library";
 import { Checkbox, Label, Radio } from "theme-ui";
-// import { store } from "../../data/store";
+import { userCart } from "../../data/store";
+import { useRecoilState } from "recoil";
 import { campusNames } from "../../data/fundMeta";
 import {
   giftNamePrefixOptions,
@@ -25,7 +26,7 @@ import {
 } from "../../data/donationForm";
 
 export default function GivingForm({ fund }) {
-  // const { state, dispatch } = useContext(store);
+  const [cart, setCart] = useRecoilState(userCart);
   const router = useRouter();
   // console.log(router);
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
@@ -61,7 +62,8 @@ export default function GivingForm({ fund }) {
     data.fundRoute = router.asPath;
     data.fundTitle = fund.title;
     data.fundCampus = campusNames[fund.campus];
-    // dispatch({ type: "add to cart", data });
+    setCart([...cart, data]);
+    window.localStorage.setItem("userCart", JSON.stringify([...cart, data]));
 
     switch (action) {
       case "add to basket":
@@ -337,6 +339,7 @@ export default function GivingForm({ fund }) {
         <Grid columns={[1, 2]} sx={{ mt: 3 }}>
           <Button
             variant="button.secondary"
+            data-testid="add-to-basket-button"
             onClick={() => {
               submitHandler("add to basket");
             }}
@@ -345,6 +348,7 @@ export default function GivingForm({ fund }) {
           </Button>
           <Button
             variant="button.secondary"
+            data-testid="give-now-button"
             onClick={() => {
               submitHandler("give now");
             }}
