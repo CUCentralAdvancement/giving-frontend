@@ -359,37 +359,39 @@ export default function GivingForm({ fund }) {
 
 function DonationRadio({ name, label, value, trackedValue, setter, ...props }) {
   return (
-    <Label
-      sx={{
-        border:
-          trackedValue == value ? "#231F20 solid 2px" : "#A0A3A6 solid 2px",
-        color: trackedValue == value ? "#231F20" : "#A0A3A6",
-        display: "inline-block",
-        textAlign: "center",
-        bg: trackedValue == value ? "#D4D5D5" : "white",
-        py: 1,
-        fontWeight: 500,
-        ":hover": {
-          border: "#231F20 solid 2px",
-          color: "#231F20",
-        },
-      }}
-    >
-      <Radio
-        name={name}
-        value={value}
-        onChange={(e) => {
-          // console.log(e.target.value);
-          setter(name, e.target.value);
-        }}
+    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+      <Label
         sx={{
-          position: "absolute",
-          clip: "rect(0,0,0,0)",
-          pointerEvents: "none",
+          border:
+            trackedValue == value ? "#231F20 solid 2px" : "#A0A3A6 solid 2px",
+          color: trackedValue == value ? "#231F20" : "#A0A3A6",
+          display: "inline-block",
+          textAlign: "center",
+          bg: trackedValue == value ? "#D4D5D5" : "white",
+          py: 1,
+          fontWeight: 500,
+          ":hover": {
+            border: "#231F20 solid 2px",
+            color: "#231F20",
+          },
         }}
-        {...props}
-      />
-      {label}
-    </Label>
+      >
+        <Radio
+          name={name}
+          value={value}
+          onChange={(e) => {
+            // console.log(e.target.value);
+            setter(name, e.target.value);
+          }}
+          sx={{
+            position: "absolute",
+            clip: "rect(0,0,0,0)",
+            pointerEvents: "none",
+          }}
+          {...props}
+        />
+        {label}
+      </Label>
+    </motion.div>
   );
 }
