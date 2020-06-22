@@ -8,6 +8,7 @@ import SearchResults from "../components/fund-search/SearchResults";
 
 export default function FundSearch({ searchData, count }) {
   const [results, setResults] = useState(searchData);
+  const [resultCount, setResultCount] = useState(count);
 
   // useEffect(() => {
   //   async function fetchFullResults() {
@@ -40,6 +41,7 @@ export default function FundSearch({ searchData, count }) {
       return true;
     });
     setResults(newResults);
+    setResultCount(newResults.length);
   }
   return (
     <>
@@ -49,7 +51,10 @@ export default function FundSearch({ searchData, count }) {
             <Box sx={{ p: 3, maxWidth: "960px", mx: "auto" }}>
               <SearchForm
                 submitHandler={submitHandler}
-                resetHandler={() => setResults(searchData)}
+                resetHandler={() => {
+                  setResults(searchData);
+                  setResultCount(count);
+                }}
               />
             </Box>
           </Box>
@@ -57,7 +62,7 @@ export default function FundSearch({ searchData, count }) {
             sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}
             data-testid="search-results"
           >
-            <SearchResults results={results} count={count} />
+            <SearchResults results={results} count={resultCount} />
           </Box>
         </Flex>
       </Layout>
