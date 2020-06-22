@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import {
   Badge,
@@ -9,16 +10,18 @@ import {
   Button,
   Text,
 } from "@cu-advancement/component-library";
-// import { store } from "../data/store";
+import { userCart } from "../../data/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/pro-regular-svg-icons";
 
 export default function Header() {
-  // const { state } = useContext(store);
+  const cart = useRecoilValue(userCart);
   const [cartItems, setCartItems] = useState(0);
-  // useEffect(() => {
-  //   setCartItems(parseInt(state.cart.length));
-  // }, [state.cart]);
+
+  useEffect(() => {
+    console.log(cart);
+    setCartItems(parseInt(cart.length));
+  }, [cart]);
 
   return (
     <Flex
@@ -96,7 +99,7 @@ export default function Header() {
                     backgroundColor: cartItems > 0 ? "secondary" : "#fff",
                   }}
                 >
-                  {cartItems}
+                  <span style={{ paddingTop: "1px" }}>{cartItems}</span>
                 </Badge>
               </a>
             </Link>

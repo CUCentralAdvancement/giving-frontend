@@ -15,28 +15,28 @@ const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
         fontSizes: [12, 14, 16, 18, 20, 24, 32, 48, 64, 96],
       }}
     >
-      <Flex sx={{ flexDirection: "column", minHeight: "100vh" }}>
-        <Header />
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Box
-              ref={ref}
-              sx={{
-                flex: "1 1 auto",
-                bg: mainBg,
-              }}
-              as="main"
+      <Flex sx={{ flexDirection: "column", height: "100vh" }}>
+        <Header sx={{ flexShrink: 0 }} />
+        <Box
+          ref={ref}
+          sx={{
+            flex: "1 0 auto",
+            bg: mainBg,
+          }}
+          as="main"
+        >
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              // transition={{ duration: 0.5 }}
             >
               {children}
-            </Box>
-          </motion.div>
-        </AnimatePresence>
-        <Footer />
+            </motion.div>
+          </AnimatePresence>
+        </Box>
+        <Footer sx={{ flexShrink: 0 }} />
       </Flex>
     </ThemeProvider>
   );
