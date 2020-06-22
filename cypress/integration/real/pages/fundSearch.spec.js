@@ -62,7 +62,7 @@ describe("Fund Search Tests", () => {
         cy.contains("CU Anschutz");
       });
     cy.get('[data-testid="search-result"]').within(() => {
-      cy.contains("CU Boulder").should("not.exist");
+      cy.contains("CU Boulder").should("be.visible");
     });
 
     cy.get('[data-testid="search-reset"]').click();
