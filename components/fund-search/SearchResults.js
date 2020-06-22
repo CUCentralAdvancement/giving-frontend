@@ -185,8 +185,8 @@ function FeaturedFund({ res }) {
 function Header({ count }) {
   return (
     <>
-      <Text data-testid="search-result-count" color="primary" mb={2}>
-        {count} Results
+      <Text color="primary" mb={2}>
+        <span data-testid="search-result-count">{count}</span> Results
       </Text>
       <Text sx={{ display: "inline-block", fontStyle: "italic" }} mr={2}>
         Can't find what you're looking for?

@@ -1,11 +1,12 @@
 describe("Fund Search Tests", () => {
   it("Shows proper inputs on search form and handles search input", () => {
     cy.visit("/fund-search");
-    cy.contains("24 Results");
 
-    // cy.get('[data-testid="search-form"]').within(($form) => {
-    // cy.root().submit();
-    // });
+    // Results should be more than 1900 but less than 2000.
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(1900);
+      expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
 
     // Need to reset form so that default search values are all set.
     // @todo Load form with default search values.
@@ -15,7 +16,11 @@ describe("Fund Search Tests", () => {
     // Bridge yields one result from UCCS.
     cy.get('[data-testid="search-input"]').type("Bridge");
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("1 Results");
+
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(0);
+      expect(parseInt(result.text())).to.be.lessThan(20);
+    });
     cy.contains("Bridge Forward Scholarship Endowment");
     cy.contains("UCCS");
 
@@ -25,7 +30,11 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("All Campuses").click();
     cy.contains("CU Anschutz").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("10 Results");
+
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(3);
+      // expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
     cy.get('[data-testid="search-result"]')
       .first()
       .within(() => {
@@ -40,7 +49,11 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("All Interests").click();
     cy.contains("Science, Research & Innovation").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("3 Results");
+
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(2);
+      // expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
     cy.get('[data-testid="search-result"]')
       .first()
       .within(() => {
@@ -58,7 +71,11 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-form"]').contains("Fund Type").click();
     cy.contains("Academic Program Funds").click();
     cy.get('[data-testid="search-button"]').click();
-    cy.contains("5 Results");
+
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(2);
+      // expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
     cy.get('[data-testid="search-result"]').within(() => {
       cy.contains("CU Boulder");
       cy.contains("CU Denver");
@@ -67,7 +84,10 @@ describe("Fund Search Tests", () => {
     });
 
     cy.get('[data-testid="search-reset"]').click();
-    cy.contains("24 Results");
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(1900);
+      expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
   });
 
   it("Loads fund search page with correct results", () => {
@@ -89,8 +109,11 @@ describe("Fund Search Tests", () => {
       "/fund/write-fund"
     );
 
-    // Initial search elements are limited to 24 results.
-    cy.get('[data-testid="search-result-count"]').contains("24");
+    // Results should be more than 1900 but less than 2000.
+    cy.get('[data-testid="search-result-count"]').then((result) => {
+      expect(parseInt(result.text())).to.be.greaterThan(1900);
+      expect(parseInt(result.text())).to.be.lessThan(2000);
+    });
 
     // First result should always be a featured fund and contain a title, campus, and interest.
     cy.get('[data-testid="search-result"]')
@@ -191,10 +214,10 @@ describe("Fund Search Tests", () => {
         cy.get('[data-testid="fund-card-container"]').within(() => {
           cy.get('[data-testid="fund-card-description"]').should("be.visible");
           cy.contains("Make a Gift").click();
-
-          cy.contains(title);
-          cy.contains(campus);
         });
+
+        cy.contains(title);
+        cy.contains(campus);
       });
   });
 });
