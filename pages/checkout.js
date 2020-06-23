@@ -25,12 +25,15 @@ import {
   titleOptions,
   phoneTypeOptions,
 } from "../data/donationForm";
+import { userCart } from "../data/store";
+import { useRecoilValue } from "recoil";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
 });
 
-export default function ContactInformation() {
+export default function Checkout() {
+  const cart = useRecoilValue(userCart);
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [addressType, setAddressType] = useState("");
@@ -67,7 +70,7 @@ export default function ContactInformation() {
       <Flex sx={{ flexDirection: "column", maxWidth: 960, mx: "auto", p: 4 }}>
         <Heading pb="3">Gift Basket Summary</Heading>
         <Divider />
-        <CartSummary editable={false} />
+        <CartSummary cart={cart} removeCallback={null} />
         <Flex
           sx={{
             flexDirection: "row",

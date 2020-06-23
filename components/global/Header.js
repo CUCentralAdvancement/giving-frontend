@@ -19,7 +19,6 @@ export default function Header() {
   const [cartItems, setCartItems] = useState(0);
 
   useEffect(() => {
-    console.log(cart);
     setCartItems(parseInt(cart.length));
   }, [cart]);
 

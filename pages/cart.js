@@ -12,8 +12,8 @@ import {
   Divider,
   Alert,
 } from "@cu-advancement/component-library";
-import { userCart } from "../data/store";
-import { useRecoilValue } from "recoil";
+import { userCart, giftSummaryLog } from "../data/store";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
@@ -21,7 +21,17 @@ const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
 
 export default function Cart() {
   // const router = useRouter();
-  const cart = useRecoilValue(userCart);
+  const [cart, setCart] = useRecoilState(userCart);
+  const setGiftSummary = useSetRecoilState(giftSummaryLog);
+
+  const removeIt = (item) => {
+    const newCart = cart.filter((cartItem) => {
+      return cartItem.allocationCode != item.allocationCode;
+    });
+    setCart(newCart);
+    setGiftSummary(newCart);
+    window.localStorage.setItem("userCart", JSON.stringify(newCart));
+  };
 
   return (
     <Layout>
@@ -45,7 +55,7 @@ export default function Cart() {
           <>
             <Heading pb="3">Gift Basket Summary</Heading>
             <Divider />
-            <CartSummary editable={true} />
+            <CartSummary cart={cart} removeCallback={removeIt} />
             <Text sx={{ pt: 3 }}>
               All gifts in support of the university are processed and receipted
               by the University of Colorado Foundation, a 501(c)(3) charitable
@@ -65,9 +75,6 @@ export default function Cart() {
                     variant="button.secondary"
                     data-testid="add-another-gift-button"
                     sx={{ mr: 3 }}
-                    // onClick={() => {
-                    //   router.push("/fund-search");
-                    // }}
                   >
                     Add Another Gift
                   </Button>

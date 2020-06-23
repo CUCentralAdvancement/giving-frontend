@@ -47,7 +47,7 @@ export default function Payment() {
           <Link href={`/checkout/complete`}>
             <a>
               <Button variant="button.secondary" type="submit">
-                See What Happens Next...
+                Complete purchase and clear cart...
               </Button>
             </a>
           </Link>

@@ -7,6 +7,12 @@ const userCartInitialState =
     ? JSON.parse(window.localStorage.getItem("userCart"))
     : [];
 
+const giftSummaryInitialState =
+  typeof window !== "undefined" &&
+  JSON.parse(window.localStorage.getItem("userCart"))
+    ? JSON.parse(window.localStorage.getItem("userCart"))
+    : [];
+
 const userInitialState =
   typeof window !== "undefined" &&
   JSON.parse(window.localStorage.getItem("user"))
@@ -16,6 +22,11 @@ const userInitialState =
 export const userCart = atom({
   key: "userCart",
   default: userCartInitialState,
+});
+
+export const giftSummaryLog = atom({
+  key: "giftSummary",
+  default: giftSummaryInitialState,
 });
 
 export const user = atom({
