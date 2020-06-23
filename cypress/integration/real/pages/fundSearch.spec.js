@@ -61,9 +61,9 @@ describe("Fund Search Tests", () => {
         cy.get('[data-testid="result-campus"]').should("be.visible");
         cy.contains("CU Anschutz");
       });
-    cy.get('[data-testid="search-result"]').within(() => {
-      cy.contains("CU Boulder").should("be.visible");
-    });
+    // cy.get('[data-testid="search-result"]').within(() => {
+    //   cy.contains("CU Boulder").should("be.visible");
+    // });
 
     cy.get('[data-testid="search-reset"]').click();
 

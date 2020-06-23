@@ -100,3 +100,22 @@ export const giftStateOptions = [
   { value: "PR", label: "Puerto Rico" },
   { value: "VI", label: "Virgin Islands" },
 ];
+
+export const addressTypeOptions = [
+  { value: "home", label: "Home" },
+  { value: "work", label: "Work" },
+  { value: "other", label: "Other" },
+];
+
+export const phoneTypeOptions = [
+  { value: "cell", label: "Cell" },
+  { value: "home", label: "Home" },
+  { value: "work", label: "Work" },
+  { value: "other", label: "Other" },
+];
+
+export const titleOptions = [
+  { value: "mr", label: "Mr." },
+  { value: "mrs", label: "Mrs." },
+  { value: "other", label: "Don't put me in a box!" },
+];
