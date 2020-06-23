@@ -2,8 +2,20 @@ import React from "react";
 import Link from "next/link";
 import { Text, Flex, Button, Box } from "@cu-advancement/component-library";
 import { motion, AnimatePresence } from "framer-motion";
+import { userCart } from "../../data/store";
+import { useRecoilState } from "recoil";
 
-export default function CartSummary({ cart, removeCallback }) {
+export default function CartSummary({ editable }) {
+  const [cart, setCart] = useRecoilState(userCart);
+
+  const removeIt = (item) => {
+    const newCart = cart.filter((cartItem) => {
+      return cartItem.allocationCode != item.allocationCode;
+    });
+    setCart(newCart);
+    window.localStorage.setItem("userCart", JSON.stringify(newCart));
+  };
+
   let orderTotal = 0;
   cart.forEach((item) => {
     orderTotal += parseInt(item["giving-amount"]);
@@ -20,40 +32,59 @@ export default function CartSummary({ cart, removeCallback }) {
           >
             <Flex
               sx={{
-                alignItems: "center",
+                // alignItems: "center",
                 borderBottom: "2px dotted #dddddf",
                 p: 3,
-                justifyContent: "space-between",
-                alignContent: "center",
+                // justifyContent: "space-around",
+                // alignContent: "center",
+                alignItems: "baseline",
               }}
             >
-              <Box sx={{ width: "80%", flex: "1 1 auto" }}>
+              <Box
+                sx={{
+                  // width: "82%",
+                  flex: "1 0 auto",
+                }}
+              >
                 <Link href="/fund/[slug]" as={item.fundRoute}>
-                  <a>
-                    {item.fundTitle} ({item.fundCampus})
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#298FCE",
+                    }}
+                  >
+                    <Box
+                      as="span"
+                      sx={{ ":hover": { textDecoration: "underline" } }}
+                    >
+                      {item.fundTitle} ({item.fundCampus})
+                    </Box>
                   </a>
                 </Link>
               </Box>
-              {removeCallback !== null && (
-                <Flex
-                  sx={{
-                    width: "20%",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                  }}
-                >
+
+              <Flex
+                sx={{
+                  width: editable ? "22%" : "inherit",
+                  justifyContent: "space-around",
+                  alignItems: "baseline",
+                  flexShrink: 0,
+                  // pl: 2,
+                }}
+              >
+                {editable && (
                   <Button
                     onClick={() => {
-                      removeCallback(item);
+                      removeIt(item);
                     }}
                     variant="button.secondary"
                     data-testid="remove-from-cart-button"
                   >
                     Remove
                   </Button>
-                  <Text sx={{}}>${item["giving-amount"]}</Text>
-                </Flex>
-              )}
+                )}
+                <Text sx={{}}>${item["giving-amount"]}</Text>
+              </Flex>
             </Flex>
           </motion.div>
         );
@@ -67,7 +98,7 @@ export default function CartSummary({ cart, removeCallback }) {
         }}
       >
         <Text>Total:</Text>
-        <Text sx={{ ml: 3, pr: 3 }} data-testid="order-total">
+        <Text sx={{ ml: 3, pr: editable ? 4 : 3 }} data-testid="order-total">
           ${orderTotal}
         </Text>
       </Flex>
