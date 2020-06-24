@@ -46,7 +46,10 @@ export default function Complete() {
             fontWeight: "bold",
           }}
         >
-          <Text sx={{ pr: 3 }}>Gift ID: 12345</Text>
+          <Text>Gift ID:&nbsp;</Text>
+          <Text data-test-id="gift-id" sx={{ pr: 3 }}>
+            12345
+          </Text>
         </Flex>
         <Divider />
         <Heading as="h3" sx={{ py: 1 }}>

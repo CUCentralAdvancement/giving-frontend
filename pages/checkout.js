@@ -232,7 +232,7 @@ export default function Checkout() {
                   </CULink>
                 </Text>
               </Box>
-              <Box>
+              <Box data-testid="matching-gifts-radios">
                 <Grid gap={2} columns={[2, "1fr 4fr"]} sx={{ mb: 2 }}>
                   <Radio
                     name="matchingGifts"
@@ -266,7 +266,11 @@ export default function Checkout() {
                   information about the intended fund in the comments box below.
                 </Text>
               </Box>
-              <Textarea rows={3} sx={{ bg: "white" }} />
+              <Textarea
+                data-testid="comments-textarea"
+                rows={3}
+                sx={{ bg: "white" }}
+              />
               <Divider />
               <Heading pb="3">Tax Receipt</Heading>
               <Box>
@@ -278,7 +282,7 @@ export default function Checkout() {
                   to you within 2 business days.
                 </Text>
               </Box>
-              <Box>
+              <Box data-testid="tax-receipt-radios">
                 <Grid gap={2} columns={[2, "1fr 4fr"]} sx={{ mb: 2 }}>
                   <Radio
                     name="taxReceipt"
@@ -315,7 +319,7 @@ export default function Checkout() {
                       <Button
                         variant="button.secondary"
                         type="submit"
-                        // sx={{ maxWidth: ["100%", "50%"], mr: 2 }}
+                        data-testid="continue-button"
                       >
                         Continue to next step
                       </Button>
