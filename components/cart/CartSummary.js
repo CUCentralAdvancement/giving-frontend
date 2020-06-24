@@ -2,20 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Text, Flex, Button, Box } from "@cu-advancement/component-library";
 import { motion, AnimatePresence } from "framer-motion";
-import { userCart } from "../../data/store";
-import { useRecoilState } from "recoil";
 
-export default function CartSummary({ editable }) {
-  const [cart, setCart] = useRecoilState(userCart);
-
-  const removeIt = (item) => {
-    const newCart = cart.filter((cartItem) => {
-      return cartItem.allocationCode != item.allocationCode;
-    });
-    setCart(newCart);
-    window.localStorage.setItem("userCart", JSON.stringify(newCart));
-  };
-
+export default function CartSummary({ cart, removeCallback }) {
   let orderTotal = 0;
   cart.forEach((item) => {
     orderTotal += parseInt(item["giving-amount"]);
@@ -31,18 +19,15 @@ export default function CartSummary({ editable }) {
             exit={{ opacity: 0 }}
           >
             <Flex
+              data-testid="cart-item"
               sx={{
-                // alignItems: "center",
                 borderBottom: "2px dotted #dddddf",
                 p: 3,
-                // justifyContent: "space-around",
-                // alignContent: "center",
                 alignItems: "baseline",
               }}
             >
               <Box
                 sx={{
-                  // width: "82%",
                   flex: "1 0 auto",
                 }}
               >
@@ -65,17 +50,16 @@ export default function CartSummary({ editable }) {
 
               <Flex
                 sx={{
-                  width: editable ? "22%" : "inherit",
+                  width: removeCallback ? "22%" : "inherit",
                   justifyContent: "space-around",
                   alignItems: "baseline",
                   flexShrink: 0,
-                  // pl: 2,
                 }}
               >
-                {editable && (
+                {removeCallback && (
                   <Button
                     onClick={() => {
-                      removeIt(item);
+                      removeCallback(item);
                     }}
                     variant="button.secondary"
                     data-testid="remove-from-cart-button"
@@ -98,7 +82,10 @@ export default function CartSummary({ editable }) {
         }}
       >
         <Text>Total:</Text>
-        <Text sx={{ ml: 3, pr: editable ? 4 : 3 }} data-testid="order-total">
+        <Text
+          sx={{ ml: 3, pr: removeCallback ? 4 : 3 }}
+          data-testid="order-total"
+        >
           ${orderTotal}
         </Text>
       </Flex>

@@ -46,8 +46,12 @@ export default function Payment() {
         <Box sx={{ mx: "auto", my: 3 }}>
           <Link href={`/checkout/complete`}>
             <a>
-              <Button variant="button.secondary" type="submit">
-                See What Happens Next...
+              <Button
+                variant="button.secondary"
+                type="submit"
+                data-testid="complete-purchase-button"
+              >
+                Complete purchase and clear cart...
               </Button>
             </a>
           </Link>

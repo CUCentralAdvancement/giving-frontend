@@ -14,8 +14,8 @@ import {
   Flex,
 } from "@cu-advancement/component-library";
 import { Checkbox, Label, Radio } from "theme-ui";
-import { userCart } from "../../data/store";
-import { useRecoilState } from "recoil";
+import { userCart, giftSummaryLog } from "../../data/store";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { campusNames } from "../../data/fundMeta";
 import {
   giftNamePrefixOptions,
@@ -27,6 +27,7 @@ import {
 
 export default function GivingForm({ fund }) {
   const [cart, setCart] = useRecoilState(userCart);
+  const setGiftSummary = useSetRecoilState(giftSummaryLog);
   const router = useRouter();
   // console.log(router);
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
@@ -63,6 +64,7 @@ export default function GivingForm({ fund }) {
     data.fundTitle = fund.title;
     data.fundCampus = campusNames[fund.campus];
     setCart([...cart, data]);
+    setGiftSummary([...cart, data]);
     window.localStorage.setItem("userCart", JSON.stringify([...cart, data]));
 
     switch (action) {

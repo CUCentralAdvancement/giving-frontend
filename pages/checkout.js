@@ -25,12 +25,15 @@ import {
   titleOptions,
   phoneTypeOptions,
 } from "../data/donationForm";
+import { userCart } from "../data/store";
+import { useRecoilValue } from "recoil";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
 });
 
-export default function ContactInformation() {
+export default function Checkout() {
+  const cart = useRecoilValue(userCart);
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [addressType, setAddressType] = useState("");
@@ -67,7 +70,7 @@ export default function ContactInformation() {
       <Flex sx={{ flexDirection: "column", maxWidth: 960, mx: "auto", p: 4 }}>
         <Heading pb="3">Gift Basket Summary</Heading>
         <Divider />
-        <CartSummary editable={false} />
+        <CartSummary cart={cart} removeCallback={null} />
         <Flex
           sx={{
             flexDirection: "row",
@@ -229,7 +232,7 @@ export default function ContactInformation() {
                   </CULink>
                 </Text>
               </Box>
-              <Box>
+              <Box data-testid="matching-gifts-radios">
                 <Grid gap={2} columns={[2, "1fr 4fr"]} sx={{ mb: 2 }}>
                   <Radio
                     name="matchingGifts"
@@ -263,7 +266,11 @@ export default function ContactInformation() {
                   information about the intended fund in the comments box below.
                 </Text>
               </Box>
-              <Textarea rows={3} sx={{ bg: "white" }} />
+              <Textarea
+                data-testid="comments-textarea"
+                rows={3}
+                sx={{ bg: "white" }}
+              />
               <Divider />
               <Heading pb="3">Tax Receipt</Heading>
               <Box>
@@ -275,7 +282,7 @@ export default function ContactInformation() {
                   to you within 2 business days.
                 </Text>
               </Box>
-              <Box>
+              <Box data-testid="tax-receipt-radios">
                 <Grid gap={2} columns={[2, "1fr 4fr"]} sx={{ mb: 2 }}>
                   <Radio
                     name="taxReceipt"
@@ -312,7 +319,7 @@ export default function ContactInformation() {
                       <Button
                         variant="button.secondary"
                         type="submit"
-                        // sx={{ maxWidth: ["100%", "50%"], mr: 2 }}
+                        data-testid="continue-button"
                       >
                         Continue to next step
                       </Button>

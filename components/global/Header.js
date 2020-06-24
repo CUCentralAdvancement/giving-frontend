@@ -19,7 +19,6 @@ export default function Header() {
   const [cartItems, setCartItems] = useState(0);
 
   useEffect(() => {
-    console.log(cart);
     setCartItems(parseInt(cart.length));
   }, [cart]);
 
@@ -99,7 +98,12 @@ export default function Header() {
                     backgroundColor: cartItems > 0 ? "secondary" : "#fff",
                   }}
                 >
-                  <span style={{ paddingTop: "1px" }}>{cartItems}</span>
+                  <span
+                    data-testid="cart-items-total"
+                    style={{ paddingTop: "1px" }}
+                  >
+                    {cartItems}
+                  </span>
                 </Badge>
               </a>
             </Link>
