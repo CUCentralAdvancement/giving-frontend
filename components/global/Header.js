@@ -40,6 +40,7 @@ export default function Header() {
           src="https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg"
           sx={{ width: "317px" }}
           data-testid="header-cu-logo"
+          alt="University of Colorado Logo"
         />
       </Box>
       <Box sx={{ fontSize: 3, textTransform: "uppercase", p: 2 }}>

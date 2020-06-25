@@ -36,33 +36,33 @@ export default function FundCard({ result, close }) {
         <Text sx={{ fontSize: 5, cursor: "pointer", mr: 2 }}>X</Text>
         <Text sx={{ fontSize: 5, cursor: "pointer" }}>close</Text>
       </Flex>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-        >
-          <Box sx={{ px: 3, py: 4, bg: "gray" }}>
-            <Image
-              data-testid="fund-card-campus"
-              src={campusLogos[result.campus]}
-              alt={`${campusNames[result.campus]} Logo`}
-              sx={{ height: "60px" }}
-            />
-          </Box>
-          <Box sx={{ p: 4 }}>
-            <Heading data-testid="fund-card-title">{result.title}</Heading>
-            <Text data-testid="fund-card-description" my={4}>
-              {result.description}
-            </Text>
-            <Link as={result.path} href="fund/[slug]">
-              <a>
-                <Button variant="button.secondary">Make a Gift</Button>
-              </a>
-            </Link>
-          </Box>
-        </motion.div>
-      </AnimatePresence>
+        > */}
+      <Box sx={{ px: 3, py: 4, bg: "gray" }}>
+        <Image
+          data-testid="fund-card-campus"
+          src={campusLogos[result.campus]}
+          alt={`${campusNames[result.campus]} Logo`}
+          sx={{ height: "60px" }}
+        />
+      </Box>
+      <Box sx={{ p: 4 }}>
+        <Heading data-testid="fund-card-title">{result.title}</Heading>
+        <Text data-testid="fund-card-description" my={4}>
+          {result.description}
+        </Text>
+        <Link as={result.path} href="fund/[slug]">
+          <a>
+            <Button variant="button.secondary">Make a Gift</Button>
+          </a>
+        </Link>
+      </Box>
+      {/* </motion.div>
+      </AnimatePresence> */}
     </Flex>
   );
 }
