@@ -108,13 +108,15 @@ export default function SearchResults({ results, count }) {
               <motion.div
                 style={styleProps}
                 key={1}
-                initial={{ opacity: 0, transform: "translateX(0%)" }}
-                animate={{ opacity: 1, transform: "translateX(-100%)" }}
+                // initial={{ opacity: 0, transform: "translateX(0%)" }}
+                initial={{ transform: "translateX(0%)" }}
+                // animate={{ opacity: 1, transform: "translateX(-100%)" }}
+                animate={{ transform: "translateX(-100%)" }}
                 exit={{
-                  opacity: 0,
+                  // opacity: 0,
                   transform: "translateX(0%)",
                 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3 }}
               >
                 <FundCard
                   result={fundCardResult}

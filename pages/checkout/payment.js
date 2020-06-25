@@ -18,7 +18,6 @@ export default function Payment() {
           maxWidth: "1020px",
           mx: "auto",
           flexDirection: "column",
-          // justifyContent: "center",
         }}
       >
         <Flex
@@ -33,6 +32,7 @@ export default function Payment() {
           <Image
             src="https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg"
             sx={{ mr: 2, width: "25px" }}
+            alt="Warning Icon"
           />
           <Text> Please do not use Refresh or Back buttons on this page.</Text>
         </Flex>
@@ -42,6 +42,7 @@ export default function Payment() {
         <Image
           src="https://giving-test.cu.edu/sites/all/themes/themekit/images/verified-auth-net.png"
           sx={{ width: "135px", mx: "auto" }}
+          alt="Verified by Authorize.net"
         />
         <Box sx={{ mx: "auto", my: 3 }}>
           <Link href={`/checkout/complete`}>
