@@ -9,70 +9,72 @@ export default function CartSummary({ cart, removeCallback }) {
     orderTotal += parseInt(item["giving-amount"]);
   });
   return (
-    <AnimatePresence>
-      {cart.map((item) => {
-        return (
-          <motion.div
-            key={item.allocationCode}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <Flex
-              data-testid="cart-item"
-              sx={{
-                borderBottom: "2px dotted #dddddf",
-                p: 3,
-                alignItems: "baseline",
-              }}
+    <>
+      <AnimatePresence>
+        {cart.map((item) => {
+          return (
+            <motion.div
+              key={item.allocationCode}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              <Box
-                sx={{
-                  flex: "1 0 auto",
-                }}
-              >
-                <Link href="/fund/[slug]" as={item.fundRoute}>
-                  <a
-                    style={{
-                      textDecoration: "none",
-                      color: "#298FCE",
-                    }}
-                  >
-                    <Box
-                      as="span"
-                      sx={{ ":hover": { textDecoration: "underline" } }}
-                    >
-                      {item.fundTitle} ({item.fundCampus})
-                    </Box>
-                  </a>
-                </Link>
-              </Box>
-
               <Flex
+                data-testid="cart-item"
                 sx={{
-                  width: removeCallback ? "22%" : "inherit",
-                  justifyContent: "space-around",
+                  borderBottom: "2px dotted #dddddf",
+                  p: 3,
                   alignItems: "baseline",
-                  flexShrink: 0,
                 }}
               >
-                {removeCallback && (
-                  <Button
-                    onClick={() => {
-                      removeCallback(item);
-                    }}
-                    variant="button.secondary"
-                    data-testid="remove-from-cart-button"
-                  >
-                    Remove
-                  </Button>
-                )}
-                <Text sx={{}}>${item["giving-amount"]}</Text>
+                <Box
+                  sx={{
+                    flex: "1 0 auto",
+                  }}
+                >
+                  <Link href="/fund/[slug]" as={item.fundRoute}>
+                    <a
+                      style={{
+                        textDecoration: "none",
+                        color: "#298FCE",
+                      }}
+                    >
+                      <Box
+                        as="span"
+                        sx={{ ":hover": { textDecoration: "underline" } }}
+                      >
+                        {item.fundTitle} ({item.fundCampus})
+                      </Box>
+                    </a>
+                  </Link>
+                </Box>
+
+                <Flex
+                  sx={{
+                    width: removeCallback ? "22%" : "inherit",
+                    justifyContent: "space-around",
+                    alignItems: "baseline",
+                    flexShrink: 0,
+                  }}
+                >
+                  {removeCallback && (
+                    <Button
+                      onClick={() => {
+                        removeCallback(item);
+                      }}
+                      variant="button.secondary"
+                      data-testid="remove-from-cart-button"
+                    >
+                      Remove
+                    </Button>
+                  )}
+                  <Text sx={{}}>${item["giving-amount"]}</Text>
+                </Flex>
               </Flex>
-            </Flex>
-          </motion.div>
-        );
-      })}
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
       <Flex
         sx={{
           flexDirection: "row",
@@ -89,6 +91,6 @@ export default function CartSummary({ cart, removeCallback }) {
           ${orderTotal}
         </Text>
       </Flex>
-    </AnimatePresence>
+    </>
   );
 }

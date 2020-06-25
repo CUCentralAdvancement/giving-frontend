@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Head from "next/head";
+// import Head from "next/head";
 import { ThemeProvider } from "theme-ui";
 import { Box, Flex, theme } from "@cu-advancement/component-library";
 import Header from "./Header";
 import Footer from "./Footer";
-import { motion, AnimatePresence } from "framer-motion";
+import FadeIn from "./FadeIn";
 
 const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
   return (
@@ -25,16 +25,7 @@ const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
           }}
           as="main"
         >
-          <AnimatePresence>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              // transition={{ duration: 0.5 }}
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
+          <FadeIn>{children}</FadeIn>
         </Box>
         <Footer sx={{ flexShrink: 0 }} />
       </Flex>

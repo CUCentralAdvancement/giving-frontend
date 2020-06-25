@@ -13,9 +13,7 @@ export default function FundSearch({ searchData, count }) {
   // useEffect(() => {
   //   async function fetchFullResults() {
   //     const result = await fetch(
-  //       `http://localhost:3000/api/hello`
-  //       // `https://385-i-cu-giving.pantheonsite.io/sites/default/files/all_fund_data.json`
-  //       // { mode: "no-cors" }
+  //       `http://localhost:3000/api/funds`
   //     );
   //     const data = await result.json();
   //     setResults(data.realSearchData);
