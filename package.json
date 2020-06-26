@@ -17,7 +17,7 @@
     "@fortawesome/fontawesome-pro": "^5.13.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/pro-regular-svg-icons": "^5.13.1",
-    "@fortawesome/react-fontawesome": "^0.1.10",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "express": "^4.17.1",
     "framer-motion": "^1.11.1",
     "next": "9.4.4",
