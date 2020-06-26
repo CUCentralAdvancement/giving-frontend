@@ -5,10 +5,7 @@ import { URL } from "whatwg-url";
 import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
-
-// const baseURL = "http://cu-giving.lndo.site";
-const baseURL = "https://385-i-cu-giving.pantheonsite.io";
-// const baseURL = "https://stormy-caverns-60033.herokuapp.com";
+import { baseURL } from "../../data/store";
 
 export default function Fund({ fund }) {
   // console.log(fund);
@@ -58,17 +55,16 @@ export default function Fund({ fund }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(
-    // `http://cu-giving.lndo.site/api/funds/paths`
-    `https://385-i-cu-giving.pantheonsite.io/api/funds/paths`
-  );
+  const res = await fetch(`${baseURL}/api/funds/paths`);
   const pathsList = await res.json();
 
   const paths = [];
-  Object.keys(pathsList).forEach((key) => {
-    paths.push({
-      params: { slug: pathsList[key] },
-    });
+  Object.keys(pathsList).forEach((key, index) => {
+    if (index < 200) {
+      paths.push({
+        params: { slug: pathsList[key] },
+      });
+    }
   });
 
   return {
@@ -80,8 +76,6 @@ export async function getStaticPaths() {
 // This gets called on every request
 export async function getStaticProps({ params }) {
   const slug = params.slug || null;
-
-  // const realSlug = params.slug.replace("%E2%80%99", "'");
 
   // Fetch data from external API
   const res = await fetch(new URL(`${baseURL}/api/fund/${slug}`));

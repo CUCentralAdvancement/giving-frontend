@@ -27,6 +27,7 @@ const Portal = dynamic(() => import("../global/Portal"), {
  * Description of the search results component.
  */
 export default function SearchResults({ results, count }) {
+  // console.log(results);
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
     campus: "UCCS",
@@ -245,11 +246,24 @@ function CardContents({ res }) {
       >
         {interests[res.interests]}
         <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-          {res.keywords.length >= 1 && res.keywords.join(", ")}
-          {res.additional_keywords.length >= 1 &&
-            `, ${res.additional_keywords.join(", ")}`}
+          {getKeywords(res)}
         </Box>
       </Text>
     </Flex>
   );
+}
+
+function getKeywords(res) {
+  let keywords = [];
+
+  typeof res.keywords !== "undefined" &&
+    res.keywords.forEach((el) => {
+      keywords.push(el.label);
+    });
+  typeof res.additional_keywords !== "undefined" &&
+    res.additional_keywords.forEach((el) => {
+      keywords.push(el.label);
+    });
+
+  return keywords.join(", ");
 }

@@ -5,6 +5,7 @@ import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/global/Layout";
 import SearchForm from "../components/fund-search/SearchForm";
 import SearchResults from "../components/fund-search/SearchResults";
+import { baseURL } from "../data/store";
 
 export default function FundSearch({ searchData, count }) {
   const [results, setResults] = useState(searchData);
@@ -75,15 +76,11 @@ export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(
-    // `http://cu-giving.lndo.site/sites/default/files/small_fund_data.json`
-    `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
+    `${baseURL}/sites/default/files/small_fund_data.json`
   );
   const searchData = await res.json();
 
-  const count = await fetch(
-    // `http://cu-giving.lndo.site/api/funds/count`
-    `https://385-i-cu-giving.pantheonsite.io/api/funds/count`
-  );
+  const count = await fetch(`${baseURL}/api/funds/count`);
   const fundsCount = await count.json();
 
   const realSearchData = [];

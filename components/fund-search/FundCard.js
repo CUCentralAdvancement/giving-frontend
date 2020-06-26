@@ -10,7 +10,6 @@ import {
   Image,
 } from "@cu-advancement/component-library";
 import { campusColors, campusLogos, campusNames } from "../../data/fundMeta";
-import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * Description of the search results component.
@@ -36,12 +35,6 @@ export default function FundCard({ result, close }) {
         <Text sx={{ fontSize: 5, cursor: "pointer", mr: 2 }}>X</Text>
         <Text sx={{ fontSize: 5, cursor: "pointer" }}>close</Text>
       </Flex>
-      {/* <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        > */}
       <Box sx={{ px: 3, py: 4, bg: "gray" }}>
         <Image
           data-testid="fund-card-campus"
