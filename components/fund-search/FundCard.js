@@ -9,7 +9,7 @@ import {
   Button,
   Image,
 } from "@cu-advancement/component-library";
-import { campusColors, campusLogos, campusNames } from "../../data/fundMeta";
+import { campusColors, campusLogos } from "../../data/fundMeta";
 
 /**
  * Description of the search results component.
@@ -25,7 +25,7 @@ export default function FundCard({ result, close }) {
           flexDirection: "row",
           justifyContent: "flex-end",
           alignItems: "baseline",
-          bg: campusColors[result.campus],
+          bg: campusColors[result.campus.value],
           color: "background",
           p: 3,
         }}
@@ -38,8 +38,8 @@ export default function FundCard({ result, close }) {
       <Box sx={{ px: 3, py: 4, bg: "gray" }}>
         <Image
           data-testid="fund-card-campus"
-          src={campusLogos[result.campus]}
-          alt={`${campusNames[result.campus]} Logo`}
+          src={campusLogos[result.campus.value]}
+          alt={`${result.campus.label} Logo`}
           sx={{ height: "60px" }}
         />
       </Box>
@@ -54,8 +54,6 @@ export default function FundCard({ result, close }) {
           </a>
         </Link>
       </Box>
-      {/* </motion.div>
-      </AnimatePresence> */}
     </Flex>
   );
 }
