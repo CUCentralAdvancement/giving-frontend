@@ -2,6 +2,7 @@ import React from "react";
 // import App from 'next/app'
 // import { StateProvider } from "../data/store";
 import { RecoilRoot } from "recoil";
+import "../components/fund-search/algolia.css";
 
 function MyApp({ Component, pageProps }) {
   return (
