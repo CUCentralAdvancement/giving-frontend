@@ -8,14 +8,10 @@ describe("Fund Search Tests", () => {
       expect(parseInt(result.text())).to.be.lessThan(2000);
     });
 
-    // Need to reset form so that default search values are all set.
-    // @todo Load form with default search values.
-    cy.get('[data-testid="search-reset"]').click();
-
     // Test search inpiut.
     // Bridge yields one result from UCCS.
     cy.get('[data-testid="search-input"]').type("Bridge");
-    cy.get('[data-testid="search-button"]').click();
+    // cy.get('[data-testid="search-button"]').click();
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
       expect(parseInt(result.text())).to.be.greaterThan(0);
@@ -23,17 +19,22 @@ describe("Fund Search Tests", () => {
     });
     cy.contains("Bridge Forward Scholarship Endowment");
     cy.contains("UCCS");
+    cy.contains("CU Boulder");
 
     cy.get('[data-testid="search-reset"]').click();
 
     // Text campus selector.
-    cy.get('[data-testid="search-form"]').contains("All Campuses").click();
-    cy.contains("CU Anschutz").click();
-    cy.get('[data-testid="search-button"]').click();
+    cy.get('[data-testid="campus-select-list"]')
+      .find("select")
+      .select("CU Anschutz");
+
+    cy.wait(500);
+    // cy.contains("CU Anschutz").click();
+    // cy.get('[data-testid="search-button"]').click();
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
-      expect(parseInt(result.text())).to.be.greaterThan(3);
-      // expect(parseInt(result.text())).to.be.lessThan(2000);
+      expect(parseInt(result.text())).to.be.greaterThan(100);
+      expect(parseInt(result.text())).to.be.lessThan(1000);
     });
     cy.get('[data-testid="search-result"]')
       .first()
@@ -46,13 +47,18 @@ describe("Fund Search Tests", () => {
     cy.get('[data-testid="search-reset"]').click();
 
     // Test Interests selector.
-    cy.get('[data-testid="search-form"]').contains("All Interests").click();
-    cy.contains("Science, Research & Innovation").click();
-    cy.get('[data-testid="search-button"]').click();
+    // cy.get('[data-testid="search-form"]').contains("All Interests").click();
+    // cy.contains("Science, Research & Innovation").click();
+    // cy.get('[data-testid="search-button"]').click();
+    cy.get('[data-testid="interests-select-list"]')
+      .find("select")
+      .select("Science, Research & Innovation");
+
+    cy.wait(500);
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
-      expect(parseInt(result.text())).to.be.greaterThan(1);
-      // expect(parseInt(result.text())).to.be.lessThan(2000);
+      expect(parseInt(result.text())).to.be.greaterThan(100);
+      expect(parseInt(result.text())).to.be.lessThan(1000);
     });
     cy.get('[data-testid="search-result"]')
       .first()
@@ -61,26 +67,31 @@ describe("Fund Search Tests", () => {
         cy.get('[data-testid="result-campus"]').should("be.visible");
         cy.contains("CU Anschutz");
       });
-    // cy.get('[data-testid="search-result"]').within(() => {
-    //   cy.contains("CU Boulder").should("be.visible");
-    // });
+    cy.get('[data-testid="search-result"]').within(() => {
+      cy.contains("CU Boulder").should("be.visible");
+    });
 
     cy.get('[data-testid="search-reset"]').click();
 
     // Test fund type.
-    cy.get('[data-testid="search-form"]').contains("Fund Type").click();
-    cy.contains("Academic Program Funds").click();
-    cy.get('[data-testid="search-button"]').click();
+    // cy.get('[data-testid="search-form"]').contains("Fund Type").click();
+    // cy.contains("Academic Program Funds").click();
+    // cy.get('[data-testid="search-button"]').click();
+    cy.get('[data-testid="fund-type-select-list"]')
+      .find("select")
+      .select("Academic Program Funds");
+
+    cy.wait(500);
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
-      expect(parseInt(result.text())).to.be.greaterThan(1);
-      // expect(parseInt(result.text())).to.be.lessThan(2000);
+      expect(parseInt(result.text())).to.be.greaterThan(100);
+      expect(parseInt(result.text())).to.be.lessThan(1000);
     });
     cy.get('[data-testid="search-result"]').within(() => {
-      // cy.contains("CU Boulder");
+      cy.contains("CU Boulder");
       cy.contains("CU Denver");
       cy.contains("UCCS");
-      cy.contains("CU Anschutz").should("not.exist");
+      cy.contains("CU Anschutz");
     });
 
     cy.get('[data-testid="search-reset"]').click();
@@ -219,5 +230,18 @@ describe("Fund Search Tests", () => {
         cy.contains(title);
         cy.contains(campus);
       });
+  });
+
+  // @todo Add test about scroll to the top refinement.
+  it("Loads more and returns to top of page for refine search", () => {
+    cy.visit("/fund-search");
+    cy.get('[data-testid="search-result"]').then((results) => {
+      expect(results.length).to.equal(20);
+    });
+    cy.get('[data-testid="load-more-button"]').click();
+    cy.wait(500);
+    cy.get('[data-testid="search-result"]').then((results) => {
+      expect(results.length).to.equal(40);
+    });
   });
 });

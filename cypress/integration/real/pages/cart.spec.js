@@ -102,7 +102,8 @@ describe("Cart Tests", () => {
         expect(total.text()).to.equal("$300");
       });
 
-    cy.get('[data-testid="remove-from-cart-button"]').click({ multiple: true });
+    cy.get('[data-testid="remove-from-cart-button"]').first().click();
+    // cy.get('[data-testid="remove-from-cart-button"]').click();
 
     cy.contains("Your gift basket is empty.");
     cy.contains("Gift Basket Summary").should("not.exist");
