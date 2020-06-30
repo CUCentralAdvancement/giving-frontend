@@ -30,7 +30,10 @@ export default function SearchForm() {
             flexDirection: ["column", "row", "row"],
           }}
         >
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="campus-select-list"
+          >
             <MenuSelect
               attribute="campus.label"
               translations={{
@@ -38,7 +41,10 @@ export default function SearchForm() {
               }}
             />
           </Box>
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="interests-select-list"
+          >
             <MenuSelect
               attribute="interests.label"
               translations={{
@@ -46,7 +52,10 @@ export default function SearchForm() {
               }}
             />
           </Box>
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="fund-type-select-list"
+          >
             <MenuSelect
               attribute="fund_type.label"
               translations={{
