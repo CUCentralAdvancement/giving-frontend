@@ -62,6 +62,7 @@ export default function CartSummary({ cart, removeCallback }) {
                       onClick={() => {
                         removeCallback(item);
                       }}
+                      name="remove-from-cart"
                       variant="button.secondary"
                       data-testid="remove-from-cart-button"
                     >

@@ -1,50 +1,28 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+// import PropTypes from "prop-types";
 import {
   Flex,
   Box,
   Button,
-  SelectInput,
   TextInput,
 } from "@cu-advancement/component-library";
-import { useForm } from "react-hook-form";
 import {
-  campusOptions,
-  interestsOptions,
-  fundTypeOptions,
-} from "../../data/fundMeta";
+  connectCurrentRefinements,
+  connectSearchBox,
+  MenuSelect,
+} from "react-instantsearch-dom";
 
-export default function SearchForm({ submitHandler, resetHandler }) {
-  const { register, handleSubmit, setValue } = useForm();
-  const [campus, setCampus] = useState({ value: "All", label: "All Campuses" });
-  const [interest, setInterest] = useState({
-    value: "All",
-    label: "All Interests",
-  });
-  const [fundType, setFundType] = useState({
-    value: "All",
-    label: "Fund Type",
-  });
+const CustomClearRefinements = connectCurrentRefinements(CustomRefine);
+const SearchBox = connectSearchBox(CustomSearch);
 
-  const resetSelects = () => {
-    setFundType({ value: "All", label: "Fund Type" });
-    setValue("fundType", "All");
-    setInterest({ value: "All", label: "All Interests" });
-    setValue("interest", "All");
-    setCampus({ value: "All", label: "All Campuses" });
-    setValue("campus", "All");
-  };
-
-  useEffect(() => {
-    register({ name: "campus" });
-    register({ name: "interest" });
-    register({ name: "fundType" });
-    register({ name: "search" });
-  }, [register]);
+export default function SearchForm() {
+  function handleSubmit() {
+    console.log("submitted form");
+  }
 
   return (
     <>
-      <form onSubmit={handleSubmit(submitHandler)} data-testid="search-form">
+      <form onSubmit={handleSubmit()} data-testid="search-form">
         <Flex
           sx={{
             mx: -2,
@@ -52,73 +30,54 @@ export default function SearchForm({ submitHandler, resetHandler }) {
             flexDirection: ["column", "row", "row"],
           }}
         >
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
-            <SelectInput
-              name="campus"
-              data-testid="campus-select"
-              value={campus}
-              options={campusOptions}
-              onChange={(selectedOption) => {
-                setValue("campus", selectedOption.value);
-                setCampus(selectedOption);
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="campus-select-list"
+          >
+            <MenuSelect
+              attribute="campus.label"
+              translations={{
+                seeAllOption: "All Campuses",
               }}
             />
           </Box>
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
-            <SelectInput
-              name="interest"
-              data-testid="interests-select"
-              value={interest}
-              options={interestsOptions}
-              onChange={(selectedOption) => {
-                setValue("interest", selectedOption.value);
-                setInterest(selectedOption);
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="interests-select-list"
+          >
+            <MenuSelect
+              attribute="interests.label"
+              translations={{
+                seeAllOption: "All Interests",
               }}
             />
           </Box>
-          <Box sx={{ width: "100%", px: 2, pt: 2 }}>
-            <SelectInput
-              name="fundType"
-              data-testid="fundType-select"
-              value={fundType}
-              options={fundTypeOptions}
-              onChange={(selectedOption) => {
-                setValue("fundType", selectedOption.value);
-                setFundType(selectedOption);
+          <Box
+            sx={{ width: "100%", px: 2, pt: 2 }}
+            data-testid="fund-type-select-list"
+          >
+            <MenuSelect
+              attribute="fund_type.label"
+              translations={{
+                seeAllOption: "Fund Type",
               }}
             />
           </Box>
         </Flex>
         <Flex sx={{ mx: -2, mb: 3, flexDirection: ["column", "row", "row"] }}>
-          <Box sx={{ width: ["100%", "70%"], px: 2, pt: [2, 0, 0] }}>
-            <TextInput
-              // autoFocus={true}
-              name="search"
-              type="text"
-              onChange={(e) => setValue("search", e.target.value)}
-              data-testid="search-input"
-            />
+          <Box sx={{ width: ["100%", "80%"], px: 2, pt: [2, 0, 0] }}>
+            <SearchBox />
           </Box>
-          <Box sx={{ width: ["100%", "30%"], px: 2, pt: [2, 0, 0] }}>
-            <Button
+          <Box sx={{ width: ["100%", "20%"], px: 2, pt: [2, 0, 0] }}>
+            {/* <Button
               variant="button.secondary"
               type="submit"
               mr={2}
               data-testid="search-button"
             >
               Search
-            </Button>
-            <Button
-              variant="button.secondary"
-              type="reset"
-              data-testid="search-reset"
-              onClick={() => {
-                resetHandler();
-                resetSelects();
-              }}
-            >
-              Reset
-            </Button>
+            </Button> */}
+            <CustomClearRefinements clearsQuery />
           </Box>
         </Flex>
       </form>
@@ -126,12 +85,31 @@ export default function SearchForm({ submitHandler, resetHandler }) {
   );
 }
 
-SearchForm.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
-  resetHandler: PropTypes.func.isRequired,
-};
+function CustomSearch({ currentRefinement, isSearchStalled, refine }) {
+  return (
+    <TextInput
+      name="search"
+      type="search"
+      onChange={(event) => refine(event.currentTarget.value)}
+      data-testid="search-input"
+    />
+  );
+}
 
-SearchForm.defaultProps = {
-  submitHandler: (data) => alert(data),
-  resetHandler: () => alert("Clicked reset handler."),
-};
+function CustomRefine({ refine, items }) {
+  if (items.length) {
+    return (
+      <Button
+        variant="button.secondary"
+        type="reset"
+        data-testid="search-reset"
+        onClick={() => refine(items)}
+        isDisabled={!items.length}
+      >
+        Reset
+      </Button>
+    );
+  } else {
+    return null;
+  }
+}

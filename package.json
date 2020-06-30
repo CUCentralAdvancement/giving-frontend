@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@cu-advancement/component-library": "^0.2.2",
+    "algoliasearch": "^4.3.0",
     "@fortawesome/fontawesome-pro": "^5.13.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/pro-regular-svg-icons": "^5.13.1",
@@ -24,6 +25,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hook-form": "^5.7.2",
+    "react-instantsearch-dom": "^6.6.0",
     "recoil": "^0.0.10",
     "uuid": "^8.2.0",
     "whatwg-url": "^8.1.0"
@@ -36,6 +38,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
+    "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2"
   },
   "cacheDirectories": [

@@ -11,7 +11,6 @@ import {
   TextInput,
   SelectInput,
   Button,
-  Flex,
 } from "@cu-advancement/component-library";
 import { Checkbox, Label, Radio } from "theme-ui";
 import { userCart, giftSummaryLog } from "../../data/store";
@@ -63,6 +62,7 @@ export default function GivingForm({ fund }) {
     data.fundRoute = router.asPath;
     data.fundTitle = fund.title;
     data.fundCampus = campusNames[fund.campus];
+
     setCart([...cart, data]);
     setGiftSummary([...cart, data]);
     window.localStorage.setItem("userCart", JSON.stringify([...cart, data]));
@@ -216,7 +216,7 @@ export default function GivingForm({ fund }) {
           <Label htmlFor="inHonorOf">
             Is this gift in honor of or in memory of someone?
           </Label>
-          <Grid gap={2} columns={(2, 4)} sx={{ my: 2 }}>
+          <Grid gap={2} columns={[2, 4]} sx={{ my: 2 }}>
             <DonationRadio
               name="inHonorOf"
               label="No"

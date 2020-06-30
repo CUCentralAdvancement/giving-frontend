@@ -33,3 +33,6 @@ export const user = atom({
   key: "user",
   default: userInitialState,
 });
+
+// export const baseURL = "http://cu-giving.lndo.site";
+export const baseURL = "https://385-i-cu-giving.pantheonsite.io";

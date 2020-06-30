@@ -17,16 +17,25 @@ import { campusColors, campusNames, interests } from "../../data/fundMeta";
 import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
 import { useWindowDimensions } from "../../utils/hooks";
+import {
+  connectStats,
+  connectInfiniteHits,
+  PoweredBy,
+} from "react-instantsearch-dom";
 
 // The portal can't render server-side.
 const Portal = dynamic(() => import("../global/Portal"), {
   ssr: false,
 });
 
+const CustomHits = connectInfiniteHits(CardContents);
+const Header = connectStats(CustomStats);
+
 /**
  * Description of the search results component.
  */
 export default function SearchResults({ results, count }) {
+  // console.log(results);
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
     campus: "UCCS",
@@ -55,72 +64,35 @@ export default function SearchResults({ results, count }) {
         transition={{ duration: 0.5 }}
       >
         <Box p={3}>
-          <Header count={count} />
+          <Header />
         </Box>
-        <Grid gap={3} columns={[1, 2, 3, 4]}>
-          {results.map((res) => (
-            <Card
-              data-testid="search-result"
-              key={res.alloc_code.toString()}
-              sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
-              onClick={() => {
-                if (!open) {
-                  setOpen(true);
-                }
-                setFundCardResult(res);
-              }}
-            >
-              <CardContents res={res} />
-            </Card>
-          ))}
-        </Grid>
-        <Flex
-          sx={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            py: 4,
-          }}
-        >
-          <Button
-            variant="button.outline"
-            sx={{
-              color: "secondary",
-              mr: 2,
-              border: "1px solid",
-              fontWeight: 500,
-            }}
-            data-testid="load-more-button"
-          >
-            Load more funds...
-          </Button>
-          <Button
-            variant="button.outline"
-            sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
-            data-testid="refine-search-button"
-          >
-            Refine my search
-          </Button>
-        </Flex>
+        <CustomHits
+          setResult={setFundCardResult}
+          setOpen={setOpen}
+          open={open}
+        />
         <Portal>
           <AnimatePresence>
-            {open && (
-              <motion.div
-                style={styleProps}
-                key={1}
-                initial={{ transform: "translateX(0%)" }}
-                animate={{ transform: "translateX(-100%)" }}
-                exit={{ transform: "translateX(0%)" }}
-                transition={{ duration: 0.3 }}
-              >
-                <FundCard
-                  result={fundCardResult}
-                  close={() => {
-                    setOpen(false);
-                  }}
-                />
-              </motion.div>
-            )}
+            {
+              // @todo Adbstract this into a component and use a recoil atom to share the current fund being opened.
+              open && (
+                <motion.div
+                  style={styleProps}
+                  key={1}
+                  initial={{ transform: "translateX(0%)" }}
+                  animate={{ transform: "translateX(-100%)" }}
+                  exit={{ transform: "translateX(0%)" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FundCard
+                    result={fundCardResult}
+                    close={() => {
+                      setOpen(false);
+                    }}
+                  />
+                </motion.div>
+              )
+            }
           </AnimatePresence>
         </Portal>
       </motion.div>
@@ -171,7 +143,7 @@ function FeaturedFund({ res }) {
     >
       <Flex sx={{ flexDirection: "row" }}>
         <Box sx={{ height: "100%" }}>
-          <RightArrow fillColor={campusColors[res.campus]} />
+          <RightArrow fillColor={campusColors[res.campus.value]} />
         </Box>
         <Text sx={{ ml: "auto", p: 2, fontSize: 1 }}>Featured Fund</Text>
       </Flex>
@@ -179,11 +151,12 @@ function FeaturedFund({ res }) {
   );
 }
 
-function Header({ count }) {
+function CustomStats({ processingTimeMS, nbHits }) {
   return (
     <>
       <Text color="primary" mb={2}>
-        <span data-testid="search-result-count">{count}</span> Results
+        <span data-testid="search-result-count">{nbHits}</span> Results
+        {process.env.NODE_ENV !== "production" && ` in ${processingTimeMS}ms`}
       </Text>
       <Text sx={{ display: "inline-block", fontStyle: "italic" }} mr={2}>
         Can't find what you're looking for?
@@ -206,50 +179,118 @@ function Header({ count }) {
   );
 }
 
-function CardContents({ res }) {
+function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
   return (
-    <Flex
-      sx={{
-        flexDirection: "column",
-        minHeight: 231,
-        color: "text",
-        cursor: "pointer",
-      }}
-    >
-      <Box bg={campusColors[res.campus]} mx={-2} mt={-2} color="background">
-        <Flex>
-          <Text
-            sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
-            data-testid="result-campus"
+    <>
+      <Grid gap={3} columns={[1, 2, 3, 4]}>
+        {hits.map((res) => (
+          <Card
+            data-testid="search-result"
+            key={res.alloc_code.toString()}
+            sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
+            onClick={() => {
+              if (!open) {
+                setOpen(true);
+              }
+              setResult(res);
+            }}
           >
-            {campusNames[res.campus]}
-          </Text>
-          {res.featured == true && <FeaturedFund res={res}></FeaturedFund>}
-        </Flex>
-      </Box>
-      <Heading
-        sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
-        data-testid="result-title"
-      >
-        {res.title}
-      </Heading>
-      <Text
+            <Flex
+              sx={{
+                flexDirection: "column",
+                minHeight: 231,
+                color: "text",
+                cursor: "pointer",
+              }}
+            >
+              <Box
+                bg={campusColors[res.campus.value]}
+                mx={-2}
+                mt={-2}
+                color="background"
+              >
+                <Flex>
+                  <Text
+                    sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
+                    data-testid="result-campus"
+                  >
+                    {res.campus.label}
+                  </Text>
+                  {res.featured == true && (
+                    <FeaturedFund res={res}></FeaturedFund>
+                  )}
+                </Flex>
+              </Box>
+              <Heading
+                sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
+                data-testid="result-title"
+              >
+                {res.title}
+              </Heading>
+              <Text
+                sx={{
+                  p: 2,
+                  fontSize: 2,
+                  fontWeight: 700,
+                  color: "#4D5259",
+                  lineHeight: 1.2,
+                }}
+                data-testid="result-interest"
+              >
+                {interests[res.interests]}
+                <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
+                  {getKeywords(res)}
+                </Box>
+              </Text>
+            </Flex>
+          </Card>
+        ))}
+      </Grid>
+      <Flex
         sx={{
-          p: 2,
-          fontSize: 2,
-          fontWeight: 700,
-          color: "#4D5259",
-          lineHeight: 1.2,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          py: 4,
         }}
-        data-testid="result-interest"
       >
-        {interests[res.interests]}
-        <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-          {res.keywords.length >= 1 && res.keywords.join(", ")}
-          {res.additional_keywords.length >= 1 &&
-            `, ${res.additional_keywords.join(", ")}`}
-        </Box>
-      </Text>
-    </Flex>
+        <Button
+          variant="button.outline"
+          sx={{
+            color: "secondary",
+            mr: 2,
+            border: "1px solid",
+            fontWeight: 500,
+          }}
+          data-testid="load-more-button"
+          isDisabled={!hasMore}
+          onClick={refineNext}
+        >
+          Load more funds...
+        </Button>
+        <Button
+          variant="button.outline"
+          sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
+          data-testid="refine-search-button"
+        >
+          Refine my search
+        </Button>
+      </Flex>
+    </>
   );
+}
+
+function getKeywords(res) {
+  let keywords = [];
+
+  typeof res.keywords !== "undefined" &&
+    res.keywords.forEach((el) => {
+      keywords.push(el.label);
+    });
+  typeof res.additional_keywords !== "undefined" &&
+    res.additional_keywords.forEach((el) => {
+      keywords.push(el.label);
+    });
+
+  return keywords.join(", ");
 }
