@@ -32,3 +32,6 @@ yarn-error.log*
 # Cypress
 cypress/videos
 cypress/screenshots
+
+localhost.key
+localhost.crt
