@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Layout from "../../components/global/Layout";
 import {
   Heading,
@@ -9,11 +10,46 @@ import {
   Image,
   Box,
 } from "@cu-advancement/component-library";
+import { useRecoilValue } from "recoil";
+import { authorizeNetToken } from "../../data/store";
+// import { query } from "express";
 
-export default function Payment({ token }) {
+export default function Payment() {
+  const token = useRecoilValue(authorizeNetToken);
+  const router = useRouter();
+
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.querySelector("#send_token").submit();
+
+      if (!window.AuthorizeNetIFrame) {
+        window.AuthorizeNetIFrame = {};
+        window.AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
+          var params = parseQueryString(querystr);
+          console.log(params);
+          let ifrm = {};
+          switch (params["action"]) {
+            case "successfulSave":
+              break;
+            case "cancel":
+              // window.location = window.location.origin + "/checkout";
+              router.push("/checkout");
+              break;
+            case "resizeWindow":
+              var w = parseInt(params["width"]);
+              var h = parseInt(params["height"]);
+              ifrm = document.getElementById("add_payment");
+              ifrm.style.width = w.toString() + "px";
+              ifrm.style.height = h.toString() + "px";
+              break;
+            case "transactResponse":
+              ifrm = document.getElementById("add_payment");
+              ifrm.style.display = "none";
+
+              router.push("/checkout/complete");
+          }
+        };
+      }
     }
   }, []);
   return (
@@ -44,7 +80,7 @@ export default function Payment({ token }) {
         <div
           id="iframe_holder"
           className="center-block"
-          style={{ width: "90%", maxWidth: "1000px", height: "600px" }}
+          style={{ width: "90%", maxWidth: "1200px", height: "600px" }}
         >
           <iframe
             id="add_payment"
@@ -85,51 +121,27 @@ export default function Payment({ token }) {
       >
         <input type="hidden" name="token" value={token} />
       </form>
-      {(function () {
-        if (typeof window !== "undefined" && !window.AuthorizeNetIFrame) {
-          window.AuthorizeNetIFrame = {};
-          AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
-            var params = parseQueryString(querystr);
-            switch (params["action"]) {
-              case "successfulSave":
-                break;
-              case "cancel":
-                break;
-              case "resizeWindow":
-                var w = parseInt(params["width"]);
-                var h = parseInt(params["height"]);
-                var ifrm = document.getElementById("add_payment");
-                ifrm.style.width = w.toString() + "px";
-                ifrm.style.height = h.toString() + "px";
-                break;
-              case "transactResponse":
-                var ifrm = document.getElementById("add_payment");
-                ifrm.style.display = "none";
-            }
-          };
-        }
-
-        function parseQueryString(str) {
-          var vars = [];
-          var arr = str.split("&");
-          var pair;
-          for (var i = 0; i < arr.length; i++) {
-            pair = arr[i].split("=");
-            vars.push(pair[0]);
-            vars[pair[0]] = unescape(pair[1]);
-          }
-          return vars;
-        }
-      })()}
     </Layout>
   );
 }
 
-export async function getServerSideProps({}) {
-  // Fetch data from external API
-  const res = await fetch("http://localhost:3000/api/authorize-token");
-  const token = await res.json();
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   const res = await fetch("http://localhost:3000/api/authorize-token");
+//   const token = await res.json();
 
-  // Pass data to the page via props
-  return { props: { token: token.token } };
+//   // Pass data to the page via props
+//   return { props: { token: token.token } };
+// }
+
+function parseQueryString(str) {
+  var vars = [];
+  var arr = str.split("&");
+  var pair;
+  for (var i = 0; i < arr.length; i++) {
+    pair = arr[i].split("=");
+    vars.push(pair[0]);
+    vars[pair[0]] = unescape(pair[1]);
+  }
+  return vars;
 }

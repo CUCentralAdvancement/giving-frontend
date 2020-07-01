@@ -34,5 +34,10 @@ export const user = atom({
   default: userInitialState,
 });
 
+export const authorizeNetToken = atom({
+  key: "authorizeNetToken",
+  default: "",
+});
+
 // export const baseURL = "http://cu-giving.lndo.site";
 export const baseURL = "https://385-i-cu-giving.pantheonsite.io";

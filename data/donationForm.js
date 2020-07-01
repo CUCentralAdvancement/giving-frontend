@@ -114,8 +114,8 @@ export const phoneTypeOptions = [
   { value: "other", label: "Other" },
 ];
 
-export const titleOptions = [
-  { value: "mr", label: "Mr." },
-  { value: "mrs", label: "Mrs." },
-  { value: "other", label: "Don't put me in a box!" },
-];
+// export const titleOptions = [
+//   { value: "mr", label: "Mr." },
+//   { value: "mrs", label: "Mrs." },
+//   { value: "other", label: "Don't put me in a box!" },
+// ];

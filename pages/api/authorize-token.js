@@ -16,6 +16,9 @@ function getAnAcceptPaymentPage() {}
 // module.exports.getAnAcceptPaymentPage = getAnAcceptPaymentPage;
 
 export default async (req, res) => {
+  console.log(req.body);
+  const data = req.body;
+
   var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
   merchantAuthenticationType.setName(
     process.env.NEXT_PUBLIC_AUTHORIZE_LOGIN_ID
@@ -28,7 +31,22 @@ export default async (req, res) => {
   transactionRequestType.setTransactionType(
     ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION
   );
-  transactionRequestType.setAmount(50.0);
+  transactionRequestType.setAmount(data.amount);
+  transactionRequestType.setOrder({
+    invoiceNumber: data.invoiceNumber,
+    description: data.description,
+  });
+  transactionRequestType.setBillTo({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    company: data.companyName,
+    address: data.addressLine1,
+    city: data.addressCity,
+    state: data.addressState,
+    zip: data.addressZip,
+    country: "USA",
+    phoneNumber: data.preferredPhone,
+  });
 
   var setting1 = new ApiContracts.SettingType();
   setting1.setSettingName("hostedPaymentButtonOptions");
@@ -36,17 +54,17 @@ export default async (req, res) => {
 
   var setting2 = new ApiContracts.SettingType();
   setting2.setSettingName("hostedPaymentOrderOptions");
-  setting2.setSettingValue('{"show": false}');
+  setting2.setSettingValue('{"show": true}');
 
   var returnOptions = new ApiContracts.SettingType();
   returnOptions.setSettingName("hostedPaymentReturnOptions");
   returnOptions.setSettingValue(
-    '{"showReceipt": false, "url": "http://localhost:3000/checkout/complete", "cancelUrl": "http://localhost:3000/checkout/complete", "cancelUrlText": "Back to previous step"}'
+    '{"showReceipt": false, "url": "https://localhost:3443/checkout/complete", "cancelUrl": "https://localhost:3443/checkout", "cancelUrlText": "Back to previous step"}'
   );
 
   var iframeCommURL = new ApiContracts.SettingType();
   iframeCommURL.setSettingName("hostedPaymentIFrameCommunicatorUrl");
-  iframeCommURL.setSettingValue('{"url": "http://localhost:3000/cator.html"}');
+  iframeCommURL.setSettingValue('{"url": "https://localhost:3443/cator.html"}');
 
   var settingList = [];
   settingList.push(setting1);
@@ -82,11 +100,12 @@ export default async (req, res) => {
         ApiContracts.MessageTypeEnum.OK
       ) {
         console.log("Hosted payment page token :");
-        const token = response.getToken();
-        console.log(token);
         // console.log(response);
+        const token = response.getToken();
         res.statusCode = 200;
+        // res.cookie("authorizenet_token", token);
         res.json({ token: token });
+        // res.redirect(303, 'http://example.com')
       } else {
         //console.log('Result Code: ' + response.getMessages().getResultCode());
         console.log(

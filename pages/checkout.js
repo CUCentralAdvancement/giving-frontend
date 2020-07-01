@@ -3,6 +3,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 // import fetch from "node-fetch";
 import Layout from "../components/global/Layout";
 import {
@@ -22,11 +23,13 @@ import {
 import { Textarea } from "theme-ui";
 import {
   addressTypeOptions,
-  titleOptions,
+  giftStateOptions,
   phoneTypeOptions,
+  giftNamePrefixOptions,
 } from "../data/donationForm";
-import { userCart } from "../data/store";
-import { useRecoilValue } from "recoil";
+import { userCart, authorizeNetToken } from "../data/store";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+// import { faCommentSmile } from "@fortawesome/pro-regular-svg-icons";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
@@ -35,17 +38,50 @@ const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
 export default function Checkout() {
   const cart = useRecoilValue(userCart);
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [addressType, setAddressType] = useState("");
-  const [phoneType, setPhoneType] = useState("");
+  const [title, setTitle] = useState({ value: "Mr.", label: "Mr." });
+  const [addressType, setAddressType] = useState({
+    value: "home",
+    label: "Home",
+  });
+  const [addressState, setAddressState] = useState({
+    value: "OH",
+    label: "Ohio",
+  });
+  const [phoneType, setPhoneType] = useState({ value: "cell", label: "Cell" });
   const [includeSpouse, setIncludeSpouse] = useState(false);
   const [updateProfile, setUpdateProfile] = useState(false);
   const { register, handleSubmit, setValue, watch } = useForm();
   const type = watch("individual-company");
   const giftsMatched = watch("matchingGifts");
+  const setAuthorizeNetToken = useSetRecoilState(authorizeNetToken);
 
   function submitHandler(data) {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    let description = "";
+    let orderTotal = "";
+    cart.forEach((item) => {
+      description += item.fundTitle + " (" + item.allocationCode + ")";
+      // @todo Add to parse for floats, since the format is in dollars AND cents.
+      orderTotal += parseInt(item["giving-amount"]);
+    });
+    data.description = description;
+    data.amount = orderTotal;
+    data.invoiceNumber = uuidv4().slice(0, 8);
+
+    fetch("/api/authorize-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          setAuthorizeNetToken(data.token);
+          router.push("/checkout/payment");
+        } else {
+          // throw error.
+        }
+      });
   }
 
   useEffect(() => {
@@ -54,7 +90,13 @@ export default function Checkout() {
     register({ name: "title" });
     register({ name: "firstName" });
     register({ name: "lastName" });
+
     register({ name: "addressType" });
+    register({ name: "addressLine1" });
+    register({ name: "addressCity" });
+    register({ name: "addressState" });
+    register({ name: "addressZip" });
+
     register({ name: "phoneType" });
     register({ name: "preferredPhone" });
     register({ name: "email" });
@@ -144,7 +186,7 @@ export default function Checkout() {
                     name="title"
                     label="Title"
                     value={title}
-                    options={titleOptions}
+                    options={giftNamePrefixOptions}
                     onChange={(selectedOption) => {
                       setValue("title", selectedOption.value);
                       setTitle(selectedOption);
@@ -152,13 +194,11 @@ export default function Checkout() {
                   />
                 </Box>
                 <TextInput
-                  // sx={{ width: ["100%", "30%"], mr: 5 }}
                   name="firstName"
                   label="First Name"
                   onChange={(e) => setValue("firstName", e.target.value)}
                 />
                 <TextInput
-                  // sx={{ width: ["100%", "30%"], pl: 2 }}
                   name="lastName"
                   label="Last Name"
                   onChange={(e) => setValue("lastName", e.target.value)}
@@ -175,6 +215,42 @@ export default function Checkout() {
                   setAddressType(selectedOption);
                 }}
               />
+              <TextInput
+                name="addressLine1"
+                label="Address Line 1"
+                onChange={(e) => setValue("addressLine1", e.target.value)}
+              />
+              <Flex
+                sx={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <TextInput
+                  name="addressCity"
+                  label="City"
+                  onChange={(e) => setValue("addressCity", e.target.value)}
+                />
+                <Box sx={{ minWidth: "33%" }}>
+                  <SelectInput
+                    name="addressState"
+                    label="State"
+                    value={addressState}
+                    options={giftStateOptions}
+                    defaultValue={{ value: "none", label: "State" }}
+                    onChange={(selectedOption) => {
+                      setValue("addressState", selectedOption.value);
+                      setAddressState(selectedOption);
+                    }}
+                  />
+                </Box>
+                <TextInput
+                  name="addressZip"
+                  label="Zip Code"
+                  onChange={(e) => setValue("addressZip", e.target.value)}
+                />
+              </Flex>
               <Heading sx={{ my: 2 }} as="h3">
                 Address Input Placeholder
               </Heading>
@@ -314,19 +390,14 @@ export default function Checkout() {
               <Divider />
               <Flex sx={{ flexDirection: "row", alignItems: "center", mt: 2 }}>
                 <Box sx={{ maxWidth: ["100%", "50%"], mr: 2 }}>
-                  <Link href={`/checkout/payment`}>
-                    <a>
-                      <Button
-                        variant="button.secondary"
-                        type="submit"
-                        data-testid="continue-button"
-                      >
-                        Continue to next step
-                      </Button>
-                    </a>
-                  </Link>
+                  <Button
+                    variant="button.secondary"
+                    type="submit"
+                    data-testid="continue-button"
+                  >
+                    Continue to next step
+                  </Button>
                 </Box>
-
                 <Text sx={{ mr: 2 }}>or</Text>
                 <Link href={`/checkout`}>
                   <a>Cancel</a>

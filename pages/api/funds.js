@@ -3,7 +3,7 @@
 export default async (req, res) => {
   const result = await fetch(
     // `http://cu-giving.lndo.site/api/funds/all`
-    `https://385-i-cu-giving.pantheonsite.io/sites/default/files/all_fund_data.json`
+    `https://385-i-cu-giving.pantheonsite.io/sites/default/files/small_fund_data.json`
   );
   const data = await result.json();
 
@@ -11,6 +11,9 @@ export default async (req, res) => {
   Object.keys(data).forEach((key) => {
     realSearchData.push(data[key]);
   });
+
+  // console.log(res.cookie("a_token", "34567"));
+  res.cookie("a_token", "34567890");
 
   res.statusCode = 200;
   res.json({ realSearchData });
