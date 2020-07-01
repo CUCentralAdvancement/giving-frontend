@@ -2,21 +2,9 @@
 
 var ApiContracts = require("authorizenet").APIContracts;
 var ApiControllers = require("authorizenet").APIControllers;
-// var utils = require('../utils.js');
-// var constants = require('../constants.js');
-
-function getAnAcceptPaymentPage() {}
-
-// if (require.main === module) {
-// 	getAnAcceptPaymentPage(function(){
-// 		console.log('getAnAcceptPaymentPage call complete.');
-// 	});
-// }
-
-// module.exports.getAnAcceptPaymentPage = getAnAcceptPaymentPage;
 
 export default async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const data = req.body;
 
   var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
@@ -80,32 +68,24 @@ export default async (req, res) => {
   getRequest.setTransactionRequest(transactionRequestType);
   getRequest.setHostedPaymentSettings(alist);
 
-  //console.log(JSON.stringify(getRequest.getJSON(), null, 2));
-
   var ctrl = new ApiControllers.GetHostedPaymentPageController(
     getRequest.getJSON()
   );
 
   ctrl.execute(function () {
     var apiResponse = ctrl.getResponse();
-
     var response = new ApiContracts.GetHostedPaymentPageResponse(apiResponse);
-
-    //pretty print response
-    //console.log(JSON.stringify(response, null, 2));
 
     if (response != null) {
       if (
         response.getMessages().getResultCode() ==
         ApiContracts.MessageTypeEnum.OK
       ) {
-        console.log("Hosted payment page token :");
+        // console.log("Hosted payment page token :");
         // console.log(response);
         const token = response.getToken();
         res.statusCode = 200;
-        // res.cookie("authorizenet_token", token);
         res.json({ token: token });
-        // res.redirect(303, 'http://example.com')
       } else {
         //console.log('Result Code: ' + response.getMessages().getResultCode());
         console.log(
@@ -118,7 +98,5 @@ export default async (req, res) => {
     } else {
       console.log("Null response received");
     }
-
-    // callback(response);
   });
 };
