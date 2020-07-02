@@ -4,7 +4,7 @@ var ApiContracts = require("authorizenet").APIContracts;
 var ApiControllers = require("authorizenet").APIControllers;
 
 export default async (req, res) => {
-  // console.log(req.body);
+  // console.log(req);
   const data = req.body;
 
   var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
@@ -45,14 +45,15 @@ export default async (req, res) => {
   setting2.setSettingValue('{"show": true}');
 
   var returnOptions = new ApiContracts.SettingType();
+  const host = req.headers.host;
   returnOptions.setSettingName("hostedPaymentReturnOptions");
   returnOptions.setSettingValue(
-    '{"showReceipt": false, "url": "https://localhost:3443/checkout/complete", "cancelUrl": "https://localhost:3443/checkout", "cancelUrlText": "Back to previous step"}'
+    `{"showReceipt": false, "url": "https://${host}/checkout/complete", "cancelUrl": "https://${host}/checkout", "cancelUrlText": "Back to previous step"}`
   );
 
   var iframeCommURL = new ApiContracts.SettingType();
   iframeCommURL.setSettingName("hostedPaymentIFrameCommunicatorUrl");
-  iframeCommURL.setSettingValue('{"url": "https://localhost:3443/cator.html"}');
+  iframeCommURL.setSettingValue(`{"url": "https://${host}/cator.html"}`);
 
   var settingList = [];
   settingList.push(setting1);
