@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../../components/global/Layout";
 import {
-  Heading,
   Flex,
   Button,
   Text,
@@ -12,7 +11,6 @@ import {
 } from "@cu-advancement/component-library";
 import { useRecoilValue } from "recoil";
 import { authorizeNetToken } from "../../data/store";
-// import { query } from "express";
 
 export default function Payment() {
   const token = useRecoilValue(authorizeNetToken);
@@ -32,7 +30,6 @@ export default function Payment() {
             case "successfulSave":
               break;
             case "cancel":
-              // window.location = window.location.origin + "/checkout";
               router.push("/checkout");
               break;
             case "resizeWindow":
@@ -124,15 +121,6 @@ export default function Payment() {
     </Layout>
   );
 }
-
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch("http://localhost:3000/api/authorize-token");
-//   const token = await res.json();
-
-//   // Pass data to the page via props
-//   return { props: { token: token.token } };
-// }
 
 function parseQueryString(str) {
   var vars = [];

@@ -48,7 +48,7 @@ describe("Checkout Tests", () => {
       .click()
       .trigger("keydown", { keyCode: 40, which: 40 })
       .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="title"]').should("have.attr", "value", "mrs");
+    cy.get('input[name="title"]').should("have.attr", "value", "Ms.");
 
     cy.get('input[name="firstName"]').type("John");
     cy.get('input[name="lastName"]').type("Doe");

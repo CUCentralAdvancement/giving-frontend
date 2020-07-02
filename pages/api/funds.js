@@ -12,9 +12,6 @@ export default async (req, res) => {
     realSearchData.push(data[key]);
   });
 
-  // console.log(res.cookie("a_token", "34567"));
-  res.cookie("a_token", "34567890");
-
   res.statusCode = 200;
   res.json({ realSearchData });
 };

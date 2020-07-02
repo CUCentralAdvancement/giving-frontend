@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-// import fetch from "node-fetch";
 import Layout from "../components/global/Layout";
 import {
   Box,
@@ -29,7 +28,6 @@ import {
 } from "../data/donationForm";
 import { userCart, authorizeNetToken } from "../data/store";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-// import { faCommentSmile } from "@fortawesome/pro-regular-svg-icons";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
@@ -79,7 +77,7 @@ export default function Checkout() {
           setAuthorizeNetToken(data.token);
           router.push("/checkout/payment");
         } else {
-          // throw error.
+          // @todo Throw error.
         }
       });
   }
@@ -266,7 +264,6 @@ export default function Checkout() {
                   }}
                 />
                 <TextInput
-                  // sx={{ flex: "1 1 auto" }}
                   name="preferredPhone"
                   label="Preferred Phone"
                   placeholder="(e.g. 555-555-5555)"
@@ -280,7 +277,6 @@ export default function Checkout() {
                   onChange={(e) => setValue("email", e.target.value)}
                 />
               </Box>
-              {/* <Divider /> */}
               <Checkbox
                 name="includeSpouse"
                 label="Include Spouse/Partner in your gift?"
