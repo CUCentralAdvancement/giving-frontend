@@ -187,7 +187,9 @@ describe("Checkout Tests", () => {
 
     getIframeBody("add_payment").find(".payButton").click();
 
-    cy.url().should("include", "checkout/payment");
+    cy.wait(5000);
+
+    cy.url().should("include", "checkout/complete");
     cy.contains(
       "Thank you for your generous gift to the University of Colorado."
     );
