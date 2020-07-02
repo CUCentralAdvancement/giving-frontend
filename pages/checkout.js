@@ -25,6 +25,7 @@ import {
   giftStateOptions,
   phoneTypeOptions,
   giftNamePrefixOptions,
+  countryOptionsList,
 } from "../data/donationForm";
 import { userCart, authorizeNetToken } from "../data/store";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -41,6 +42,10 @@ export default function Checkout() {
     value: "home",
     label: "Home",
   });
+  const [addressCountry, setAddressCountry] = useState({
+    value: "US",
+    label: "United States",
+  });
   const [addressState, setAddressState] = useState({
     value: "OH",
     label: "Ohio",
@@ -56,12 +61,14 @@ export default function Checkout() {
   function submitHandler(data) {
     // alert(JSON.stringify(data));
     let description = "";
-    let orderTotal = "";
+    let orderTotal = 0.0;
     cart.forEach((item) => {
       description += item.fundTitle + " (" + item.allocationCode + ")";
       // @todo Add to parse for floats, since the format is in dollars AND cents.
-      orderTotal += parseInt(item["giving-amount"]);
+      orderTotal =
+        parseFloat(orderTotal) + parseFloat(`${item["giving-amount"]}.00`);
     });
+    console.log(orderTotal);
     data.description = description;
     data.amount = orderTotal;
     data.invoiceNumber = uuidv4().slice(0, 8);
@@ -90,6 +97,7 @@ export default function Checkout() {
     register({ name: "lastName" });
 
     register({ name: "addressType" });
+    register({ name: "addressCountry" });
     register({ name: "addressLine1" });
     register({ name: "addressCity" });
     register({ name: "addressState" });
@@ -207,15 +215,24 @@ export default function Checkout() {
                 label="Address Type"
                 value={addressType}
                 options={addressTypeOptions}
-                defaultValue={{ value: "home", label: "Home" }}
                 onChange={(selectedOption) => {
                   setValue("addressType", selectedOption.value);
                   setAddressType(selectedOption);
                 }}
               />
+              <SelectInput
+                name="addressCountry"
+                label="Country"
+                value={addressCountry}
+                options={countryOptionsList}
+                onChange={(selectedOption) => {
+                  setValue("addressCountry", selectedOption.value);
+                  setAddressCountry(selectedOption);
+                }}
+              />
               <TextInput
                 name="addressLine1"
-                label="Address Line 1"
+                label="Address / Thoroughfare"
                 onChange={(e) => setValue("addressLine1", e.target.value)}
               />
               <Flex
@@ -227,13 +244,13 @@ export default function Checkout() {
               >
                 <TextInput
                   name="addressCity"
-                  label="City"
+                  label="City / Locality"
                   onChange={(e) => setValue("addressCity", e.target.value)}
                 />
                 <Box sx={{ minWidth: "33%" }}>
                   <SelectInput
                     name="addressState"
-                    label="State"
+                    label="State / Administrative Area"
                     value={addressState}
                     options={giftStateOptions}
                     defaultValue={{ value: "none", label: "State" }}
@@ -245,13 +262,10 @@ export default function Checkout() {
                 </Box>
                 <TextInput
                   name="addressZip"
-                  label="Zip Code"
+                  label="Postal Code"
                   onChange={(e) => setValue("addressZip", e.target.value)}
                 />
               </Flex>
-              <Heading sx={{ my: 2 }} as="h3">
-                Address Input Placeholder
-              </Heading>
               <Grid gap={2} columns={[2, "2fr 3fr"]} sx={{ mb: 2 }}>
                 <SelectInput
                   name="phoneType"

@@ -7,7 +7,7 @@ describe("Checkout Tests", () => {
   // @todo Do this after figuring out alerts on redirects.
   xit("Handles empty cart on all checkout-related pages", () => {
     cy.visit("/checkout");
-    // cy.contains("Your gift basket is empty.");
+    cy.cxontains("Your gift basket is empty.");
 
     // cy.contains("Gift Basket Summary").should("not.exist");
     // cy.get('[data-testid="remove-from-cart-button"]').should("not.exist");
@@ -42,7 +42,7 @@ describe("Checkout Tests", () => {
     cy.contains("Company/Organization").click();
     cy.get('input[name="companyName"]').should("be.visible").type("ACME Corp.");
 
-    // Set title select to "Mrs.".
+    // Set title select to "Ms.".
     cy.get('label[for="title"]')
       .next()
       .click()
@@ -50,6 +50,7 @@ describe("Checkout Tests", () => {
       .trigger("keydown", { keyCode: 13, which: 13 });
     cy.get('input[name="title"]').should("have.attr", "value", "Ms.");
 
+    // Set first and last name.
     cy.get('input[name="firstName"]').type("John");
     cy.get('input[name="lastName"]').type("Doe");
 
@@ -61,9 +62,30 @@ describe("Checkout Tests", () => {
       .trigger("keydown", { keyCode: 13, which: 13 });
     cy.get('input[name="addressType"]').should("have.attr", "value", "work");
 
-    // @todo Add tests for address.
+    // Set country to "Afghanistan".
+    cy.get('label[for="addressCountry"]')
+      .next()
+      .click()
+      .trigger("keydown", { keyCode: 40, which: 40 })
+      .trigger("keydown", { keyCode: 13, which: 13 });
+    cy.get('input[name="addressCountry"]').should("have.attr", "value", "AF");
 
-    // Set address type to "Work".
+    // Set address and city.
+    cy.get('input[name="addressLine1"]').type("123 High St.");
+    cy.get('input[name="addressCity"]').type("London");
+
+    // Set state to "Alabama".
+    cy.get('label[for="addressState"]')
+      .next()
+      .click()
+      .trigger("keydown", { keyCode: 40, which: 40 })
+      .trigger("keydown", { keyCode: 13, which: 13 });
+    cy.get('input[name="addressState"]').should("have.attr", "value", "AL");
+
+    // Set postal code.
+    cy.get('input[name="addressZip"]').type("43210");
+
+    // Set phone type to "Work".
     cy.get('label[for="phoneType"]')
       .next()
       .click()
@@ -71,6 +93,8 @@ describe("Checkout Tests", () => {
       .trigger("keydown", { keyCode: 40, which: 40 })
       .trigger("keydown", { keyCode: 13, which: 13 });
     cy.get('input[name="phoneType"]').should("have.attr", "value", "work");
+
+    cy.get('input[name="preferredPhone"]').type("555-555-5555");
 
     // @todo Add email validation tests.
     cy.get('input[name="email"]').type("john.doe@gmail.com");
@@ -100,14 +124,81 @@ describe("Checkout Tests", () => {
     cy.get('[data-testid="continue-button"]').click();
 
     cy.url().should("include", "checkout/payment");
+    cy.contains("Please do not use Refresh or Back buttons on this page.");
+
+    getIframeBody("add_payment")
+      .contains("Missing or invalid token.")
+      .should("not.exist");
+    getIframeBody("add_payment")
+      .find("#orderDescription")
+      .contains("Office of Student Life Food Pantry Fund (0321793)")
+      .should("be.visible");
+    getIframeBody("add_payment")
+      .find("#orderDescription")
+      .contains("Bridge Forward Scholarship Endowment (0430106)")
+      .should("be.visible");
+    getIframeBody("add_payment")
+      .find("#orderTotalAmount")
+      .contains("300.00")
+      .should("be.visible");
+    getIframeBody("add_payment")
+      .find("#orderInvoiceNumber")
+      .should("be.visible");
+
+    // The form is done in Angular and looks like all of these fields are stored in JS
+    // but not in the DOM.
+    // getIframeBody("add_payment")
+    //   .find('input[name="firstName"]')
+    //   .contains("John")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find('input[name="lastName"]')
+    //   .contains("Doe")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find('input[name="zip"]')
+    //   .contains("43210")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find('input[name="city"]')
+    //   .contains("London")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find('input[name="state"]')
+    //   .contains("AL")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find('input[name="phoneNumber"]')
+    //   .contains("555-555-5555")
+    //   .should("be.visible");
+    // getIframeBody("add_payment")
+    //   .find("#billingAddress_dropdownParent")
+    //   .find(".dropdown-selected-item")
+    //   .contains("Afghanistan")
+    //   .should("be.visible");
+
+    getIframeBody("add_payment")
+      .find('input[name="cardNum"]')
+      .type("4111111111111111");
+
+    getIframeBody("add_payment").find('input[name="expiryDate"]').type("0125");
+
+    getIframeBody("add_payment").find('input[name="cvv"]').type("123");
+
+    getIframeBody("add_payment").find(".payButton").click();
+
+    cy.url().should("include", "checkout/payment");
+    cy.contains(
+      "Thank you for your generous gift to the University of Colorado."
+    );
   });
 
-  it("Handles payment page and navigates to completion page.", () => {
+  it("Handles payment page without a token.", () => {
     setCart();
     cy.visit("/checkout/payment");
     cy.contains("Please do not use Refresh or Back buttons on this page.");
-    cy.get('[data-testid="complete-purchase-button"]').click();
-    cy.url().should("include", "checkout/complete");
+
+    getIframeBody("add_payment").contains("Missing or invalid token.");
   });
 
   it("Handles payment completion page.", () => {
@@ -125,11 +216,12 @@ describe("Checkout Tests", () => {
 
     // Make sure that cart in header doesn't have any items.
     // @todo Figure out why this works locally but not on Travis CI.
-    // cy.get("header").within(() => {
-    //   cy.get('[data-testid="cart-items-total"]').then((total) => {
-    //     expect(total.text()).to.equal("0");
-    //   });
-    // });
+    cy.wait(1000);
+    cy.get("header").within(() => {
+      cy.get('[data-testid="cart-items-total"]').then((total) => {
+        expect(total.text()).to.equal("0");
+      });
+    });
 
     // @todo Make this dymanic with actual gift ID.
     cy.get('[data-test-id="gift-id"]').contains("12345");
@@ -165,3 +257,18 @@ function setCart() {
     ])
   );
 }
+
+const getIframeBody = (id) => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
+  return (
+    cy
+      .get(`iframe[data-cy="${id}"]`)
+      .its("0.contentDocument.body")
+      .should("not.be.empty")
+      // wraps "body" DOM element to allow
+      // chaining more Cypress commands, like ".find(...)"
+      // https://on.cypress.io/wrap
+      .then(cy.wrap)
+  );
+};

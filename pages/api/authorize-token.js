@@ -32,7 +32,7 @@ export default async (req, res) => {
     city: data.addressCity,
     state: data.addressState,
     zip: data.addressZip,
-    country: "USA",
+    country: data.addressCountry,
     phoneNumber: data.preferredPhone,
   });
 

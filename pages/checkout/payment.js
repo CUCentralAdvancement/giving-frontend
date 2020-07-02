@@ -56,6 +56,7 @@ export default function Payment() {
           maxWidth: "1020px",
           mx: "auto",
           flexDirection: "column",
+          my: 3,
         }}
       >
         <Flex
@@ -65,6 +66,7 @@ export default function Payment() {
             p: 3,
             flexDirection: "row",
             justifyContent: "center",
+            mb: 2,
           }}
         >
           <Image
@@ -77,38 +79,26 @@ export default function Payment() {
         <div
           id="iframe_holder"
           className="center-block"
-          style={{ width: "90%", maxWidth: "1200px", height: "600px" }}
+          style={{ width: "90%", maxWidth: "1020px", height: "640px" }}
         >
           <iframe
             id="add_payment"
+            data-cy="add_payment"
             className="embed-responsive-item panel"
             name="add_payment"
             width="100%"
             height="100%"
             frameBorder="0"
-            scrolling="no"
+            scrolling="yes"
             // hidden="true"
             title="Authorize.net Payment Form"
           ></iframe>
         </div>
         <Image
           src="https://giving-test.cu.edu/sites/all/themes/themekit/images/verified-auth-net.png"
-          sx={{ width: "135px", mx: "auto" }}
+          sx={{ width: "135px", mx: "auto", mt: 2 }}
           alt="Verified by Authorize.net"
         />
-        <Box sx={{ mx: "auto", my: 3 }}>
-          <Link href={`/checkout/complete`}>
-            <a>
-              <Button
-                variant="button.secondary"
-                type="submit"
-                data-testid="complete-purchase-button"
-              >
-                Complete purchase and clear cart...
-              </Button>
-            </a>
-          </Link>
-        </Box>
       </Flex>
       <form
         id="send_token"
