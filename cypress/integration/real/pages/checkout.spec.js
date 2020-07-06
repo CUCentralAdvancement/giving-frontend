@@ -7,7 +7,7 @@ describe("Checkout Tests", () => {
   // @todo Do this after figuring out alerts on redirects.
   xit("Handles empty cart on all checkout-related pages", () => {
     cy.visit("/checkout");
-    cy.cxontains("Your gift basket is empty.");
+    cy.contains("Your gift basket is empty.");
 
     // cy.contains("Gift Basket Summary").should("not.exist");
     // cy.get('[data-testid="remove-from-cart-button"]').should("not.exist");
