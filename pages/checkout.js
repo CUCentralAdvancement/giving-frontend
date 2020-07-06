@@ -27,7 +27,7 @@ import {
   giftNamePrefixOptions,
   countryOptionsList,
 } from "../data/donationForm";
-import { userCart, authorizeNetToken } from "../data/store";
+import { userCart, authorizeNetToken, givingFormInfo } from "../data/store";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
@@ -36,6 +36,8 @@ const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
 
 export default function Checkout() {
   const cart = useRecoilValue(userCart);
+  const setAuthorizeNetToken = useSetRecoilState(authorizeNetToken);
+  const setGivingInfo = useSetRecoilState(givingFormInfo);
   const router = useRouter();
   const [title, setTitle] = useState({ value: "Mr.", label: "Mr." });
   const [addressType, setAddressType] = useState({
@@ -56,7 +58,6 @@ export default function Checkout() {
   const { register, handleSubmit, setValue, watch } = useForm();
   const type = watch("individual-company");
   const giftsMatched = watch("matchingGifts");
-  const setAuthorizeNetToken = useSetRecoilState(authorizeNetToken);
 
   function submitHandler(data) {
     // alert(JSON.stringify(data));
@@ -68,10 +69,11 @@ export default function Checkout() {
       orderTotal =
         parseFloat(orderTotal) + parseFloat(`${item["giving-amount"]}.00`);
     });
-    console.log(orderTotal);
+    // console.log(orderTotal);
     data.description = description;
     data.amount = orderTotal;
     data.invoiceNumber = uuidv4().slice(0, 8);
+    setGivingInfo(data);
 
     fetch("/api/authorize-token", {
       method: "POST",
@@ -109,6 +111,8 @@ export default function Checkout() {
     register({ name: "includeSpouse" });
     register({ name: "spouseName" });
     register({ name: "matchingGifts" });
+    register({ name: "employerName" });
+    register({ name: "giftComments" });
     register({ name: "taxReceipt" });
     register({ name: "updateProfile" });
   }, [register]);
@@ -353,7 +357,9 @@ export default function Checkout() {
                 </Text>
               </Box>
               <Textarea
+                name="giftComments"
                 data-testid="comments-textarea"
+                onChange={(e) => setValue("giftComments", e.target.value)}
                 rows={3}
                 sx={{ bg: "white" }}
               />

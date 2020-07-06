@@ -226,7 +226,7 @@ describe("Checkout Tests", () => {
     });
 
     // @todo Make this dymanic with actual gift ID.
-    cy.get('[data-test-id="gift-id"]').contains("12345");
+    // cy.get('[data-test-id="gift-id"]').contains("12345");
 
     cy.contains(
       "Thank you for your generous gift to the University of Colorado."

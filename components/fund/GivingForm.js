@@ -22,6 +22,7 @@ import {
   reocurringGiftFrequencyOptions,
   honorMemorySelectorOptions,
   giftStateOptions,
+  countryOptionsList,
 } from "../../data/donationForm";
 
 export default function GivingForm({ fund }) {
@@ -55,6 +56,10 @@ export default function GivingForm({ fund }) {
     value: "none",
     label: "State",
   });
+  const [giftCountry, setGiftCountry] = useState({
+    value: "US",
+    label: "United States",
+  });
 
   function submitHandler(action) {
     let data = getValues();
@@ -62,6 +67,10 @@ export default function GivingForm({ fund }) {
     data.fundRoute = router.asPath;
     data.fundTitle = fund.title;
     data.fundCampus = campusNames[fund.campus];
+
+    if (data["giving-amount"] === "other") {
+      data["giving-amount"] = data["other-amount"];
+    }
 
     setCart([...cart, data]);
     setGiftSummary([...cart, data]);
@@ -97,6 +106,7 @@ export default function GivingForm({ fund }) {
     register({ name: "giftAddressTwo" });
     register({ name: "giftCity" });
     register({ name: "giftState" });
+    register({ name: "giftCountry" });
     register({ name: "giftZipCode" });
     register({ name: "giftEmail" });
   }, [register]);
@@ -210,7 +220,7 @@ export default function GivingForm({ fund }) {
           This is a pledge payment
         </Label>
         <Box sx={{ mt: 2 }}>
-          <Heading as="h3" mb={2}>
+          <Heading as="h3" sx={{ mt: 4, mb: 2 }}>
             In Honor/Memory of:
           </Heading>
           <Label htmlFor="inHonorOf">
@@ -266,10 +276,10 @@ export default function GivingForm({ fund }) {
                     onChange={(e) => setValue("honoreeName", e.target.value)}
                   />
                 )}
-                <Heading as="h3" my={2}>
+                <Heading as="h3" sx={{ mt: 3 }}>
                   {honorMemorySelector.value == "honor"
-                    ? "Next of Kin/Contact Information"
-                    : "Honoree's Information"}
+                    ? "Honoree's Information"
+                    : "Next of Kin/Contact Information"}
                 </Heading>
                 <Grid gap={2} columns={1} sx={{ my: 2 }}>
                   <SelectInput
@@ -296,7 +306,16 @@ export default function GivingForm({ fund }) {
                       onChange={(e) => setValue("giftLastName", e.target.value)}
                     />
                   </Grid>
-                  <Heading as="h4">Country Selector Placeholder</Heading>
+                  <SelectInput
+                    name="giftCountry"
+                    // label="Country"
+                    value={giftCountry}
+                    options={countryOptionsList}
+                    onChange={(selectedOption) => {
+                      setValue("giftCountry", selectedOption.value);
+                      setGiftCountry(selectedOption);
+                    }}
+                  />
                   <TextInput
                     name="giftAddresOne"
                     placeholder="Address 1"

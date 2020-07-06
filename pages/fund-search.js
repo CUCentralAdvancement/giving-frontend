@@ -7,6 +7,7 @@ import SearchForm from "../components/fund-search/SearchForm";
 import SearchResults from "../components/fund-search/SearchResults";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_ID,
@@ -27,10 +28,19 @@ export default function FundSearch() {
             sx={{ p: 3, maxWidth: "1280px", mx: "auto" }}
             data-testid="search-results"
           >
-            <SearchResults />
-            <Flex sx={{ flexDirection: "row", justifyContent: "flex-end" }}>
-              <PoweredBy />
-            </Flex>
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <SearchResults />
+                <Flex sx={{ flexDirection: "row", justifyContent: "flex-end" }}>
+                  <PoweredBy />
+                </Flex>
+              </motion.div>
+            </AnimatePresence>
           </Box>
         </Flex>
       </InstantSearch>
