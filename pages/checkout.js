@@ -3,7 +3,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-// import fetch from "node-fetch";
+import { v4 as uuidv4 } from "uuid";
 import Layout from "../components/global/Layout";
 import {
   Box,
@@ -22,11 +22,13 @@ import {
 import { Textarea } from "theme-ui";
 import {
   addressTypeOptions,
-  titleOptions,
+  giftStateOptions,
   phoneTypeOptions,
+  giftNamePrefixOptions,
+  countryOptionsList,
 } from "../data/donationForm";
-import { userCart } from "../data/store";
-import { useRecoilValue } from "recoil";
+import { userCart, authorizeNetToken } from "../data/store";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
@@ -35,17 +37,56 @@ const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
 export default function Checkout() {
   const cart = useRecoilValue(userCart);
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [addressType, setAddressType] = useState("");
-  const [phoneType, setPhoneType] = useState("");
+  const [title, setTitle] = useState({ value: "Mr.", label: "Mr." });
+  const [addressType, setAddressType] = useState({
+    value: "home",
+    label: "Home",
+  });
+  const [addressCountry, setAddressCountry] = useState({
+    value: "US",
+    label: "United States",
+  });
+  const [addressState, setAddressState] = useState({
+    value: "OH",
+    label: "Ohio",
+  });
+  const [phoneType, setPhoneType] = useState({ value: "cell", label: "Cell" });
   const [includeSpouse, setIncludeSpouse] = useState(false);
   const [updateProfile, setUpdateProfile] = useState(false);
   const { register, handleSubmit, setValue, watch } = useForm();
   const type = watch("individual-company");
   const giftsMatched = watch("matchingGifts");
+  const setAuthorizeNetToken = useSetRecoilState(authorizeNetToken);
 
   function submitHandler(data) {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    let description = "";
+    let orderTotal = 0.0;
+    cart.forEach((item) => {
+      description += item.fundTitle + " (" + item.allocationCode + ")";
+      // @todo Add to parse for floats, since the format is in dollars AND cents.
+      orderTotal =
+        parseFloat(orderTotal) + parseFloat(`${item["giving-amount"]}.00`);
+    });
+    console.log(orderTotal);
+    data.description = description;
+    data.amount = orderTotal;
+    data.invoiceNumber = uuidv4().slice(0, 8);
+
+    fetch("/api/authorize-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          setAuthorizeNetToken(data.token);
+          router.push("/checkout/payment");
+        } else {
+          // @todo Throw error.
+        }
+      });
   }
 
   useEffect(() => {
@@ -54,7 +95,14 @@ export default function Checkout() {
     register({ name: "title" });
     register({ name: "firstName" });
     register({ name: "lastName" });
+
     register({ name: "addressType" });
+    register({ name: "addressCountry" });
+    register({ name: "addressLine1" });
+    register({ name: "addressCity" });
+    register({ name: "addressState" });
+    register({ name: "addressZip" });
+
     register({ name: "phoneType" });
     register({ name: "preferredPhone" });
     register({ name: "email" });
@@ -144,7 +192,7 @@ export default function Checkout() {
                     name="title"
                     label="Title"
                     value={title}
-                    options={titleOptions}
+                    options={giftNamePrefixOptions}
                     onChange={(selectedOption) => {
                       setValue("title", selectedOption.value);
                       setTitle(selectedOption);
@@ -152,13 +200,11 @@ export default function Checkout() {
                   />
                 </Box>
                 <TextInput
-                  // sx={{ width: ["100%", "30%"], mr: 5 }}
                   name="firstName"
                   label="First Name"
                   onChange={(e) => setValue("firstName", e.target.value)}
                 />
                 <TextInput
-                  // sx={{ width: ["100%", "30%"], pl: 2 }}
                   name="lastName"
                   label="Last Name"
                   onChange={(e) => setValue("lastName", e.target.value)}
@@ -169,15 +215,57 @@ export default function Checkout() {
                 label="Address Type"
                 value={addressType}
                 options={addressTypeOptions}
-                defaultValue={{ value: "home", label: "Home" }}
                 onChange={(selectedOption) => {
                   setValue("addressType", selectedOption.value);
                   setAddressType(selectedOption);
                 }}
               />
-              <Heading sx={{ my: 2 }} as="h3">
-                Address Input Placeholder
-              </Heading>
+              <SelectInput
+                name="addressCountry"
+                label="Country"
+                value={addressCountry}
+                options={countryOptionsList}
+                onChange={(selectedOption) => {
+                  setValue("addressCountry", selectedOption.value);
+                  setAddressCountry(selectedOption);
+                }}
+              />
+              <TextInput
+                name="addressLine1"
+                label="Address / Thoroughfare"
+                onChange={(e) => setValue("addressLine1", e.target.value)}
+              />
+              <Flex
+                sx={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <TextInput
+                  name="addressCity"
+                  label="City / Locality"
+                  onChange={(e) => setValue("addressCity", e.target.value)}
+                />
+                <Box sx={{ minWidth: "33%" }}>
+                  <SelectInput
+                    name="addressState"
+                    label="State / Administrative Area"
+                    value={addressState}
+                    options={giftStateOptions}
+                    defaultValue={{ value: "none", label: "State" }}
+                    onChange={(selectedOption) => {
+                      setValue("addressState", selectedOption.value);
+                      setAddressState(selectedOption);
+                    }}
+                  />
+                </Box>
+                <TextInput
+                  name="addressZip"
+                  label="Postal Code"
+                  onChange={(e) => setValue("addressZip", e.target.value)}
+                />
+              </Flex>
               <Grid gap={2} columns={[2, "2fr 3fr"]} sx={{ mb: 2 }}>
                 <SelectInput
                   name="phoneType"
@@ -190,7 +278,6 @@ export default function Checkout() {
                   }}
                 />
                 <TextInput
-                  // sx={{ flex: "1 1 auto" }}
                   name="preferredPhone"
                   label="Preferred Phone"
                   placeholder="(e.g. 555-555-5555)"
@@ -204,7 +291,6 @@ export default function Checkout() {
                   onChange={(e) => setValue("email", e.target.value)}
                 />
               </Box>
-              {/* <Divider /> */}
               <Checkbox
                 name="includeSpouse"
                 label="Include Spouse/Partner in your gift?"
@@ -314,19 +400,14 @@ export default function Checkout() {
               <Divider />
               <Flex sx={{ flexDirection: "row", alignItems: "center", mt: 2 }}>
                 <Box sx={{ maxWidth: ["100%", "50%"], mr: 2 }}>
-                  <Link href={`/checkout/payment`}>
-                    <a>
-                      <Button
-                        variant="button.secondary"
-                        type="submit"
-                        data-testid="continue-button"
-                      >
-                        Continue to next step
-                      </Button>
-                    </a>
-                  </Link>
+                  <Button
+                    variant="button.secondary"
+                    type="submit"
+                    data-testid="continue-button"
+                  >
+                    Continue to next step
+                  </Button>
                 </Box>
-
                 <Text sx={{ mr: 2 }}>or</Text>
                 <Link href={`/checkout`}>
                   <a>Cancel</a>
