@@ -23,6 +23,7 @@ export default function Cart() {
   // const router = useRouter();
   const [cart, setCart] = useRecoilState(userCart);
   const setGiftSummary = useSetRecoilState(giftSummaryLog);
+  // console.log(cart);
 
   const removeIt = (item) => {
     const newCart = cart.filter((cartItem) => {

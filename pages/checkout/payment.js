@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../../components/global/Layout";
+import { Flex, Text, Image } from "@cu-advancement/component-library";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  Flex,
-  Button,
-  Text,
-  Image,
-  Box,
-} from "@cu-advancement/component-library";
-import { useRecoilValue } from "recoil";
-import { authorizeNetToken } from "../../data/store";
+  authorizeNetToken,
+  transactionDetails,
+  givingFormInfo,
+} from "../../data/store";
 
 export default function Payment() {
   const token = useRecoilValue(authorizeNetToken);
+  // const givingInfo = useRecoilValue(givingFormInfo);
+  // console.log(givingInfo);
+  const setTransactionDetails = useSetRecoilState(transactionDetails);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function Payment() {
               ifrm = document.getElementById("add_payment");
               ifrm.style.display = "none";
 
+              setTransactionDetails(JSON.parse(params["response"]));
               router.push("/checkout/complete");
           }
         };

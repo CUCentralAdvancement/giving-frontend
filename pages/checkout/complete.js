@@ -8,10 +8,15 @@ import {
   Divider,
   Text,
   Grid,
-  Box,
+  // Box,
 } from "@cu-advancement/component-library";
-import { userCart, giftSummaryLog } from "../../data/store";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import {
+  userCart,
+  giftSummaryLog,
+  transactionDetails,
+  givingFormInfo,
+} from "../../data/store";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
 const CartSummary = dynamic(() => import("../../components/cart/CartSummary"), {
   ssr: false,
@@ -19,7 +24,11 @@ const CartSummary = dynamic(() => import("../../components/cart/CartSummary"), {
 
 export default function Complete() {
   const setCart = useSetRecoilState(userCart);
+  const [transaction, setTransactionDetails] = useRecoilState(
+    transactionDetails
+  );
   const giftSummary = useRecoilValue(giftSummaryLog);
+  const givingInfo = useRecoilValue(givingFormInfo);
 
   useEffect(() => {
     setCart([]);
@@ -46,9 +55,12 @@ export default function Complete() {
             fontWeight: "bold",
           }}
         >
-          <Text>Gift ID:&nbsp;</Text>
-          <Text data-test-id="gift-id" sx={{ pr: 3 }}>
-            12345
+          <Text sx={{ pr: 3 }}>
+            Transaction ID:&nbsp;
+            <span data-test-id="gift-id">{transaction.transId}</span>
+            <br />
+            Invoice Number:&nbsp;
+            {transaction.orderInvoiceNumber}
           </Text>
         </Flex>
         <Divider />
@@ -80,37 +92,50 @@ export default function Complete() {
             Click here to fill out our survey &gt;
           </a>
         </Text>
-        <Box as="span" sx={{ fontWeight: "bold" }}>
+        <Heading as="h3" sx={{ mt: 3 }}>
           Your Contact Information:
-        </Box>
+        </Heading>
         <Text as="p">
-          John Doe <br />
-          123 Rich St. <br />
-          Boulder, CO 80301
+          {transaction.billTo.firstName}&nbsp;{transaction.billTo.lastName}
           <br />
-          555-555-5555
+          {transaction.billTo.address} <br />
+          {transaction.billTo.city},&nbsp;{transaction.billTo.state}&nbsp;
+          {transaction.billTo.zip}
+          <br />
+          {transaction.billTo.country}
+          <br />
+          <br />
+          {transaction.billTo.phoneNumber}
           <br />
           ajohn.doe@cu.edu
         </Text>
-        <Box as="span" sx={{ fontWeight: "bold" }}>
+        <Heading as="h3" sx={{ mt: 3 }}>
           Your Billing Information:
-        </Box>
+        </Heading>
         <Text as="p">
-          John Doe <br />
-          123 Rich St. <br />
-          Boulder, CO 80301
+          {transaction.billTo.firstName}&nbsp;{transaction.billTo.lastName}
           <br />
-          555-555-5555
+          {transaction.billTo.address} <br />
+          {transaction.billTo.city},&nbsp;{transaction.billTo.state}&nbsp;
+          {transaction.billTo.zip}
+          <br />
+          {transaction.billTo.country}
+          <br />
+          <br />
+          {transaction.billTo.phoneNumber}
           <br />
           ajohn.doe@cu.edu
         </Text>
-        <Box as="span" sx={{ fontWeight: "bold" }}>
+        <Heading as="h3" sx={{ mt: 3 }}>
           Your Gift Details:
-        </Box>
+        </Heading>
         <Text as="p">
-          Comments:
-          <br />
-          Receive tax receipt by: Email
+          <strong>Comments: </strong>
+          <br /> {givingInfo.giftComments}
+        </Text>
+
+        <Text as="p">
+          <strong>Receive tax receipt by:</strong>&nbsp;{givingInfo.taxReceipt}
         </Text>
       </Grid>
     </Layout>

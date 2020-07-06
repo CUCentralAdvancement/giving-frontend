@@ -13,15 +13,11 @@ import {
   Grid,
   Button,
 } from "@cu-advancement/component-library";
-import { campusColors, campusNames, interests } from "../../data/fundMeta";
+import { campusColors, interests } from "../../data/fundMeta";
 import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
 import { useWindowDimensions } from "../../utils/hooks";
-import {
-  connectStats,
-  connectInfiniteHits,
-  PoweredBy,
-} from "react-instantsearch-dom";
+import { connectStats, connectInfiniteHits } from "react-instantsearch-dom";
 
 // The portal can't render server-side.
 const Portal = dynamic(() => import("../global/Portal"), {
@@ -56,47 +52,36 @@ export default function SearchResults({ results, count }) {
   };
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Box p={3}>
-          <Header />
-        </Box>
-        <CustomHits
-          setResult={setFundCardResult}
-          setOpen={setOpen}
-          open={open}
-        />
-        <Portal>
-          <AnimatePresence>
-            {
-              // @todo Adbstract this into a component and use a recoil atom to share the current fund being opened.
-              open && (
-                <motion.div
-                  style={styleProps}
-                  key={1}
-                  initial={{ transform: "translateX(0%)" }}
-                  animate={{ transform: "translateX(-100%)" }}
-                  exit={{ transform: "translateX(0%)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <FundCard
-                    result={fundCardResult}
-                    close={() => {
-                      setOpen(false);
-                    }}
-                  />
-                </motion.div>
-              )
-            }
-          </AnimatePresence>
-        </Portal>
-      </motion.div>
-    </AnimatePresence>
+    <>
+      <Box p={3}>
+        <Header />
+      </Box>
+      <CustomHits setResult={setFundCardResult} setOpen={setOpen} open={open} />
+      <Portal>
+        <AnimatePresence>
+          {
+            // @todo Adbstract this into a component and use a recoil atom to share the current fund being opened.
+            open && (
+              <motion.div
+                style={styleProps}
+                key={1}
+                initial={{ transform: "translateX(0%)" }}
+                animate={{ transform: "translateX(-100%)" }}
+                exit={{ transform: "translateX(0%)" }}
+                transition={{ duration: 0.3 }}
+              >
+                <FundCard
+                  result={fundCardResult}
+                  close={() => {
+                    setOpen(false);
+                  }}
+                />
+              </motion.div>
+            )
+          }
+        </AnimatePresence>
+      </Portal>
+    </>
   );
 }
 
