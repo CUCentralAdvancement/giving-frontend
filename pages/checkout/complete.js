@@ -15,6 +15,7 @@ import {
   giftSummaryLog,
   transactionDetails,
   givingFormInfo,
+  baseURL,
 } from "../../data/store";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
@@ -32,7 +33,29 @@ export default function Complete() {
 
   useEffect(() => {
     setCart([]);
-  }, [setCart]);
+    window.localStorage.setItem("userCart", JSON.stringify([]));
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        givingInfo: givingInfo,
+        giftSummary: giftSummary,
+        transaction: transaction,
+      }),
+      mode: "no-cors",
+      // redirect: "follow",
+    };
+
+    const url = `${baseURL}/api/order/create?${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME}=${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY}`;
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
     <Layout>
