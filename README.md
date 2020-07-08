@@ -10,7 +10,40 @@ To run the development server, you should have [Yarn installed](https://classic.
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. It will default to loading the fund search page at: [http://localhost:3000/fund-search](http://localhost:3000/fund-search).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. It will default to loading the fund search page at: [http://localhost:3000/fund-search](http://localhost:3000/fund-search). You'll be able to view the basic app but several parts won't properly function until you've added local environmental variables and enabled SSL support.
+
+### SSL 
+
+To complete a payment transaction, Authorize.net needs its iframe to load a local communicator file because of the same-origin policy browsers use to restrict CORS. That communicator file has to be loades on a secure connection. To generate a local certificate, run openssl.
+
+```bash
+cd giving-frontend
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+That will create the needed public key and certificate files at the root of your project. These files aren't tracked in source control since services end up sending you scary warnings about commiting public keys, even if they are only for a localhost SSL cert. I prefer not to get those notices.
+
+### .env Variables
+
+The `.env.example` file has a set of placeholder for the API keys you will need to add in order to run the app, provide logging, handle search, and handle payments.
+
+```ini
+NEXT_PUBLIC_ALGOLIA_KEY=
+NEXT_PUBLIC_ALGOLIA_ID=
+
+NEXT_PUBLIC_AUTHORIZE_LOGIN_ID=
+NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY=
+
+NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME=
+NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY=
+```
+
+Fill those in by asking your coworkers for the proper credentials and do so in a `.env.local` file. Just like the SSL cert and key, the `.env.local` file isn't tracked by version control in order to not reveal sensitive information to the world.
+
+After filling in those credentials, you should be able to view and use the entire application.
 
 ## Stack
 
