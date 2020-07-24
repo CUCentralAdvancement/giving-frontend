@@ -1110,10 +1110,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cu-advancement/component-library@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@cu-advancement/component-library/-/component-library-0.2.2.tgz#272d5021689cd06ccc1a6b550b10d1c6e9861c53"
-  integrity sha512-AbbJ0IM9G2NptxSRRWzQeQvY7Ufw0g+fXeygUdgChGwJJGkyt4gIMg4ZB6b9HsYZZFKiafrqDoOmPkz70N05UA==
+"@cu-advancement/component-library@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@cu-advancement/component-library/-/component-library-0.2.5.tgz#6e8e1978447406cbc20347230b171c1c858b33b9"
+  integrity sha512-Irq2YeWlaHOaBVA1roLp9pnJojNjauUyB1mhBmE2dXxknhuHhaJh4qlX+wVem2N0l3DV+EvLiu48yygR0JEBHA==
   dependencies:
     react-select "^3.1.0"
     theme-ui "^0.3.1"
