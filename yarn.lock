@@ -6567,10 +6567,10 @@ react-fast-compare@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-hook-form@^6.0.8:
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.0.8.tgz#29319df417c8ba68ee7ce497426c53a69df07aa5"
-  integrity sha512-lf1TTuRuqHkYJqDtNIgDu9Rk7euKWkFaG2+XZ3FSkngiFWR72Lj96/FeSGF+ZMylCLdCFq2F059kzucVKWvDiQ==
+react-hook-form@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.1.0.tgz#ef2d4d7ad4805b3f33d027448d8a0f2944ec8ca5"
+  integrity sha512-sPOTCaWQUOPaf+U8hJEXD3ZqBiBxnvCBNm/VLAOh6MUMxRz0Yl0PtsWHAXIqxz5yGLGPe7prgghlfEUJ+sb5Dg==
 
 react-input-autosize@^2.2.2:
   version "2.2.2"
