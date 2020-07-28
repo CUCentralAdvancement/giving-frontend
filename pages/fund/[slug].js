@@ -59,12 +59,10 @@ export async function getStaticPaths() {
   const pathsList = await res.json();
 
   const paths = [];
-  Object.keys(pathsList).forEach((key, index) => {
-    if (index < 200) {
-      paths.push({
-        params: { slug: pathsList[key] },
-      });
-    }
+  Object.keys(pathsList).forEach((key) => {
+    paths.push({
+      params: { slug: pathsList[key] },
+    });
   });
 
   return {

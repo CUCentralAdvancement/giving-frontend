@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
 // export const baseURL = "http://cu-giving.lndo.site";
-export const baseURL = "https://385-i-cu-giving.pantheonsite.io";
+export const baseURL = "https://385-j-cu-giving.pantheonsite.io";
 
 const userCartInitialState =
   typeof window !== "undefined" &&
