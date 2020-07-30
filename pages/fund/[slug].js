@@ -80,5 +80,5 @@ export async function getStaticProps({ params }) {
   const fund = await res.json();
 
   // Pass data to the page via props
-  return { props: { fund }, unstable_revalidate: 60 };
+  return { props: { fund }, revalidate: 60 };
 }
