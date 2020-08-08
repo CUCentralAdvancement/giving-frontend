@@ -18,7 +18,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/pro-regular-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "algoliasearch": "^4.3.1",
+    "algoliasearch": "^4.4.0",
     "authorizenet": "^1.0.7",
     "express": "^4.17.1",
     "framer-motion": "^2.3.0",
