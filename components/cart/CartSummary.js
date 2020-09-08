@@ -1,7 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Link from "next/link";
 import { Text, Flex, Button, Box } from "@cu-advancement/component-library";
 import { motion, AnimatePresence } from "framer-motion";
+
+CartSummary.propTypes = {
+  cart: PropTypes.arrayOf(PropTypes.object),
+  removeCallback: PropTypes.func,
+};
 
 export default function CartSummary({ cart, removeCallback }) {
   let orderTotal = 0;
