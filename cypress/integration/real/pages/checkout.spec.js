@@ -187,6 +187,7 @@ describe("Checkout Tests", () => {
 
     getIframeBody("add_payment").find(".payButton").click();
 
+    /* eslint-disable-next-line */
     cy.wait(5000);
 
     // cy.url().should("include", "checkout/complete");
@@ -218,6 +219,7 @@ describe("Checkout Tests", () => {
 
     // Make sure that cart in header doesn't have any items.
     // @todo Figure out why this works locally but not on Travis CI.
+    /* eslint-disable-next-line */
     cy.wait(1000);
     cy.get("header").within(() => {
       cy.get('[data-testid="cart-items-total"]').then((total) => {
