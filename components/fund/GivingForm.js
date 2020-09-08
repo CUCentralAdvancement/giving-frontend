@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +25,10 @@ import {
   giftStateOptions,
   countryOptionsList,
 } from "../../data/donationForm";
+
+GivingForm.propTypes = {
+  fund: PropTypes.object,
+};
 
 export default function GivingForm({ fund }) {
   const [cart, setCart] = useRecoilState(userCart);
@@ -161,7 +166,7 @@ export default function GivingForm({ fund }) {
             <Checkbox
               name="reocurringGift"
               checked={reocurringGift}
-              onChange={(e) => {
+              onChange={() => {
                 setValue("reocurringGift", !reocurringGift);
                 setReocurringGift(!reocurringGift);
               }}
@@ -207,7 +212,7 @@ export default function GivingForm({ fund }) {
           <Checkbox
             name="pledgePayment"
             checked={pledgePayment}
-            onChange={(e) => {
+            onChange={() => {
               setValue("pledgePayment", !pledgePayment);
             }}
             sx={{
@@ -381,6 +386,14 @@ export default function GivingForm({ fund }) {
     </form>
   );
 }
+
+DonationRadio.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  trackedValue: PropTypes.string,
+  setter: PropTypes.func,
+};
 
 function DonationRadio({ name, label, value, trackedValue, setter, ...props }) {
   return (
