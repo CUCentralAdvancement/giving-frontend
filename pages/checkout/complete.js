@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // import Link from "next/link";
 import dynamic from "next/dynamic";
 import Layout from "../../components/global/Layout";
@@ -17,7 +17,7 @@ import {
   givingFormInfo,
   baseURL,
 } from "../../data/store";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 const CartSummary = dynamic(() => import("../../components/cart/CartSummary"), {
   ssr: false,
@@ -25,9 +25,7 @@ const CartSummary = dynamic(() => import("../../components/cart/CartSummary"), {
 
 export default function Complete() {
   const setCart = useSetRecoilState(userCart);
-  const [transaction, setTransactionDetails] = useRecoilState(
-    transactionDetails
-  );
+  const transaction = useRecoilValue(transactionDetails);
   const giftSummary = useRecoilValue(giftSummaryLog);
   const givingInfo = useRecoilValue(givingFormInfo);
 
@@ -55,7 +53,7 @@ export default function Complete() {
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [giftSummary, givingInfo, setCart, transaction]);
 
   return (
     <Layout>

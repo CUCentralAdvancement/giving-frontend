@@ -1,5 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 // import Head from "next/head";
+
+Home.propTypes = {
+  message: PropTypes.string,
+};
 
 export default function Home({ message }) {
   return (

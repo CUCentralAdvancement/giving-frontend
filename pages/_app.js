@@ -1,8 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 // import App from 'next/app'
 // import { StateProvider } from "../data/store";
 import { RecoilRoot } from "recoil";
 import "../components/fund-search/algolia.css";
+
+MyApp.propTypes = {
+  Component: PropTypes.any.isRequired,
+  pageProps: PropTypes.any.isRequired,
+};
 
 function MyApp({ Component, pageProps }) {
   return (
