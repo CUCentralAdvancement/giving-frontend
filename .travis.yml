@@ -12,7 +12,7 @@ cache:
   npm: true
   directories:
     - "~/.cache"
-    - ".next/cache"
+    # - ".next/cache"
 install:
   - yarn
 script:
