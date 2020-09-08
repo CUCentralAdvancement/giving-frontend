@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import {
@@ -13,7 +14,7 @@ import {
 import { userCart } from "../../data/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/pro-regular-svg-icons";
-import { motion, useAnimation, transform } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 export default function Header() {
   const cart = useRecoilValue(userCart);
@@ -142,6 +143,12 @@ export default function Header() {
     </Flex>
   );
 }
+
+StyledLink.propTypes = {
+  children: PropTypes.any.isRequired,
+  sx: PropTypes.object,
+  url: PropTypes.string,
+};
 
 function StyledLink({ children, sx, url }) {
   return (
