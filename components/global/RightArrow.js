@@ -1,4 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+RightArrow.propTypes = {
+  fillColor: PropTypes.string,
+};
 
 export default function RightArrow({ fillColor }) {
   return (
