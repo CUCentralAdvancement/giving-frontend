@@ -7,6 +7,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FadeIn from "./FadeIn";
 
+/* eslint-disable */
 const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
   return (
     <ThemeProvider
