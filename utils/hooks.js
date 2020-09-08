@@ -13,10 +13,12 @@ const useWindowDimensions = () => {
     return { width: 0, height: 0 };
   }
 
+  /* eslint-disable-next-line */
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
 
+  /* eslint-disable-next-line */
   useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
