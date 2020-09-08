@@ -30,7 +30,7 @@ const Header = connectStats(CustomStats);
 /**
  * Description of the search results component.
  */
-export default function SearchResults({ results, count }) {
+export default function SearchResults() {
   // console.log(results);
   const [fundCardResult, setFundCardResult] = useState({
     title: "",
@@ -119,6 +119,10 @@ SearchResults.defaultProps = {
   ],
 };
 
+FeaturedFund.propTypes = {
+  res: PropTypes.object,
+};
+
 function FeaturedFund({ res }) {
   return (
     <Box
@@ -136,6 +140,11 @@ function FeaturedFund({ res }) {
   );
 }
 
+CustomStats.propTypes = {
+  processingTimeMS: PropTypes.number,
+  nbHits: PropTypes.number,
+};
+
 function CustomStats({ processingTimeMS, nbHits }) {
   return (
     <>
@@ -144,7 +153,7 @@ function CustomStats({ processingTimeMS, nbHits }) {
         {process.env.NODE_ENV !== "production" && ` in ${processingTimeMS}ms`}
       </Text>
       <Text sx={{ display: "inline-block", fontStyle: "italic" }} mr={2}>
-        Can't find what you're looking for?
+        Can&apos;t find what you&apos;re looking for?
       </Text>
       <Link href="/fund/write-fund">
         <a
@@ -163,6 +172,15 @@ function CustomStats({ processingTimeMS, nbHits }) {
     </>
   );
 }
+
+CardContents.propTypes = {
+  hits: PropTypes.arrayOf(PropTypes.object),
+  hasMore: PropTypes.bool,
+  refineNext: PropTypes.func,
+  setOpen: PropTypes.func,
+  setResult: PropTypes.func,
+  open: PropTypes.bool,
+};
 
 function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
   return (
