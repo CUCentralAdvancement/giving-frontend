@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   Flex,
@@ -9,6 +10,10 @@ import {
   Link,
 } from "@cu-advancement/component-library";
 import { footerLinks } from "../../data/menus";
+
+PaddedText.propTypes = {
+  children: PropTypes.any.isRequired,
+};
 
 const PaddedText = ({ children }) => (
   <Text sx={{ pl: [1, 0], pb: [1, 0], fontWeight: [1] }}>{children}</Text>

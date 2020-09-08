@@ -3,16 +3,10 @@ import { useRouter } from "next/router";
 import Layout from "../../components/global/Layout";
 import { Flex, Text, Image } from "@cu-advancement/component-library";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  authorizeNetToken,
-  transactionDetails,
-  givingFormInfo,
-} from "../../data/store";
+import { authorizeNetToken, transactionDetails } from "../../data/store";
 
 export default function Payment() {
   const token = useRecoilValue(authorizeNetToken);
-  // const givingInfo = useRecoilValue(givingFormInfo);
-  // console.log(givingInfo);
   const setTransactionDetails = useSetRecoilState(transactionDetails);
   const router = useRouter();
 
@@ -49,7 +43,7 @@ export default function Payment() {
         };
       }
     }
-  }, []);
+  }, [router, setTransactionDetails]);
   return (
     <Layout>
       <Flex

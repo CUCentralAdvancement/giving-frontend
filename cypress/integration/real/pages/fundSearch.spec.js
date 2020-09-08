@@ -28,6 +28,7 @@ describe("Fund Search Tests", () => {
       .find("select")
       .select("CU Anschutz");
 
+    /* eslint-disable-next-line */
     cy.wait(500);
     // cy.contains("CU Anschutz").click();
     // cy.get('[data-testid="search-button"]').click();
@@ -54,6 +55,7 @@ describe("Fund Search Tests", () => {
       .find("select")
       .select("Science, Research & Innovation");
 
+    /* eslint-disable-next-line */
     cy.wait(500);
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
@@ -81,6 +83,7 @@ describe("Fund Search Tests", () => {
       .find("select")
       .select("Academic Program Funds");
 
+    /* eslint-disable-next-line */
     cy.wait(500);
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
@@ -239,7 +242,10 @@ describe("Fund Search Tests", () => {
       expect(results.length).to.equal(20);
     });
     cy.get('[data-testid="load-more-button"]').click();
+
+    /* eslint-disable-next-line */
     cy.wait(500);
+
     cy.get('[data-testid="search-result"]').then((results) => {
       expect(results.length).to.equal(40);
     });

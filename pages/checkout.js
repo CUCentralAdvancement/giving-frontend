@@ -299,7 +299,7 @@ export default function Checkout() {
                 name="includeSpouse"
                 label="Include Spouse/Partner in your gift?"
                 checked={includeSpouse}
-                onChange={(e) => {
+                onChange={() => {
                   setValue("includeSpouse", !includeSpouse);
                   setIncludeSpouse(!includeSpouse);
                 }}
@@ -397,7 +397,7 @@ export default function Checkout() {
                 name="updateProfile"
                 label="Update my profile with this information"
                 checked={updateProfile}
-                onChange={(e) => {
+                onChange={() => {
                   setValue("updateProfile", !updateProfile);
                   setUpdateProfile(!updateProfile);
                 }}
