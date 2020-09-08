@@ -1,5 +1,5 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import {
   Flex,
   Box,
@@ -85,7 +85,11 @@ export default function SearchForm() {
   );
 }
 
-function CustomSearch({ currentRefinement, isSearchStalled, refine }) {
+CustomSearch.propTypes = {
+  refine: PropTypes.func,
+};
+
+function CustomSearch({ refine }) {
   return (
     <TextInput
       name="search"
