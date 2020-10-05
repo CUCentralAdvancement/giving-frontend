@@ -16,7 +16,7 @@
     "@cu-advancement/component-library": "^0.2.8",
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/fontawesome-pro": "^5.15.0",
-    "@fortawesome/pro-regular-svg-icons": "^5.15.0",
+    "@fortawesome/pro-regular-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "algoliasearch": "^4.5.1",
     "authorizenet": "^1.0.7",
