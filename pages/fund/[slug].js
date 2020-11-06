@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Layout from "../../components/global/Layout";
-// import fetch from "node-fetch";
 import { URL } from "whatwg-url";
 import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";

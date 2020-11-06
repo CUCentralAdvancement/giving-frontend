@@ -1,5 +1,5 @@
 const algoliasearch = require("algoliasearch");
-const fetch = require("node-fetch");
+const fetch = require("fetch");
 // const baseURL = "http://cu-giving.lndo.site";
 const baseURL = "https://385-i-cu-giving.pantheonsite.io";
 
