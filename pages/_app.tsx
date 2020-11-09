@@ -1,16 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
+import type { AppProps /*, AppContext */ } from 'next/app'
 // import App from 'next/app'
 // import { StateProvider } from "../data/store";
 import { RecoilRoot } from "recoil";
 import "../components/fund-search/algolia.css";
 
-MyApp.propTypes = {
-  Component: PropTypes.any.isRequired,
-  pageProps: PropTypes.any.isRequired,
-};
-
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <React.StrictMode>
       <RecoilRoot>

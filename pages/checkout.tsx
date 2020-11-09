@@ -66,8 +66,7 @@ export default function Checkout() {
     cart.forEach((item) => {
       description += item.fundTitle + " (" + item.allocationCode + ")";
       // @todo Add to parse for floats, since the format is in dollars AND cents.
-      orderTotal =
-        parseFloat(orderTotal) + parseFloat(`${item["giving-amount"]}.00`);
+      orderTotal += parseFloat(`${item["giving-amount"]}.00`);
     });
     // console.log(orderTotal);
     data.description = description;

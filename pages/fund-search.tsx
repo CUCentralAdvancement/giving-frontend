@@ -1,6 +1,5 @@
 // import Head from "next/head";
 import React from "react";
-// import PropTypes from "prop-types";
 import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/global/Layout";
 import SearchForm from "../components/fund-search/SearchForm";

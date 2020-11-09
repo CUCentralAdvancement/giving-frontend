@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 // import Head from "next/head";
 import { ThemeProvider } from "theme-ui";
 import { Box, Flex, theme } from "@cu-advancement/component-library";
@@ -7,8 +6,12 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FadeIn from "./FadeIn";
 
+type Props = {
+  mainBg?: string
+}
+
 /* eslint-disable */
-const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
+const Layout: React.FC<Props> = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
   return (
     <ThemeProvider
       theme={{
@@ -35,8 +38,3 @@ const Layout = React.forwardRef(({ children, mainBg = "inherit" }, ref) => {
 });
 
 export default Layout;
-
-Layout.propTypes = {
-  children: PropTypes.element.isRequired,
-  mainBg: PropTypes.string,
-};

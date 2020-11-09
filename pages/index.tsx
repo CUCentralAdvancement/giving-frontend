@@ -1,18 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
-// import Head from "next/head";
 
-Home.propTypes = {
-  message: PropTypes.string,
-};
+type Props = {
+  message?: string
+}
 
-export default function Home({ message }) {
+const Home: React.FC<Props> = ({ message }) => {
   return (
     <div className="container">
       <h1>{message}</h1>
     </div>
   );
 }
+
+export default Home;
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do

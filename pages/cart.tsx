@@ -19,7 +19,7 @@ const CartSummary = dynamic(() => import("../components/cart/CartSummary"), {
   ssr: false,
 });
 
-export default function Cart() {
+export default function Cart() { 
   // const router = useRouter();
   const [cart, setCart] = useRecoilState(userCart);
   const setGiftSummary = useSetRecoilState(giftSummaryLog);
