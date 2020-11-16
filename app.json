@@ -1,0 +1,22 @@
+{
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "auth0:free "
+  ],
+  "environments": {
+    "review": {
+      "addons": [
+        "heroku-postgresql:hobby-dev",
+        "auth0:free "
+      ]
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-cli"
+    }
+  ]
+}
