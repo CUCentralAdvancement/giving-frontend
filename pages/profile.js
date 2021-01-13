@@ -26,6 +26,8 @@ export async function getServerSideProps({ req, res }) {
   // Check for cookie and use that if there?
   // console.log(req.cookies['a0:session']);
 
+  let user = {};
+
   // Only do on client-side.
   if (typeof window === 'undefined') {
     // Get Auth0 session and redirect to login if no user.
@@ -38,11 +40,15 @@ export async function getServerSideProps({ req, res }) {
       return;
     }
 
+    user = session.user;
     // Set cookie for next request?
   }
 
   // Grab user info from db.
-  const user = session.user;
+  if (user.email) {
+    const db = require('../data/db').instance;
+    db.query();
+  }
 
   return { props: { user } };
 }
