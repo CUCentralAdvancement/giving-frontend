@@ -459,10 +459,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fortawesome/fontawesome-common-types@^0.2.32":
-  version "0.2.32"
-  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/0.2.32/fontawesome-common-types-0.2.32.tgz#3436795d5684f22742989bfa08f46f50f516f259"
-  integrity sha512-ux2EDjKMpcdHBVLi/eWZynnPxs0BtFVXJkgHIxXRl+9ZFaHPvYamAfCzeeQFqHRjuJtX90wVnMRaMQAAlctz3w==
+"@fortawesome/fontawesome-common-types@^0.2.32", "@fortawesome/fontawesome-common-types@^0.2.34":
+  version "0.2.34"
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/0.2.34/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
+  integrity sha512-XcIn3iYbTEzGIxD0/dY5+4f019jIcEIWBiHc3KrmK/ROahwxmZ/s+tdj97p/5K0klz4zZUiMfUlYP0ajhSJjmA==
 
 "@fortawesome/fontawesome-pro@^5.15.1":
   version "5.15.1"
@@ -476,12 +476,12 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.32"
 
-"@fortawesome/pro-regular-svg-icons@^5.15.1":
-  version "5.15.1"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/5.15.1/pro-regular-svg-icons-5.15.1.tgz#628d37cff0e0af6575603cf639887a39c3085546"
-  integrity sha512-DsY0Dn9jjt0jJIHHm5AKR3PUDzd5z9KXzwllaxqxk8cAvNZv1+JsBXdsMVe5HQf60Fj8M+G7oRnTg1dpGL2v2A==
+"@fortawesome/pro-regular-svg-icons@^5.15.2":
+  version "5.15.2"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/5.15.2/pro-regular-svg-icons-5.15.2.tgz#9ae32dc539aa71a45a60579946b186d05ee3b90c"
+  integrity sha512-hdR6mtkGAfucMHVG68CnD7gxvoZVSYtjh+HiNi1uk9mhTHGyW3NuP//UaRpLrzdZ12toq4H0cfThbBHtR1/iCQ==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.32"
+    "@fortawesome/fontawesome-common-types" "^0.2.34"
 
 "@fortawesome/react-fontawesome@^0.1.14":
   version "0.1.14"
