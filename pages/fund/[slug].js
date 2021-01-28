@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Layout from "../../components/global/Layout";
-import { URL } from "whatwg-url";
+// import { URL } from "whatwg-url";
 import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
-import { baseURL } from "../../data/store";
+// import { baseURL } from "../../data/store";
 
 Fund.propTypes = {
   fund: PropTypes.object,
@@ -59,19 +59,21 @@ export default function Fund({ fund }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${baseURL}/api/funds/paths`);
-  const pathsList = await res.json();
+  // const res = await fetch(`${baseURL}/api/funds/paths`);
+  // const pathsList = await res.json();
 
-  const paths = [];
-  Object.keys(pathsList).forEach((key) => {
-    paths.push({
-      params: { slug: pathsList[key] },
-    });
-  });
+  // const paths = [];
+  // Object.keys(pathsList).forEach((key) => {
+  //   paths.push({
+  //     params: { slug: pathsList[key] },
+  //   });
+  // });
+
+  const paths = require('../../data/fund-paths.json');
 
   return {
-    paths: paths,
-    fallback: true,
+    paths: paths.map((el) => `/fund/${el}`),
+    fallback: false,
   };
 }
 
@@ -80,9 +82,10 @@ export async function getStaticProps({ params }) {
   const slug = params.slug || null;
 
   // Fetch data from external API
-  const res = await fetch(new URL(`${baseURL}/api/fund/${slug}`));
-  const fund = await res.json();
+  // const res = await fetch(new URL(`${baseURL}/api/fund/${slug}`));
+  // const fund = await res.json();
+  const fund = require(`../../data/funds/${slug}.json`);
 
   // Pass data to the page via props
-  return { props: { fund }, revalidate: 60 };
+  return { props: { fund } };
 }
