@@ -13,7 +13,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^0.16.0",
     "@cu-advancement/component-library": "^0.2.8",
     "@fortawesome/fontawesome-pro": "^5.15.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
