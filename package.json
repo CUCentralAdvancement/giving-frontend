@@ -28,6 +28,7 @@
     "react-hook-form": "^6.15.1",
     "react-instantsearch-dom": "^6.9.0",
     "recoil": "^0.1.2",
+    "sqreen": "^1.61.0",
     "uuid": "^8.3.2",
     "whatwg-url": "^8.4.0"
   },

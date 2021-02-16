@@ -1,3 +1,6 @@
+// Sqreen needs to be the first script loaded.
+require('sqreen');
+
 const express = require("express");
 const next = require("next");
 const http = require("http");
