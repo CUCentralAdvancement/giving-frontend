@@ -2,6 +2,9 @@
 
 Build with Next.js, this application will pull data from multiple sources and render content for users. It will use server-side rendering techniques, incremental builds for static content, and also fancy client-side caching to provide the best UX possible.
 
+- [Getting Started](#getting-started)
+- [Font Awesome Icons](#font-awesome)
+
 ## Getting Started
 
 To run the development server, you should have [Yarn installed](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
@@ -151,3 +154,19 @@ Sometimes the build will fail. Unlike a Travis CI test run, you can't easily cli
 <img width="1043" alt="Screen Shot 2020-06-05 at 3 09 24 PM" src="https://user-images.githubusercontent.com/3640707/83914173-b41f9100-a73e-11ea-9a32-2f0ea0b14584.png">
 
 Also, the Next.js build of the app will try to connect to the API with fund data in it. If that server needs to wake up, then the deployment might fail for that reason. To mitigate this, at least while developing and testing, there could be a Heroku-specific config file that wakes up the API. I am doing this in the Travis CI script already.
+
+# Font Awesome
+
+This repository used to integrate with the Pro version of Font Awesome icons, which requires more setup, but now the free version of Font Awesome 5 is used.
+
+```js
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// Search for icons at https://fontawesome.com/icons?d=gallery&m=free .
+// Then Pascal-case the name removing hyphens to get the exported component.
+import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
+
+function IconThing() {
+  return (
+    <FontAwesomeIcon icon={faShoppingBasket}/>
+  );
+}
