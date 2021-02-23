@@ -155,7 +155,7 @@ Sometimes the build will fail. Unlike a Travis CI test run, you can't easily cli
 
 Also, the Next.js build of the app will try to connect to the API with fund data in it. If that server needs to wake up, then the deployment might fail for that reason. To mitigate this, at least while developing and testing, there could be a Heroku-specific config file that wakes up the API. I am doing this in the Travis CI script already.
 
-# Font Awesome
+## Font Awesome
 
 This repository used to integrate with the Pro version of Font Awesome icons, which requires more setup, but now the free version of Font Awesome 5 is used.
 
