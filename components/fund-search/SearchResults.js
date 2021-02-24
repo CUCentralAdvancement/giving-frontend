@@ -285,15 +285,18 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
 
 function getKeywords(res) {
   let keywords = [];
-
-  typeof res.keywords !== "undefined" &&
+  
+  if (typeof res.keywords !== "undefined") {
     res.keywords.forEach((el) => {
       keywords.push(el.label);
     });
-  typeof res.additional_keywords !== "undefined" &&
+  }
+
+  if (typeof res.additional_keywords !== "undefined") {
     res.additional_keywords.forEach((el) => {
       keywords.push(el.label);
     });
+  }
 
   return keywords.join(", ");
 }
