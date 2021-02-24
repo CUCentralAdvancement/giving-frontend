@@ -298,5 +298,5 @@ function getKeywords(res) {
     });
   }
 
-  return keywords.join(", ");
+  return keywords.length > 0 ? keywords.join(", ") : '';
 }
