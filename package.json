@@ -24,7 +24,7 @@
     "next": "10.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-hook-form": "^6.15.3",
+    "react-hook-form": "^6.15.4",
     "react-instantsearch-dom": "^6.10.0",
     "recoil": "^0.1.2",
     "sqreen": "^1.61.0",
