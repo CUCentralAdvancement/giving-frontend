@@ -242,7 +242,7 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
               >
                 {interests[res.interests]}
                 <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-                  {getKeywords(res)}
+                  {/* {getKeywords(res)} */}
                 </Box>
               </Text>
             </Flex>
@@ -283,17 +283,20 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
   );
 }
 
-function getKeywords(res) {
-  let keywords = [];
+// function getKeywords(res) {
+//   let keywords = [];
+  
+//   if (typeof res.keywords !== "undefined") {
+//     res.keywords.forEach((el) => {
+//       keywords.push(el.label);
+//     });
+//   }
 
-  typeof res.keywords !== "undefined" &&
-    res.keywords.forEach((el) => {
-      keywords.push(el.label);
-    });
-  typeof res.additional_keywords !== "undefined" &&
-    res.additional_keywords.forEach((el) => {
-      keywords.push(el.label);
-    });
+//   if (typeof res.additional_keywords !== "undefined") {
+//     res.additional_keywords.forEach((el) => {
+//       keywords.push(el.label);
+//     });
+//   }
 
-  return keywords.join(", ");
-}
+//   return keywords.length > 0 ? keywords.join(", ") : '';
+// }

@@ -43,5 +43,10 @@
   },
   "cacheDirectories": [
     ".next/cache"
-  ]
+  ],
+    "engines": {
+      "node": "14.x",
+      "npm": "6.x",
+      "yarn": "1.x"
+  }
 }
