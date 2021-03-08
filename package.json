@@ -21,7 +21,7 @@
     "authorizenet": "^1.0.7",
     "express": "^4.17.1",
     "framer-motion": "^3.9.1",
-    "next": "10.0.7",
+    "next": "10.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^6.15.4",
