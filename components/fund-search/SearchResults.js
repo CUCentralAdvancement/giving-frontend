@@ -53,9 +53,9 @@ export default function SearchResults() {
 
   return (
     <>
-      <Box p={3}>
+      <div className="p-3">
         <Header />
-      </Box>
+      </div>
       <CustomHits setResult={setFundCardResult} setOpen={setOpen} open={open} />
       <Portal>
         <AnimatePresence>
@@ -125,18 +125,18 @@ FeaturedFund.propTypes = {
 
 function FeaturedFund({ res }) {
   return (
-    <Box
-      bg="black"
-      sx={{ mr: -2, my: 2, height: "38px" }}
+    <div
+      className="bg-black -mr-2 my-2"
+      style="height:38px;"
       data-testid="featured-fund"
     >
-      <Flex sx={{ flexDirection: "row" }}>
-        <Box sx={{ height: "100%" }}>
+      <div className="flex flex-row">
+        <div className="h-full">
           <RightArrow fillColor={campusColors[res.campus.value]} />
-        </Box>
-        <Text sx={{ ml: "auto", p: 2, fontSize: 1 }}>Featured Fund</Text>
-      </Flex>
-    </Box>
+        </div>
+        <span className="ml-auto p-2 text-sm">Featured Fund</span>
+      </div>
+    </div>
   );
 }
 
