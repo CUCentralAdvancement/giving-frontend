@@ -20,7 +20,7 @@
     "algoliasearch": "^4.8.6",
     "authorizenet": "^1.0.7",
     "express": "^4.17.1",
-    "framer-motion": "^3.10.2",
+    "framer-motion": "^4.0.2",
     "next": "10.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
