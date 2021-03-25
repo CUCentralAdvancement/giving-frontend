@@ -35,3 +35,5 @@ cypress/screenshots
 
 localhost.key
 localhost.crt
+
+.env
