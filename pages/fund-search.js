@@ -5,8 +5,8 @@ import { Box, Flex } from "@cu-advancement/component-library";
 import Layout from "../components/global/Layout";
 // import SearchForm from "../components/fund-search/SearchForm";
 // import SearchResults from "../components/fund-search/SearchResults";
-// import algoliasearch from "algoliasearch/lite";
-// import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 // const searchClient = algoliasearch(
