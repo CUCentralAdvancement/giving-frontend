@@ -52,7 +52,7 @@ export default function SearchResults() {
   };
 
   return (
-    <>
+    <div className="container mx-auto">
       <div className="p-3">
         <Header />
       </div>
@@ -81,7 +81,7 @@ export default function SearchResults() {
           }
         </AnimatePresence>
       </Portal>
-    </>
+    </div>
   );
 }
 
@@ -132,7 +132,7 @@ function FeaturedFund({ res }) {
     >
       <div className="flex flex-row">
         <div className="h-full">
-          <RightArrow fillColor={campusColors[res.campus.value]} />
+          {/* <RightArrow fillColor={campusColors[res.campus.value]} /> */}
         </div>
         <span className="ml-auto p-2 text-sm">Featured Fund</span>
       </div>
@@ -148,22 +148,16 @@ CustomStats.propTypes = {
 function CustomStats({ processingTimeMS, nbHits }) {
   return (
     <>
-      <Text color="primary" mb={2}>
+      <p className="mb-2 color-gold">
         <span data-testid="search-result-count">{nbHits}</span> Results
         {process.env.NODE_ENV !== "production" && ` in ${processingTimeMS}ms`}
-      </Text>
-      <Text sx={{ display: "inline-block", fontStyle: "italic" }} mr={2}>
+      </p>
+      <p className="inline-block italic mr-2">
         Can&apos;t find what you&apos;re looking for?
-      </Text>
+      </p>
       <Link href="/fund/write-fund">
-        <a
-          style={{
-            display: "inline-block",
-            fontStyle: "italic",
-            textDecoration: "none",
-            color: "#298FCE",
-            ":hover": 'text-decoration: "underline"',
-          }}
+        <a className="inline-block italic no-underline hover:underline"
+          style={{color: "#298FCE"}}
           data-testid="write-in-link"
         >
           Click here to use our write-in fund option.
@@ -185,12 +179,12 @@ CardContents.propTypes = {
 function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
   return (
     <>
-      <Grid gap={3} columns={[1, 2, 3, 4]}>
+      <div className="grid gap-3 grid-cols-4">
         {hits.map((res) => (
           <Card
             data-testid="search-result"
             key={res.alloc_code.toString()}
-            sx={{ width: ["100%", "85%", "100%"], mx: ["auto", 0] }}
+            sx={{ width: ['100%', '85%', '100%'], mx: ['auto', 0] }}
             onClick={() => {
               if (!open) {
                 setOpen(true);
@@ -200,34 +194,21 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
           >
             <Flex
               sx={{
-                flexDirection: "column",
+                flexDirection: 'column',
                 minHeight: 231,
-                color: "text",
-                cursor: "pointer",
+                color: 'text',
+                cursor: 'pointer',
               }}
             >
-              <Box
-                bg={campusColors[res.campus.value]}
-                mx={-2}
-                mt={-2}
-                color="background"
-              >
+              <Box bg={campusColors[res.campus.value]} mx={-2} mt={-2} color="background">
                 <Flex>
-                  <Text
-                    sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }}
-                    data-testid="result-campus"
-                  >
+                  <Text sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }} data-testid="result-campus">
                     {res.campus.label}
                   </Text>
-                  {res.featured == true && (
-                    <FeaturedFund res={res}></FeaturedFund>
-                  )}
+                  {res.featured == true && <FeaturedFund res={res}></FeaturedFund>}
                 </Flex>
               </Box>
-              <Heading
-                sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }}
-                data-testid="result-title"
-              >
+              <Heading sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }} data-testid="result-title">
                 {res.title}
               </Heading>
               <Text
@@ -235,34 +216,32 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
                   p: 2,
                   fontSize: 2,
                   fontWeight: 700,
-                  color: "#4D5259",
+                  color: '#4D5259',
                   lineHeight: 1.2,
                 }}
                 data-testid="result-interest"
               >
                 {interests[res.interests]}
-                <Box sx={{ color: "#A0A3A5", fontSize: 0, pt: 1 }}>
-                  {/* {getKeywords(res)} */}
-                </Box>
+                <Box sx={{ color: '#A0A3A5', fontSize: 0, pt: 1 }}>{/* {getKeywords(res)} */}</Box>
               </Text>
             </Flex>
           </Card>
         ))}
-      </Grid>
+      </div>
       <Flex
         sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
           py: 4,
         }}
       >
         <Button
           variant="button.outline"
           sx={{
-            color: "secondary",
+            color: 'secondary',
             mr: 2,
-            border: "1px solid",
+            border: '1px solid',
             fontWeight: 500,
           }}
           data-testid="load-more-button"
@@ -273,7 +252,7 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
         </Button>
         <Button
           variant="button.outline"
-          sx={{ color: "secondary", border: "1px solid", fontWeight: 500 }}
+          sx={{ color: 'secondary', border: '1px solid', fontWeight: 500 }}
           data-testid="refine-search-button"
         >
           Refine my search
