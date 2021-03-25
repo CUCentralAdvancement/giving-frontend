@@ -47,9 +47,3 @@ export default function FundSearch() {
     </Layout>
   );
 }
-
-export async function getStaticProps(context) {
-  return {
-    props: {},
-  };
-}
