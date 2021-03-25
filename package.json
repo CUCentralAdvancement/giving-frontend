@@ -41,12 +41,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "prop-types": "^15.7.2"
   },
-  "cacheDirectories": [
-    ".next/cache"
-  ],
   "engines": {
-    "node": "14.x",
-    "npm": "6.x",
-    "yarn": "1.x"
+    "node": "14.16.x",
+    "npm": "6.14.x",
+    "yarn": "1.22.x"
   }
 }
