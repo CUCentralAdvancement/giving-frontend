@@ -19,7 +19,7 @@ export default function FundSearch() {
       <InstantSearch searchClient={searchClient} indexName="Funds">
         <div className="flex flex-col">
           <div className="bg-gray w-full">
-            <div className="p-3 max-w-screen-lg mx-auto">
+            <div className="p-4 max-w-screen-lg mx-auto">
               <SearchForm />
             </div>
           </div>

@@ -127,12 +127,12 @@ function FeaturedFund({ res }) {
   return (
     <div
       className="bg-black -mr-2 my-2"
-      style="height:38px;"
+      style={{height:'38px'}}
       data-testid="featured-fund"
     >
       <div className="flex flex-row">
         <div className="h-full">
-          {/* <RightArrow fillColor={campusColors[res.campus.value]} /> */}
+          <RightArrow fillColor={campusColors[res.campus.value]} />
         </div>
         <span className="ml-auto p-2 text-sm">Featured Fund</span>
       </div>
@@ -179,7 +179,7 @@ CardContents.propTypes = {
 function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
   return (
     <>
-      <div className="grid gap-3 grid-cols-4">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {hits.map((res) => (
           <Card
             data-testid="search-result"
