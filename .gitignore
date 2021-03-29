@@ -36,4 +36,8 @@ cypress/screenshots
 localhost.key
 localhost.crt
 
+# Local config vars.
 .env
+
+# Sqreen config
+sqreen.json

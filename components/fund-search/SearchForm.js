@@ -1,12 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Flex,
-  Box,
-  Button,
-  TextInput,
-} from "@cu-advancement/component-library";
-import {
   connectCurrentRefinements,
   connectSearchBox,
   MenuSelect,
@@ -23,63 +17,40 @@ export default function SearchForm() {
   return (
     <>
       <form onSubmit={handleSubmit()} data-testid="search-form">
-        <Flex
-          sx={{
-            mx: -2,
-            mb: [0, 3, 3],
-            flexDirection: ["column", "row", "row"],
-          }}
-        >
-          <Box
-            sx={{ width: "100%", px: 2, pt: 2 }}
-            data-testid="campus-select-list"
-          >
+        <div className="mb-3 flex flex-row">
+          <div className="w-full px-2 pt-2" data-testid="campus-select-list">
             <MenuSelect
               attribute="campus.label"
               translations={{
-                seeAllOption: "All Campuses",
+                seeAllOption: 'All Campuses',
               }}
             />
-          </Box>
-          <Box
-            sx={{ width: "100%", px: 2, pt: 2 }}
-            data-testid="interests-select-list"
-          >
+          </div>
+          <div className="w-full px-2 pt-2" data-testid="interests-select-list">
             <MenuSelect
               attribute="interests.label"
               translations={{
-                seeAllOption: "All Interests",
+                seeAllOption: 'All Interests',
               }}
             />
-          </Box>
-          <Box
-            sx={{ width: "100%", px: 2, pt: 2 }}
-            data-testid="fund-type-select-list"
-          >
+          </div>
+          <div className="w-full px-2 pt-2" data-testid="fund-type-select-list">
             <MenuSelect
               attribute="fund_type.label"
               translations={{
-                seeAllOption: "Fund Type",
+                seeAllOption: 'Fund Type',
               }}
             />
-          </Box>
-        </Flex>
-        <Flex sx={{ mx: -2, mb: 3, flexDirection: ["column", "row", "row"] }}>
-          <Box sx={{ width: ["100%", "80%"], px: 2, pt: [2, 0, 0] }}>
+          </div>
+        </div>
+        <div className="mb-3 flex flex-row">
+          <div className="w-4/5 px-2">
             <SearchBox />
-          </Box>
-          <Box sx={{ width: ["100%", "20%"], px: 2, pt: [2, 0, 0] }}>
-            {/* <Button
-              variant="button.secondary"
-              type="submit"
-              mr={2}
-              data-testid="search-button"
-            >
-              Search
-            </Button> */}
+          </div>
+          <div className="w-1/5 px-2">
             <CustomClearRefinements clearsQuery />
-          </Box>
-        </Flex>
+          </div>
+        </div>
       </form>
     </>
   );
@@ -91,7 +62,8 @@ CustomSearch.propTypes = {
 
 function CustomSearch({ refine }) {
   return (
-    <TextInput
+    <input
+      className="w-full p-2"
       name="search"
       type="search"
       onChange={(event) => refine(event.currentTarget.value)}
@@ -103,15 +75,15 @@ function CustomSearch({ refine }) {
 function CustomRefine({ refine, items }) {
   if (items.length) {
     return (
-      <Button
-        variant="button.secondary"
+      <button
+        className="bg-black text-white rounded py-2 px-4"
         type="reset"
         data-testid="search-reset"
         onClick={() => refine(items)}
         isDisabled={!items.length}
       >
         Reset
-      </Button>
+      </button>
     );
   } else {
     return null;
