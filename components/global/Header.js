@@ -13,7 +13,7 @@ import {
 } from "@cu-advancement/component-library";
 import { userCart } from "../../data/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBasket } from "@fortawesome/pro-regular-svg-icons";
+import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation } from "framer-motion";
 
 export default function Header() {
