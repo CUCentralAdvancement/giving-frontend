@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
-// export const baseURL = "http://cu-giving.lndo.site";
-export const baseURL = "https://385-j-cu-giving.pantheonsite.io";
+// export const baseURL = "http://localhost:3000";
+export const baseURL = 'https://giving-backend-staging.herokuapp.com';
 
 const userCartInitialState =
   typeof window !== "undefined" &&
