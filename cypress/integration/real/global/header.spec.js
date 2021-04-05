@@ -30,7 +30,7 @@ describe("Header Component Test", () => {
         .and("have.attr", "href", "/fund-search");
 
       // Leaving search out for now.
-      cy.get("#block-search-form").should("not.be.visible");
+      cy.get("#block-search-form").should("not.exist");
     });
   });
 });

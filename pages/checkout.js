@@ -415,6 +415,7 @@ export default function Checkout() {
                   </Button>
                 </Box>
                 <Text sx={{ mr: 2 }}>or</Text>
+                {/* @todo make sure to Router.back() */}
                 <Link href={`/checkout`}>
                   <a>Cancel</a>
                 </Link>
