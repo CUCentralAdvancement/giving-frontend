@@ -132,7 +132,7 @@ function FeaturedFund({ res }) {
     >
       <div className="flex flex-row">
         <div className="h-full">
-          <RightArrow fillColor={campusColors[res.campus.value]} />
+          <RightArrow fillColor={campusColors[res.campus]} />
         </div>
         <span className="ml-auto p-2 text-sm">Featured Fund</span>
       </div>
@@ -183,7 +183,7 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
         {hits.map((res) => (
           <Card
             data-testid="search-result"
-            key={res.alloc_code.toString()}
+            key={res.allocation_code.toString()}
             sx={{ width: ['100%', '85%', '100%'], mx: ['auto', 0] }}
             onClick={() => {
               if (!open) {
@@ -200,12 +200,12 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
                 cursor: 'pointer',
               }}
             >
-              <Box bg={campusColors[res.campus.value]} mx={-2} mt={-2} color="background">
+              <Box bg={campusColors[res.campus]} mx={-2} mt={-2} color="background">
                 <Flex>
                   <Text sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }} data-testid="result-campus">
-                    {res.campus.label}
+                    {res.campus}
                   </Text>
-                  {res.featured == true && <FeaturedFund res={res}></FeaturedFund>}
+                  {res.featured_fund && <FeaturedFund res={res}></FeaturedFund>}
                 </Flex>
               </Box>
               <Heading sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }} data-testid="result-title">
@@ -221,8 +221,10 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
                 }}
                 data-testid="result-interest"
               >
-                {interests[res.interests]}
-                <Box sx={{ color: '#A0A3A5', fontSize: 0, pt: 1 }}>{/* {getKeywords(res)} */}</Box>
+                {res.interest}
+                <Box sx={{ color: '#A0A3A5', fontSize: 0, pt: 1 }}>
+                  {res.keywords || <span className="text-white">&nbsp;</span>}
+                </Box>
               </Text>
             </Flex>
           </Card>

@@ -16,7 +16,7 @@ const searchClient = algoliasearch(
 export default function FundSearch() {
   return (
     <Layout>
-      <InstantSearch searchClient={searchClient} indexName="Funds">
+      <InstantSearch searchClient={searchClient} indexName="Fund">
         <div className="flex flex-col">
           <div className="bg-gray w-full">
             <div className="p-4 max-w-screen-lg mx-auto">
@@ -33,7 +33,7 @@ export default function FundSearch() {
               >
                 <SearchResults />
                 <div className="flex flex-row justify-end">
-                  {/* <PoweredBy /> */}
+                  <PoweredBy />
                 </div>
               </motion.div>
             </AnimatePresence>
