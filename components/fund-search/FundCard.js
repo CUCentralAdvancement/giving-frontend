@@ -25,7 +25,7 @@ export default function FundCard({ result, close }) {
           flexDirection: "row",
           justifyContent: "flex-end",
           alignItems: "baseline",
-          bg: campusColors[result.campus.value],
+          bg: campusColors[result.campus],
           color: "background",
           p: 3,
         }}
@@ -38,7 +38,7 @@ export default function FundCard({ result, close }) {
       <Box sx={{ px: 3, py: 4, bg: "gray" }}>
         <Image
           data-testid="fund-card-campus"
-          src={campusLogos[result.campus.value]}
+          src={campusLogos[result.campus]}
           alt={`${result.campus.label} Logo`}
           sx={{ height: "60px" }}
         />
@@ -48,7 +48,7 @@ export default function FundCard({ result, close }) {
         <Text data-testid="fund-card-description" my={4}>
           {result.description}
         </Text>
-        <Link as={result.path} href="fund/[slug]">
+        <Link as={`fund/${result.slug}`} href="fund/[slug]">
           <a>
             <Button variant="button.secondary">Make a Gift</Button>
           </a>

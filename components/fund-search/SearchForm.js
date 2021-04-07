@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useRouter } from 'next/router';
 import {
   connectCurrentRefinements,
   connectSearchBox,
@@ -10,6 +11,7 @@ const CustomClearRefinements = connectCurrentRefinements(CustomRefine);
 const SearchBox = connectSearchBox(CustomSearch);
 
 export default function SearchForm() {
+  const { query } = useRouter();
   function handleSubmit() {
     console.log("submitted form");
   }
@@ -20,7 +22,8 @@ export default function SearchForm() {
         <div className="mb-3 flex flex-row">
           <div className="w-full px-2 pt-2" data-testid="campus-select-list">
             <MenuSelect
-              attribute="campus.label"
+              attribute="campus"
+              defaultRefinement={query.campus ? query.campus : ''}
               translations={{
                 seeAllOption: 'All Campuses',
               }}
@@ -28,7 +31,8 @@ export default function SearchForm() {
           </div>
           <div className="w-full px-2 pt-2" data-testid="interests-select-list">
             <MenuSelect
-              attribute="interests.label"
+              attribute="interest"
+              defaultRefinement={query.interest ? query.interest : ''}
               translations={{
                 seeAllOption: 'All Interests',
               }}
@@ -36,7 +40,8 @@ export default function SearchForm() {
           </div>
           <div className="w-full px-2 pt-2" data-testid="fund-type-select-list">
             <MenuSelect
-              attribute="fund_type.label"
+              attribute="fund_type"
+              defaultRefinement={query.fund_type ? query.fund_type : ''}
               translations={{
                 seeAllOption: 'Fund Type',
               }}
