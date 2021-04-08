@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { useRecoilValue } from "recoil";
 import Link from "next/link";
-import {
-  Badge,
-  Box,
-  Flex,
-  Image,
-  Link as CULink,
-  Button,
-  Text,
-} from "@cu-advancement/component-library";
 import { userCart } from "../../data/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
@@ -35,143 +25,69 @@ export default function Header() {
   }, [cart.length, controls]);
 
   return (
-    <Flex
-      as="header"
-      role="banner"
-      sx={{
-        flexDirection: "row",
-        maxWidth: 1280,
-        mx: "auto",
-        justifyContent: "space-between",
-        alignItems: "center",
-        pt: 3,
-      }}
-    >
-      <Box sx={{ p: 2, mr: 2 }}>
-        <Image
+    <header role="banner" className="flex flex-row max-w-screen-xl mx-auto items-center justify-between pt-3">
+      <div className="p-2 mr-3">
+        <img
           src="https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg"
-          sx={{ width: "317px" }}
+          style={{ width: '317px' }}
           data-testid="header-cu-logo"
           alt="University of Colorado Logo"
         />
-      </Box>
-      <Box sx={{ fontSize: 3, textTransform: "uppercase", p: 2 }}>
-        <StyledLink url="https://giving.cu.edu/guide-giving">
-          Guide to Giving
-        </StyledLink>
-        <StyledLink
-          url="https://giving.cu.edu/essentialcu"
-          sx={{
-            borderLeft: "2px solid #E2E3E4",
-          }}
-        >
+      </div>
+      <div className="text-lg uppercase p-2 grid grid-cols-3 items-baseline">
+        <Link href="/guide-giving">
+          <a className="pr-4 border-b-4 border-transparent hover:border-gold">Guide to Giving</a>
+        </Link>
+        <a className="text-center border-b-4 border-transparent hover:border-gold" src="https://essential.cu.edu">
           Essential CU
-        </StyledLink>
-        <StyledLink
-          url="https://giving.cu.edu/about-us"
-          sx={{
-            borderLeft: "2px solid #E2E3E4",
-          }}
-        >
-          About Us
-        </StyledLink>
-      </Box>
-      <Box sx={{ p: 2 }}>
-        <Flex
-          sx={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text sx={{ ml: "20px", height: "40px" }}>
+        </a>
+        <Link href="/guide-giving">
+          <a className="pl-4 border-b-4 border-transparent hover:border-gold">About Us</a>
+        </Link>
+      </div>
+      <div className="p-2">
+        <div className="flex flex-col items-center justify-items-center">
+          <span style={{ marginLeft: '20px', height: '40px' }}>
             <Link href="/cart">
               <a
                 className="cart-items-total"
                 style={{
-                  textDecoration: "none",
-                  color: "#000",
+                  textDecoration: 'none',
+                  color: '#000',
                   fontWeight: 700,
                 }}
               >
-                <Box sx={{ mr: "6px", display: "inline", fontSize: 4 }}>
-                  <FontAwesomeIcon
-                    style={{ height: "20px" }}
-                    icon={faShoppingBasket}
-                  />
-                </Box>
+                <div style={{ marginRight: '6px', display: 'inline' }}>
+                  <FontAwesomeIcon style={{ height: '20px' }} icon={faShoppingBasket} />
+                </div>
                 Gift Basket
-                <Badge
-                  sx={{
-                    ml: 2,
-                    borderRadius: "50%",
-                    height: "20px",
-                    width: "20px",
-                    textAlign: "center",
-                    backgroundColor: cartItems > 0 ? "secondary" : "#fff",
+                <div
+                  style={{
+                    display: 'inline-block',
+                    marginLeft: 2,
+                    borderRadius: '50%',
+                    height: '20px',
+                    width: '20px',
+                    textAlign: 'center',
+                    backgroundColor: cartItems > 0 ? 'secondary' : '#fff',
                   }}
                 >
-                  <motion.div
-                    animate={controls}
-                    data-testid="cart-items-total"
-                    style={{ paddingTop: "1px" }}
-                  >
+                  <motion.div animate={controls} data-testid="cart-items-total" style={{ paddingTop: '1px' }}>
                     {cartItems}
                   </motion.div>
-                </Badge>
+                </div>
               </a>
             </Link>
-          </Text>
+          </span>
           <Link href="/fund-search">
             <a>
-              <Button
-                sx={{
-                  textTransform: "uppercase",
-                  color: "text",
-                  fontWeight: "bold",
-                  mb: "36px",
-                  mt: 1,
-                  cursor: "pointer",
-                }}
-              >
+              <button className="uppercase bg-gold font-bold cursor-pointer p-2">
                 Give Now
-              </Button>
+              </button>
             </a>
           </Link>
-        </Flex>
-      </Box>
-    </Flex>
-  );
-}
-
-StyledLink.propTypes = {
-  children: PropTypes.any.isRequired,
-  sx: PropTypes.object,
-  url: PropTypes.string,
-};
-
-function StyledLink({ children, sx, url }) {
-  return (
-    <CULink
-      sx={{
-        ...sx,
-        p: 3,
-        textDecoration: "none",
-        color: "text",
-      }}
-      url={url}
-    >
-      <Text
-        sx={{
-          display: "inline",
-          ":hover": {
-            borderBottom: "4px solid",
-            borderBottomColor: "primary",
-          },
-        }}
-      >
-        {children}
-      </Text>
-    </CULink>
+        </div>
+      </div>
+    </header>
   );
 }
