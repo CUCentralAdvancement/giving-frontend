@@ -9,10 +9,10 @@ export default function GuideGiving() {
             <a className="cursor-pointer" href="#one-time-gifts">
               One-Time Gifts
             </a>
-            <a className="cursor-pointer">Recurring Gifts</a>
-            <a className="cursor-pointer">Securities</a>
-            <a className="cursor-pointer">Gift Planning</a>
-            <a className="cursor-pointer">Crowdfunding</a>
+            <a className="cursor-pointer" href="#recurring-gifts">Recurring Gifts</a>
+            <a className="cursor-pointer" href="#securities">Securities</a>
+            <a className="cursor-pointer" href="#gift-planning">Gift Planning</a>
+            <a className="cursor-pointer" href="#crowdfuding">Crowdfunding</a>
             <a className="cursor-pointer">Additional Options</a>
           </div>
         </div>
@@ -61,10 +61,10 @@ export default function GuideGiving() {
           </div>
         </div>
 
-        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }}>
+        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }} id="one-time-gifts">
           <div className="p-5 max-w-screen-lg mx-auto flex flex-row bg-muted-gold border-b-8 border-gold">
             <img
-              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_one_time-gold400.png?itok=H5VsGjeC"
+              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_one_time-gold400.png"
               width="379"
               height="379"
               alt=""
@@ -80,7 +80,7 @@ export default function GuideGiving() {
           </div>
         </div>
 
-        <div className="w-full p-12">
+        <div className="w-full p-12" id="recurring-gifts">
           <div className="p-5 max-w-screen-lg mx-auto flex flex-row bg-muted-gold border-b-8 border-gold">
             <div className="ml-8">
               <h2 className="text-2xl text-gold mb-3 font-bold">Set up a recurring gift</h2>
@@ -92,7 +92,7 @@ export default function GuideGiving() {
               <button className="uppercase bg-gold font-bold cursor-pointer p-2 mt-3">Get Started</button>
             </div>
             <img
-              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_recurring-gold400.png?itok=_rAjNNCJ"
+              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_recurring-gold400.png"
               width="379"
               height="379"
               alt=""
@@ -100,10 +100,10 @@ export default function GuideGiving() {
           </div>
         </div>
 
-        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }}>
+        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }} id="securities">
           <div className="p-5 max-w-screen-lg mx-auto flex flex-row bg-muted-gold border-b-8 border-gold">
             <img
-              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_stockassets-gold400.png?itok=RSvmpWiM"
+              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_stockassets-gold400.png"
               width="379"
               height="379"
               alt=""
@@ -120,7 +120,7 @@ export default function GuideGiving() {
           </div>
         </div>
 
-        <div className="w-full p-12">
+        <div className="w-full p-12" id="gift-planning">
           <div className="p-5 max-w-screen-lg mx-auto flex flex-row bg-muted-gold border-b-8 border-gold">
             <div className="ml-8">
               <h2 className="text-2xl text-gold mb-3 font-bold">Create a planned gift</h2>
@@ -132,7 +132,7 @@ export default function GuideGiving() {
               <button className="uppercase bg-gold font-bold cursor-pointer p-2 mt-3">Get Started</button>
             </div>
             <img
-              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_planned_gift-gold400.png?itok=CbQiDvl1"
+              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_planned_gift-gold400.png"
               width="379"
               height="379"
               alt=""
@@ -140,10 +140,10 @@ export default function GuideGiving() {
           </div>
         </div>
 
-        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }}>
+        <div className="w-full p-12" style={{ backgroundColor: '#e5e7ea' }} id="crowdfuding">
           <div className="p-5 max-w-screen-lg mx-auto flex flex-row bg-muted-gold border-b-8 border-gold">
             <img
-              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_crowdfunding-gold400.png?itok=kcIpyEG7"
+              src="https://giving.cu.edu/sites/default/files/styles/story_teaser_square/public/guidetogiving_crowdfunding-gold400.png"
               width="379"
               height="379"
               alt=""
@@ -191,7 +191,6 @@ export default function GuideGiving() {
             </div>
           </div>
         </div>
-
       </div>
     </Layout>
   );

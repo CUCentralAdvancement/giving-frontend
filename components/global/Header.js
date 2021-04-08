@@ -38,7 +38,10 @@ export default function Header() {
         <Link href="/guide-giving">
           <a className="pr-4 border-b-4 border-transparent hover:border-gold">Guide to Giving</a>
         </Link>
-        <a className="text-center border-b-4 border-transparent hover:border-gold" src="https://essential.cu.edu">
+        <a className="text-center border-b-4 border-transparent hover:border-gold" 
+           href="https://essential.cu.edu"
+           rel="noreferrer"
+           target="_blank">
           Essential CU
         </a>
         <Link href="/guide-giving">
