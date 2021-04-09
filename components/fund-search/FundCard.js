@@ -1,14 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import {
-  Text,
-  Flex,
-  Heading,
-  Box,
-  Button,
-  Image,
-} from "@cu-advancement/component-library";
 import { campusColors, campusLogos } from "../../data/fundMeta";
 
 /**
@@ -16,45 +7,39 @@ import { campusColors, campusLogos } from "../../data/fundMeta";
  */
 export default function FundCard({ result, close }) {
   return (
-    <Flex
-      sx={{ flexDirection: "column", bg: "white" }}
-      data-testid="fund-card-container"
-    >
-      <Flex
-        sx={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignItems: "baseline",
-          bg: campusColors[result.campus],
-          color: "background",
-          p: 3,
+    <div className="flex flex-col" data-testid="fund-card-container">
+      <div
+        className="flex flex-row justify-end align-baseline p-3 cursor-pointer text-white text-2xl"
+        style={{
+          backgroundColor: campusColors[result.campus],
         }}
         data-testid="fund-card-close"
         onClick={close}
+        onKeyPress={close}
+        role="button"
+        tabIndex="0"
       >
-        <Text sx={{ fontSize: 5, cursor: "pointer", mr: 2 }}>X</Text>
-        <Text sx={{ fontSize: 5, cursor: "pointer" }}>close</Text>
-      </Flex>
-      <Box sx={{ px: 3, py: 4, bg: "gray" }}>
-        <Image
+        <span className="mr-2">X</span>
+        <span>close</span>
+      </div>
+      <div className="px-3 py-4" style={{ backgroundColor: '#fcfcfc' }}>
+        <img
           data-testid="fund-card-campus"
           src={campusLogos[result.campus]}
           alt={`${result.campus.label} Logo`}
-          sx={{ height: "60px" }}
+          style={{ height: '60px' }}
         />
-      </Box>
-      <Box sx={{ p: 4 }}>
-        <Heading data-testid="fund-card-title">{result.title}</Heading>
-        <Text data-testid="fund-card-description" my={4}>
-          {result.description}
-        </Text>
-        <Link as={`fund/${result.slug}`} href="fund/[slug]">
+      </div>
+      <div className="p-6 bg-white">
+        <h2 data-testid="fund-card-title">{result.title}</h2>
+        <p data-testid="fund-card-description">{result.description}</p>
+        <Link as={`funds/${result.slug}`} href="funds/[slug]">
           <a>
-            <Button variant="button.secondary">Make a Gift</Button>
+            <button className="bg-black p-3 text-white">Make a Gift</button>
           </a>
         </Link>
-      </Box>
-    </Flex>
+      </div>
+    </div>
   );
 }
 

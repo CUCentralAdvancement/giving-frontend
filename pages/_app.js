@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // import { StateProvider } from "../data/store";
 import { RecoilRoot } from "recoil";
 import "../components/fund-search/algolia.css";
-import 'tailwindcss/tailwind.css';
+import '../styles/global.css';
 
 MyApp.propTypes = {
   Component: PropTypes.any.isRequired,

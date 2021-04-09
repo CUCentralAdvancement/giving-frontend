@@ -3,17 +3,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Card,
-  Text,
-  Flex,
-  Heading,
-  // Link as CULink,
-  Box,
-  Grid,
-  Button,
-} from "@cu-advancement/component-library";
-import { campusColors, interests } from "../../data/fundMeta";
+import { campusColors } from "../../data/fundMeta";
 import FundCard from "./FundCard";
 import RightArrow from "../global/RightArrow";
 import { useWindowDimensions } from "../../utils/hooks";
@@ -148,13 +138,14 @@ CustomStats.propTypes = {
 function CustomStats({ processingTimeMS, nbHits }) {
   return (
     <>
-      <p className="mb-2 color-gold">
+      <span className="mb-2 color-gold">
         <span data-testid="search-result-count">{nbHits}</span> Results
         {process.env.NODE_ENV !== "production" && ` in ${processingTimeMS}ms`}
-      </p>
-      <p className="inline-block italic mr-2">
+      </span>
+      <br />
+      <span className="italic mr-2">
         Can&apos;t find what you&apos;re looking for?
-      </p>
+      </span>
       <Link href="/fund/write-fund">
         <a className="inline-block italic no-underline hover:underline"
           style={{color: "#298FCE"}}
@@ -181,103 +172,70 @@ function CardContents({ hits, hasMore, refineNext, setOpen, setResult, open }) {
     <>
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {hits.map((res) => (
-          <Card
+          <div
+            className="p-2 border border-gray shadow"
             data-testid="search-result"
             key={res.allocation_code.toString()}
-            sx={{ width: ['100%', '85%', '100%'], mx: ['auto', 0] }}
+            role="link"
+            tabIndex="0"
             onClick={() => {
-              if (!open) {
-                setOpen(true);
-              }
+              setOpen(!open);
+              setResult(res);
+            }}
+            onKeyPress={() => {
+              setOpen(!open);
               setResult(res);
             }}
           >
-            <Flex
-              sx={{
-                flexDirection: 'column',
+            <div
+              className="flex flex-col cursor-pointer"
+              style={{
                 minHeight: 231,
-                color: 'text',
-                cursor: 'pointer',
               }}
             >
-              <Box bg={campusColors[res.campus]} mx={-2} mt={-2} color="background">
-                <Flex>
-                  <Text sx={{ flexGrow: 1, pl: 3, pt: 3, pb: 3, fontSize: 1 }} data-testid="result-campus">
+              <div className="-mx-2 -mt-2 text-white" style={{ backgroundColor: campusColors[res.campus] }}>
+                <div className="flex justify-between align-center">
+                  <span className="text-lg pl-2 py-3" data-testid="result-campus">
                     {res.campus}
-                  </Text>
+                  </span>
                   {res.featured_fund && <FeaturedFund res={res}></FeaturedFund>}
-                </Flex>
-              </Box>
-              <Heading sx={{ mt: 2, p: 2, flexGrow: 1, fontSize: 3 }} data-testid="result-title">
+                </div>
+              </div>
+              <h3 className="flex-grow" data-testid="result-title">
                 {res.title}
-              </Heading>
-              <Text
-                sx={{
-                  p: 2,
-                  fontSize: 2,
-                  fontWeight: 700,
+              </h3>
+              <span
+                className="p-2 font-bold text-sm"
+                style={{
                   color: '#4D5259',
                   lineHeight: 1.2,
                 }}
                 data-testid="result-interest"
               >
                 {res.interest}
-                <Box sx={{ color: '#A0A3A5', fontSize: 0, pt: 1 }}>
+                <div className="pt-1 text-xs" style={{ color: '#A0A3A5' }}>
                   {res.keywords || <span className="text-white">&nbsp;</span>}
-                </Box>
-              </Text>
-            </Flex>
-          </Card>
+                </div>
+              </span>
+            </div>
+          </div>
         ))}
       </div>
-      <Flex
-        sx={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          py: 4,
-        }}
-      >
-        <Button
-          variant="button.outline"
-          sx={{
-            color: 'secondary',
-            mr: 2,
-            border: '1px solid',
-            fontWeight: 500,
-          }}
+      <div className="flex flex-row items-center justify-center py-4">
+        <button
+          className="p-3 mr-2 border font-semibold"
           data-testid="load-more-button"
           isDisabled={!hasMore}
           onClick={refineNext}
         >
           Load more funds...
-        </Button>
-        <Button
-          variant="button.outline"
-          sx={{ color: 'secondary', border: '1px solid', fontWeight: 500 }}
-          data-testid="refine-search-button"
-        >
-          Refine my search
-        </Button>
-      </Flex>
+        </button>
+        <a href="#top">
+          <button className="p-3 border font-semibold" data-testid="refine-search-button">
+            Refine my search
+          </button>
+        </a>
+      </div>
     </>
   );
 }
-
-// function getKeywords(res) {
-//   let keywords = [];
-  
-//   if (typeof res.keywords !== "undefined") {
-//     res.keywords.forEach((el) => {
-//       keywords.push(el.label);
-//     });
-//   }
-
-//   if (typeof res.additional_keywords !== "undefined") {
-//     res.additional_keywords.forEach((el) => {
-//       keywords.push(el.label);
-//     });
-//   }
-
-//   return keywords.length > 0 ? keywords.join(", ") : '';
-// }

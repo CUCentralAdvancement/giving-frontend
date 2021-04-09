@@ -1,46 +1,109 @@
-import React from 'react';
-import { Box, Flex, Text, Grid, Menu, LinkButton, Link } from '@cu-advancement/component-library';
-import { footerLinks } from '../../data/menus';
-
-const PaddedText = ({ children }) => <Text sx={{ pl: [1, 0], pb: [1, 0], fontWeight: [1] }}>{children}</Text>;
+import Link from 'next/link';
 
 const Footer = () => (
-  <Box sx={{ bg: '#000', p: 3 }} as="footer">
-    <Grid gap={2} columns={[1, 2, 4]} sx={{ maxWidth: 1280, mx: 'auto' }}>
-      <Flex sx={{ py: 2, pl: [3, 0], flexDirection: 'column' }} color="#fff" fontWeight="light">
-        <LinkButton
-          variant="primary"
-          sx={{ px: 4, color: 'text', fontSize: 3, mb: 2, fontWeight: 300 }}
-          data-testid="footer-give-button"
-          url="/fund-search"
-        >
-          Give Now
-        </LinkButton>
-        <PaddedText>CU Advancement | CU Foundation</PaddedText>
-        <PaddedText>1800 Grant Street | Denver, CO 80203</PaddedText>
-        <PaddedText>303-541-1290</PaddedText>
-        <PaddedText>giving@cu.edu</PaddedText>
-        <PaddedText>
-          <Link sx={{ color: 'background' }} url="https://www.cu.edu/privacy-policy">
+  <footer className="bg-black p-4 text-white">
+    <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex flex-col items-center text-center">
+        <Link href="/fund-search">
+          <a>
+            <button className="p-3 text-black font-bold bg-gold text-lg" data-testid="footer-give-button">
+              Give Now
+            </button>
+          </a>
+        </Link>
+        <div className="p-3">
+          CU Advancement | CU Foundation
+          <br />
+          1800 Grant Street | Denver, CO 80203
+          <br />
+          303-541-1290 | giving@cu.edu
+          <br />
+          <a className="underline text-blue-500" href="https://www.cu.edu/privacy-policy">
             Privacy Policy
-          </Link>{' '}
+          </a>{' '}
           |{' '}
-          <Link sx={{ color: 'background' }} url="https://www.cu.edu/terms-service">
+          <a className="underline text-blue-500" href="https://www.cu.edu/terms-service">
             Terms of Service
-          </Link>
-        </PaddedText>
-      </Flex>
-      <Box>
-        <Menu title="About Us" links={footerLinks.about} variant="bgDark" linkDirection="column" />
-      </Box>
-      <Box>
-        <Menu title="Quicklinks" links={footerLinks.quicklinks} variant="bgDark" linkDirection="column" />
-      </Box>
-      <Box>
-        <Menu title="Campus Offices" links={footerLinks.campuses} variant="bgDark" linkDirection="column" />
-      </Box>
-    </Grid>
-  </Box>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3>About Us</h3>
+        <ul className="list-none">
+          <li>
+            <Link href="/about-us/central-cu-advancement">
+              <a>Central CU Advancement</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us/university-colorado-foundation">
+              <a>CU Foundation</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us/central-cu-advancement">
+              <a>CU Foundation Reports &amp; Financials</a>
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>Quicklinks</h3>
+        <ul className="list-none">
+          <li>
+            <Link href="/guide-giving">
+              <a>Guide to Giving</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us">
+              <a>Give by Mail/Check</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us">
+              <a>Give by Phone</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us">
+              <a>FAQs</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/about-us">
+              <a>Careers</a>
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>Campus Offices</h3>
+        <ul className="list-none">
+          <li>
+            <a href="http://supportcuanschutz.ucdenver.edu/">
+              Anschutz
+            </a>
+          </li>
+          <li>
+            <a href="http://www.colorado.edu/advancement/">
+              Boulder
+            </a>
+          </li>
+          <li>
+            <a href="http://www.uccs.edu/~advancement/">
+              Colorado Springs
+            </a>
+          </li>
+          <li>
+            <a href="https://www.ucdenver.edu/offices/office-of-advancement">
+              Denver
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 );
 
 export default Footer;
