@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-lg;
+  }
+  h1, h2, h3 {
+    @apply font-bold my-3;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  p {
+    @apply my-4;
+  }
+  ul {
+    @apply list-disc;
+  }
+  li {
+    @apply ml-6 p-1;
+  }
+}
+
+.link-blue-underline a {
+  @apply underline text-blue-500
+}

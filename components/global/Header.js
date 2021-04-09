@@ -44,7 +44,7 @@ export default function Header() {
            target="_blank">
           Essential CU
         </a>
-        <Link href="/guide-giving">
+        <Link href="/about-us">
           <a className="pl-4 border-b-4 border-transparent hover:border-gold">About Us</a>
         </Link>
       </div>

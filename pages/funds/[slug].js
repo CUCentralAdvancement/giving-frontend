@@ -59,7 +59,7 @@ export default function Fund({ fund }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${baseURL}/fund-paths.json`);
+  const res = await fetch(`${baseURL}/paths/fund.json`);
   const pathsList = await res.json();
 
   // const paths = [];
