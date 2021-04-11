@@ -36,7 +36,6 @@ export default function Checkout() {
   const giftsMatched = watch("matching-gifts");
 
   function submitHandler(data) {
-    // alert(JSON.stringify(data));
     let description = "";
     let orderTotal = 0.0;
     cart.forEach((item) => {
@@ -45,7 +44,6 @@ export default function Checkout() {
       orderTotal =
         parseFloat(orderTotal) + parseFloat(`${item["giving-amount"]}.00`);
     });
-    // console.log(orderTotal);
     data.description = description;
     data.amount = orderTotal;
     data.invoiceNumber = uuidv4().slice(0, 8);
