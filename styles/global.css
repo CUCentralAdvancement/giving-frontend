@@ -21,14 +21,24 @@
   p {
     @apply my-4;
   }
+  ol {
+    @apply list-decimal;
+  }
   ul {
     @apply list-disc;
   }
   li {
     @apply ml-6 p-1;
   }
+  hr {
+    @apply my-4 border-gray-600;
+  }
 }
 
 .link-blue-underline a {
-  @apply underline text-blue-500
+  @apply underline text-blue-500;
+}
+
+select.ais-MenuSelect-select {
+  height: '42px';
 }

@@ -3,15 +3,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 // import { useRouter } from "next/router";
 import Layout from "../components/global/Layout";
-import {
-  Text,
-  Flex,
-  Heading,
-  Button,
-  Box,
-  Divider,
-  Alert,
-} from "@cu-advancement/component-library";
 import { userCart, giftSummaryLog } from "../data/store";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -36,69 +27,51 @@ export default function Cart() {
 
   return (
     <Layout>
-      <Alert sx={{ bg: "#4BC995" }}>
-        <Box sx={{ maxWidth: 960, mx: "auto" }}>
+      <div className="bg-green-500 text-white p-3">
+        <div className="max-w-screen-lg mx-auto">
           An alert for adding/removing items could go here.
           {/* <Close ml="auto" mr={-2} /> */}
-        </Box>
-      </Alert>
-      <Flex
-        sx={{
-          flexDirection: "column",
-          maxWidth: 960,
-          mx: "auto",
-          p: 4,
-        }}
-      >
+        </div>
+      </div>
+      <div className="flex flex-col max-w-screen-lg mx-auto p-4">
         {cart.length === 0 ? (
-          <Text>Your gift basket is empty.</Text>
+          <span>Your gift basket is empty.</span>
         ) : (
           <>
-            <Heading pb="3">Gift Basket Summary</Heading>
-            <Divider />
+            <h1>Gift Basket Summary</h1>
+            <hr />
             <CartSummary cart={cart} removeCallback={removeIt} />
-            <Text sx={{ pt: 3 }}>
+            <p>
               All gifts in support of the university are processed and receipted
               by the University of Colorado Foundation, a 501(c)(3) charitable
               entity.
-            </Text>
-            <Flex
-              sx={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                fontWeight: 700,
-                pt: 3,
-              }}
-            >
+            </p>
+            <div className="flex flex-row justify-end font-bold pt-3">
               <Link href="/fund-search">
                 <a>
-                  <Button
-                    variant="button.secondary"
-                    data-testid="add-another-gift-button"
-                    sx={{ mr: 3 }}
-                  >
+                  <button className="bg-black text-white mr-3 p-3"
+                    data-testid="add-another-gift-button">
                     Add Another Gift
-                  </Button>
+                  </button>
                 </a>
               </Link>
               <Link href="/checkout">
                 <a>
-                  <Button
-                    variant="button.secondary"
+                  <button
+                    className="bg-black text-white mr-3 p-3"
                     data-testid="checkout-button"
-                    sx={{ mr: 3 }}
                     // onClick={() => {
                     //   router.push("/checkout");
                     // }}
                   >
                     Checkout
-                  </Button>
+                  </button>
                 </a>
               </Link>
-            </Flex>
+            </div>
           </>
         )}
-      </Flex>
+      </div>
     </Layout>
   );
 }

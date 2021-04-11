@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../components/global/Layout";
-import { Flex, Text, Image } from "@cu-advancement/component-library";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authorizeNetToken, transactionDetails } from "../../data/store";
 
@@ -46,31 +45,21 @@ export default function Payment() {
   }, [router, setTransactionDetails]);
   return (
     <Layout>
-      <Flex
-        sx={{
-          maxWidth: "1020px",
-          mx: "auto",
-          flexDirection: "column",
-          my: 3,
-        }}
-      >
-        <Flex
-          sx={{
+      <div className="flex flex-col max-w-screen-lg mx-auto my-3">
+        <div className="flex flex-row p-3 mb-2 justify-center"
+          style={{
             bg: "#FFFFE0",
             border: "2px solid #F0E5C5",
-            p: 3,
-            flexDirection: "row",
-            justifyContent: "center",
-            mb: 2,
           }}
         >
-          <Image
+          <img
             src="https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg"
-            sx={{ mr: 2, width: "25px" }}
+            className="mr-2"
+            sx={{ width: "25px" }}
             alt="Warning Icon"
           />
-          <Text> Please do not use Refresh or Back buttons on this page.</Text>
-        </Flex>
+          <span> Please do not use Refresh or Back buttons on this page.</span>
+        </div>
         <div
           id="iframe_holder"
           className="center-block"
@@ -89,12 +78,13 @@ export default function Payment() {
             title="Authorize.net Payment Form"
           ></iframe>
         </div>
-        <Image
+        <img
           src="https://giving-test.cu.edu/sites/all/themes/themekit/images/verified-auth-net.png"
-          sx={{ width: "135px", mx: "auto", mt: 2 }}
+          className="mx-auto mt-2"
+          style={{ width: "135px" }}
           alt="Verified by Authorize.net"
         />
-      </Flex>
+      </div>
       <form
         id="send_token"
         action="https://test.authorize.net/payment/payment"

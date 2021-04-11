@@ -6,12 +6,27 @@ module.exports = {
       colors: {
         gold: '#cfb87c',
         'muted-gold': '#f4ead0',
-        gray: '#C6C8C9',
+        'cu-gray': '#C6C8C9',
+      },
+      keyframes: {
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 0.5s ease-out',
       },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };

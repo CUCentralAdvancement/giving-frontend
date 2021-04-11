@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function FundInfo({ fund }) {
   return (
     <div className="flex flex-col p-4 h-full">
-      <h1 className="pb-3 text-2xl" data-testid="fund-title">
+      <h1 data-testid="fund-title">
         {fund.title}
       </h1>
       <div className="flex-grow">
@@ -42,7 +42,7 @@ FundInfo.propTypes = {
     marketingContent: PropTypes.string.isRequired,
     campus: PropTypes.string.isRequired,
     interest: PropTypes.string,
-    allocationCode: PropTypes.string.isRequired,
+    allocation_code: PropTypes.string.isRequired,
   }),
 };
 
@@ -53,6 +53,6 @@ FundInfo.defaultProps = {
     marketingContent: "",
     campus: "",
     interest: "950",
-    allocationCode: "",
+    allocation_code: "",
   },
 };

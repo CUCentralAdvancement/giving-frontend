@@ -34,7 +34,7 @@ export default function AboutUs() {
         <div className="p-4 max-w-screen-lg mx-auto flex flex-row">
           <div className="p-2 w-2/3 link-blue-underline">
             <h1>University of Colorado Foundation</h1>
-            <hr className="mb-6" />
+            <hr className="mb-6 mr-3" />
             <h3>Our Mission</h3>
             <p>
               We receive, manage and prudently invest private support for the benefit of the University of Colorado and
