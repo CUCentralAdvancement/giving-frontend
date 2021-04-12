@@ -18,7 +18,7 @@ export default function FundSearch() {
     <Layout>
       <InstantSearch searchClient={searchClient} indexName="Fund">
         <div className="flex flex-col">
-          <div className="bg-gray w-full">
+          <div className="bg-gray-300 w-full">
             <div className="p-4 max-w-screen-lg mx-auto">
               <SearchForm />
             </div>

@@ -1,8 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Layout from "../../components/global/Layout";
-// import { URL } from "whatwg-url";
-import { Box, Flex, Image } from "@cu-advancement/component-library";
 import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
 import { baseURL } from "../../data/store";
@@ -13,47 +10,28 @@ Fund.propTypes = {
 
 export default function Fund({ fund }) {
   // console.log(fund);
-  const intervalRef = useRef();
-  const [containerHeight, setContainerHeight] = useState("100%");
 
-  useEffect(() => {
-    setContainerHeight(intervalRef.current.offsetHeight - 40);
-  }, []);
   return (
-    <Layout ref={intervalRef}>
-      <Box
-        sx={{
-          maxWidth: "1600px",
-          mx: "auto",
-        }}
-      >
-        <Image
+    <Layout>
+      <div className="flex flex-col">
+        <img
           src="https://giving.cu.edu/sites/all/themes/themekit/images/interior-banners/banner-mountains.jpg"
-          sx={{ mb: -1, height: "86px" }}
           alt="Mountain Backdrop"
         />
-        <Flex
-          sx={{
-            flexDirection: ["column", "row"],
-            minHeight: ["100%", containerHeight],
-          }}
-        >
-          <Box sx={{ pl: [0, 0, 0, "20%"], width: ["100%", "100%", "55%"] }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
+          <div>
             <FundInfo fund={fund} />
-          </Box>
-          <Box
-            sx={{
-              bg: "#ECEDED",
-              width: ["100%", "100%", "45%"],
-              pr: [0, 0, 0, "20%"],
-            }}
-          >
-            <Box sx={{ p: 4 }}>
+          </div>
+          <div
+            className="bg-gray-200"
+            >
+            <div className="p-4">
               <GivingForm fund={fund} />
-            </Box>
-          </Box>
-        </Flex>
-      </Box>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </Layout>
   );
 }
@@ -72,7 +50,7 @@ export async function getStaticPaths() {
   // const paths = require('../../data/fund-paths.json');
 
   return {
-    paths: pathsList.map((el) => `/fund/${el}`),
+    paths: pathsList.map((el) => `/funds/${el}`),
     fallback: true,
   };
 }

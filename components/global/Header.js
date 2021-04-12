@@ -25,7 +25,7 @@ export default function Header() {
   }, [cart.length, controls]);
 
   return (
-    <header role="banner" className="flex flex-row max-w-screen-xl mx-auto items-center justify-between pt-3">
+    <header role="banner" className="flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3">
       <div className="p-2 mr-3">
         <img
           src="https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg"
@@ -34,21 +34,18 @@ export default function Header() {
           alt="University of Colorado Logo"
         />
       </div>
-      <div className="text-lg uppercase p-2 grid grid-cols-3 items-baseline">
+      <div className="text-lg uppercase p-2 grid gap-4 grid-cols-3 text-center divide-x divide-gray-100">
         <Link href="/guide-giving">
-          <a className="pr-4 border-b-4 border-transparent hover:border-gold">Guide to Giving</a>
+          <a className="hover:underline">Guide to Giving</a>
         </Link>
-        <a className="text-center border-b-4 border-transparent hover:border-gold" 
-           href="https://essential.cu.edu"
-           rel="noreferrer"
-           target="_blank">
+        <a className="hover:underline pl-2" href="https://essential.cu.edu" rel="noreferrer" target="_blank">
           Essential CU
         </a>
         <Link href="/about-us">
-          <a className="pl-4 border-b-4 border-transparent hover:border-gold">About Us</a>
+          <a className="hover:underline text-left pl-3">About Us</a>
         </Link>
       </div>
-      <div className="p-2">
+      <div>
         <div className="flex flex-col items-center justify-items-center">
           <span style={{ marginLeft: '20px', height: '40px' }}>
             <Link href="/cart">
@@ -65,28 +62,23 @@ export default function Header() {
                 </div>
                 Gift Basket
                 <div
+                  className="ml-2 text-center text-white inline-block align-top"
+                  data-testid="cart-items-total"
                   style={{
-                    display: 'inline-block',
-                    marginLeft: 2,
                     borderRadius: '50%',
-                    height: '20px',
-                    width: '20px',
-                    textAlign: 'center',
-                    backgroundColor: cartItems > 0 ? 'secondary' : '#fff',
+                    height: '24px',
+                    width: '24px',
+                    backgroundColor: cartItems > 0 ? '#000' : '#fff',
                   }}
                 >
-                  <motion.div animate={controls} data-testid="cart-items-total" style={{ paddingTop: '1px' }}>
-                    {cartItems}
-                  </motion.div>
+                  {cartItems}
                 </div>
               </a>
             </Link>
           </span>
           <Link href="/fund-search">
             <a>
-              <button className="uppercase bg-gold font-bold cursor-pointer p-2">
-                Give Now
-              </button>
+              <button className="uppercase bg-gold font-bold cursor-pointer p-2">Give Now</button>
             </a>
           </Link>
         </div>

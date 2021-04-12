@@ -17,7 +17,6 @@ export const giftNamePrefixOptions = [
   { value: "Chancellor", label: "Chancellor" },
 ];
 
-export const givingAmounts = [50, 100, 250, 500];
 
 export const reocurringGiftFrequencyOptions = [
   { value: "_none", label: "How Often?" },
