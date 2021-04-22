@@ -15,16 +15,16 @@ export default async (req, res) => {
     process.env.NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY
   );
 
-  var transactionRequestType = new ApiContracts.TransactionRequestType();
-  transactionRequestType.setTransactionType(
+  var transactionRequest = new ApiContracts.TransactionRequestType();
+  transactionRequest.setTransactionType(
     ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION
   );
-  transactionRequestType.setAmount(data.amount);
-  transactionRequestType.setOrder({
+  transactionRequest.setAmount(data.amount);
+  transactionRequest.setOrder({
     invoiceNumber: data.invoiceNumber,
     description: data.description,
   });
-  transactionRequestType.setBillTo({
+  transactionRequest.setBillTo({
     firstName: data.firstName,
     lastName: data.lastName,
     company: data.companyName,
@@ -43,6 +43,8 @@ export default async (req, res) => {
   var setting2 = new ApiContracts.SettingType();
   setting2.setSettingName("hostedPaymentOrderOptions");
   setting2.setSettingValue('{"show": true}');
+
+  // @todo Add bgColor for gold highlights?
 
   var returnOptions = new ApiContracts.SettingType();
   const host = req.headers.host;
@@ -66,7 +68,7 @@ export default async (req, res) => {
 
   var getRequest = new ApiContracts.GetHostedPaymentPageRequest();
   getRequest.setMerchantAuthentication(merchantAuthenticationType);
-  getRequest.setTransactionRequest(transactionRequestType);
+  getRequest.setTransactionRequest(transactionRequest);
   getRequest.setHostedPaymentSettings(alist);
 
   var ctrl = new ApiControllers.GetHostedPaymentPageController(

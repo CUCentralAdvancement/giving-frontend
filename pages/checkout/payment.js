@@ -17,7 +17,6 @@ export default function Payment() {
         window.AuthorizeNetIFrame = {};
         window.AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
           var params = parseQueryString(querystr);
-          console.log(params);
           let ifrm = {};
           switch (params["action"]) {
             case "successfulSave":
@@ -55,7 +54,7 @@ export default function Payment() {
           <img
             src="https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg"
             className="mr-2"
-            sx={{ width: "25px" }}
+            sx={{ height: "25px" }}
             alt="Warning Icon"
           />
           <span> Please do not use Refresh or Back buttons on this page.</span>
