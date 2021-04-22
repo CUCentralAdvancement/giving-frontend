@@ -17,7 +17,6 @@ export default function Payment() {
         window.AuthorizeNetIFrame = {};
         window.AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
           var params = parseQueryString(querystr);
-          console.log('before-params', params);
           let ifrm = {};
           switch (params["action"]) {
             case "successfulSave":
@@ -33,7 +32,6 @@ export default function Payment() {
               ifrm.style.height = h.toString() + "px";
               break;
             case "transactResponse":
-              console.log('response-params', params)
               ifrm = document.getElementById("add_payment");
               ifrm.style.display = "none";
 

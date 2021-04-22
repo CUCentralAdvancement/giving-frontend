@@ -230,11 +230,11 @@ function DonationRadio({ name, label, value, selected, register}) {
           type="radio"
           {...register(name)}
           value={value}
-          style={{
-            // opacity: 0,
-            // position: 'fixed',
-            // width: 0,
-          }}
+          // style={{
+          //   opacity: 0,
+          //   position: 'fixed',
+          //   width: 0,
+          // }}
         />
         {label}
       </label>

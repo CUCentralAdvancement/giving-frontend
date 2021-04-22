@@ -49,8 +49,6 @@ export default function Checkout() {
     data.invoiceNumber = uuidv4().slice(0, 8);
     setGivingInfo(data);
 
-    console.log('before-data', data);
-
     fetch("/api/authorize-token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,7 +56,6 @@ export default function Checkout() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('after-data', data)
         if (data.token) {
           setAuthorizeNetToken(data.token);
           router.push("/checkout/payment");
