@@ -64,7 +64,7 @@ export default function GivingForm({ fund }) {
     <form onSubmit={handleSubmit(dummySubmit)}>
           <h3 className="mb-3 text-xl">I would like to give:</h3>
           <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2">
-            {[50, 100, 250, 500].map((value) => (
+            {['50', '100', '250', '500'].map((value) => (
               <DonationRadio
                 key={value}
                 name="giving-amount"
@@ -217,26 +217,24 @@ function DonationRadio({ name, label, value, selected, register}) {
     <div className="hover:scale-110">
       <label
         htmlFor={value}
-        className="inline-block text-center py-1 px-4 font-medium"
+        className="inline-block pt-1 text-center font-medium hover:border-gray-800 hover:text-gray-800"
         style={{
           border: selected ? '#231F20 solid 2px' : '#A0A3A6 solid 2px',
           color: selected ? '#231F20' : '#A0A3A6',
           backgroundColor: selected ? '#D4D5D5' : 'white',
-          ':hover': {
-            border: '#231F20 solid 2px',
-            color: '#231F20',
-          },
+          width: '90px',
+          height: '40px',
         }}
       >
         <input
           type="radio"
           {...register(name)}
           value={value}
-          // style={{
-          //   position: 'absolute',
-          //   clip: 'rect(0,0,0,0)',
-          //   pointerEvents: 'none',
-          // }}
+          style={{
+            // opacity: 0,
+            // position: 'fixed',
+            // width: 0,
+          }}
         />
         {label}
       </label>

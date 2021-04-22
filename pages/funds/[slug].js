@@ -13,25 +13,28 @@ export default function Fund({ fund }) {
 
   return (
     <Layout>
-      <div className="flex flex-col">
+      <div
+        style={{
+          backgroundImage: 'linear-gradient(to right, #fff, #fff 50%, #ebeeed 50%, #ebeeed)',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
+        className="flex flex-col"
+      >
         <img
           src="https://giving.cu.edu/sites/all/themes/themekit/images/interior-banners/banner-mountains.jpg"
           alt="Mountain Backdrop"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
+        <div style={{minHeight: '570px'}} 
+        className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
           <div>
             <FundInfo fund={fund} />
           </div>
-          <div
-            className="bg-gray-200"
-            >
-            <div className="p-4">
-              <GivingForm fund={fund} />
-            </div>
+          <div className="p-4 pl-8">
+            <GivingForm fund={fund} />
           </div>
         </div>
       </div>
-
     </Layout>
   );
 }

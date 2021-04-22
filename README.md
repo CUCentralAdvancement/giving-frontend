@@ -4,6 +4,7 @@ Build with Next.js, this application will pull data from multiple sources and re
 
 - [Getting Started](#getting-started)
 - [Font Awesome Icons](#font-awesome)
+- [Authorize.net Payment Flow](docs/authorize-payment-flow.md)
 
 ## Getting Started
 
