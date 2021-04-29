@@ -4048,10 +4048,10 @@ react-fast-compare@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-hook-form@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.2.1.tgz#99b3540dd2314499df12e9a53c70587ad63a806c"
-  integrity sha512-QopAubhVofqQrwlWLr9aK0DF8tNU8fnU8sJIlw1Tb3tGkEvP9yeaA+cx1hlxYni8xBswtHruL1WcDEa6CYQDow==
+react-hook-form@^7.3.5:
+  version "7.3.5"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.3.5.tgz#8154fdf0401ddb6e8a5f8787f162a26839258f0d"
+  integrity sha512-T7PgHpFa4lPfVVnqm5+nDMB/CCrZ7OUBQC17ZXQ2QAZMxfc8qDbETo+Nrsd2TE5mszg6fT0bjb3EeE2DAzv7lQ==
 
 react-instantsearch-core@^6.10.3:
   version "6.10.3"
