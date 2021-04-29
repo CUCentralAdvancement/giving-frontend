@@ -6,6 +6,10 @@ Build with Next.js, this application will pull data from multiple sources and re
 - [Font Awesome Icons](#font-awesome)
 - [Authorize.net Payment Flow](docs/authorize-payment-flow.md)
 
+## Dumb Note About Todo Tasks
+
+- Need to make sure marketing cloud tracking works...obvious but don't forget.
+
 ## Getting Started
 
 To run the development server, you should have [Yarn installed](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
