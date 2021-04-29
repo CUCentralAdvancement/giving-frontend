@@ -1,0 +1,56 @@
+version: 2
+registries:
+  npm-registry-npm-fontawesome-com:
+    type: npm-registry
+    url: https://npm.fontawesome.com
+    token: "${{secrets.NPM_REGISTRY_NPM_FONTAWESOME_COM_TOKEN}}"
+
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: framer-motion
+    versions:
+    - 3.10.3
+    - 3.10.5
+    - 3.5.2
+    - 3.7.0
+    - 4.0.0
+    - 4.1.10
+    - 4.1.6
+    - 4.1.8
+    - 4.1.9
+  - dependency-name: react-hook-form
+    versions:
+    - 6.15.2
+    - 7.0.0
+    - 7.0.7
+    - 7.2.3
+    - 7.3.4
+  - dependency-name: postcss
+    versions:
+    - 8.2.12
+  - dependency-name: next
+    versions:
+    - 10.1.1
+    - 10.1.2
+  - dependency-name: react-dom
+    versions:
+    - 17.0.2
+  - dependency-name: react
+    versions:
+    - 17.0.2
+  - dependency-name: eslint-plugin-react
+    versions:
+    - 7.23.0
+  - dependency-name: cypress
+    versions:
+    - 6.7.1
+  - dependency-name: react-instantsearch-dom
+    versions:
+    - 6.10.1
+  registries:
+  - npm-registry-npm-fontawesome-com
