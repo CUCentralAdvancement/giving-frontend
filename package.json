@@ -21,7 +21,7 @@
     "authorizenet": "^1.0.8",
     "autoprefixer": "^10.2.5",
     "express": "^4.17.1",
-    "framer-motion": "^4.1.11",
+    "framer-motion": "^4.1.17",
     "next": "10.2.0",
     "postcss": "^8.2.14",
     "react": "17.0.2",
