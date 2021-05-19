@@ -42,6 +42,7 @@ FundInfo.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     marketingContent: PropTypes.string.isRequired,
+    keywords: PropTypes.string,
     campus: PropTypes.string.isRequired,
     interest: PropTypes.string,
     allocation_code: PropTypes.string.isRequired,

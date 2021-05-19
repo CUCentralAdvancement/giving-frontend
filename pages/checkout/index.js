@@ -114,7 +114,7 @@ export default function Checkout() {
                   {...register('company-name')}
                   type="text"
                   placeholder="Name of Organization or Company"
-                  className={'w-full ' + (type == 'company' ? 'visible' : 'hidden')}
+                  className={'w-full ' + (type === 'company' ? 'visible' : 'hidden')}
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2">

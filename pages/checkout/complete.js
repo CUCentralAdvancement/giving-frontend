@@ -27,20 +27,21 @@ export default function Complete() {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    const theBody = JSON.stringify({
+      givingInfo: givingInfo,
+      giftSummary: giftSummary,
+      transaction: transaction,
+    });
 
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify({
-        givingInfo: givingInfo,
-        giftSummary: giftSummary,
-        transaction: transaction,
-      }),
+      body: theBody,
       mode: "no-cors",
       // redirect: "follow",
     };
 
-    const url = `${baseURL}/api/order/create?${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME}=${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY}`;
+    const url = process.env.ORDER_CREATION_URL ? process.env.ORDER_CREATION_URL : `${baseURL}/api/order/create`;
     fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
