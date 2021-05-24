@@ -33,7 +33,7 @@ export default function FundCard({ result, close }) {
       <div className="p-6 bg-white">
         <h2 data-testid="fund-card-title">{result.title}</h2>
         <p data-testid="fund-card-description">{result.description}</p>
-        <Link as={`funds/${result.slug}`} href="funds/[slug]">
+        <Link as={`fund/${result.slug}`} href="fund/[slug]">
           <a>
             <button className="bg-black p-3 text-white">Make a Gift</button>
           </a>

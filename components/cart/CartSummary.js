@@ -12,6 +12,7 @@ export default function CartSummary({ cart, removeCallback }) {
   cart.forEach((item) => {
     orderTotal += parseInt(item["giving-amount"]);
   });
+  console.log(cart);
   return (
     <>
       <div className="animate-fade-in-up">
@@ -23,7 +24,7 @@ export default function CartSummary({ cart, removeCallback }) {
               className="flex flex-row border-b-2 border-dotted p-3 align-baseline"
             >
               <div className="flex-grow">
-                <Link href="/fund/[slug]" as={item.fundRoute}>
+                <Link href="/fund/[slug]" as={item.fund_route}>
                   <a className="no-underline hover:underline">
                     {item.fund_title} ({item.fund_campus})
                   </a>

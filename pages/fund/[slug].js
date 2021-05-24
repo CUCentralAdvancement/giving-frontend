@@ -4,6 +4,10 @@ import FundInfo from "../../components/fund/FundInfo";
 import GivingForm from "../../components/fund/GivingForm";
 import { baseURL } from "../../data/store";
 
+// const FundTypes = {
+//
+// };
+
 Fund.propTypes = {
   fund: PropTypes.object,
 };
@@ -25,7 +29,7 @@ export default function Fund({ fund }) {
           src="https://giving.cu.edu/sites/all/themes/themekit/images/interior-banners/banner-mountains.jpg"
           alt="Mountain Backdrop"
         />
-        <div style={{minHeight: '570px'}} 
+        <div style={{minHeight: '570px'}}
         className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
           <div>
             <FundInfo fund={fund} />
@@ -53,7 +57,7 @@ export async function getStaticPaths() {
   // const paths = require('../../data/fund-paths.json');
 
   return {
-    paths: pathsList.map((el) => `/funds/${el}`),
+    paths: pathsList.map((el) => `/fund/${el}`),
     fallback: true,
   };
 }
@@ -62,11 +66,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const slug = params.slug || null;
 
-  // Fetch data from external API
+  // Need to fetch at "/funds" since Rails defaults models to plural whereas the giving site
+  // currently uses "/fund".
   const res = await fetch(new URL(`${baseURL}/funds/${slug}.json`));
   const fund = await res.json();
   // const fund = require(`../../data/funds/${slug}.json`);
 
-  // Pass data to the page via props
   return { props: { fund } };
 }
