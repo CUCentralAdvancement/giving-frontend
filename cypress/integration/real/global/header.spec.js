@@ -8,17 +8,17 @@ describe("Header Component Test", () => {
       cy.contains("a", "Guide to Giving").should(
         "have.attr",
         "href",
-        "https://giving.cu.edu/guide-giving"
+        "/guide-giving"
       );
       cy.contains("a", "Essential CU").should(
         "have.attr",
         "href",
-        "https://giving.cu.edu/essentialcu"
+        "https://essential.cu.edu"
       );
       cy.contains("a", "About Us").should(
         "have.attr",
         "href",
-        "https://giving.cu.edu/about-us"
+        "/about-us"
       );
 
       cy.get(".cart-items-total")
@@ -30,7 +30,7 @@ describe("Header Component Test", () => {
         .and("have.attr", "href", "/fund-search");
 
       // Leaving search out for now.
-      cy.get("#block-search-form").should("not.be.visible");
+      // cy.get("#block-search-form").should("not.be.visible");
     });
   });
 });

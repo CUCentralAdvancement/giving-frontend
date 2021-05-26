@@ -13,7 +13,7 @@ Fund.propTypes = {
 };
 
 export default function Fund({ fund }) {
-  // console.log(fund);
+  console.log(fund);
 
   return (
     <Layout>
@@ -33,6 +33,8 @@ export default function Fund({ fund }) {
         className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
           <div>
             <FundInfo fund={fund} />
+          {/*  @todo Need to add disclaimer body here. It can be derived from the allocation
+           code.*/}
           </div>
           <div className="p-4 pl-8">
             <GivingForm fund={fund} />

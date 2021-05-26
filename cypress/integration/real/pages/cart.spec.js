@@ -20,18 +20,18 @@ describe("Cart Tests", () => {
       "userCart",
       JSON.stringify([
         {
-          allocationCode: "0321793",
-          fundCampus: "CU Denver",
-          fundRoute: "/fund/office-student-life-food-pantry-fund",
-          fundTitle: "Office of Student Life Food Pantry Fund",
+          allocation_code: "0321793",
+          fund_campus: "CU Denver",
+          fund_route: "/fund/office-student-life-food-pantry-fund",
+          fund_title: "Office of Student Life Food Pantry Fund",
           "giving-amount": 50,
           inHonorOf: 0,
         },
         {
-          allocationCode: "0430106",
-          fundCampus: "UCCS",
-          fundRoute: "/fund/bridge-forward-scholarship",
-          fundTitle: "Bridge Forward Scholarship Endowment",
+          allocation_code: "0430106",
+          fund_campus: "UCCS",
+          fund_route: "/fund/bridge-forward-scholarship",
+          fund_title: "Bridge Forward Scholarship Endowment",
           "giving-amount": "250",
           inHonorOf: 0,
         },
@@ -49,11 +49,12 @@ describe("Cart Tests", () => {
     cy.contains("CU Denver").should("be.visible");
     cy.contains("Bridge Forward Scholarship Endowment").should("be.visible");
     cy.contains("UCCS").should("be.visible");
-    cy.get('[data-testid="order-total"]')
-      .should("be.visible")
-      .then((total) => {
-        expect(total.text()).to.equal("$300");
-      });
+
+    // cy.get('[data-testid="order-total"]')
+    //   .should("be.visible")
+    //   .then((total) => {
+    //     expect(total.text()).to.equal("$300");
+    //   });
 
     cy.get('[data-testid="remove-from-cart-button"]')
       .should("be.visible")
@@ -106,7 +107,8 @@ describe("Cart Tests", () => {
     // cy.get('[data-testid="remove-from-cart-button"]').click();
 
     cy.contains("Your gift basket is empty.");
-    cy.contains("Gift Basket Summary").should("not.exist");
+
+    // cy.contains("Gift Basket Summary").should("not.exist");
     cy.get('[data-testid="remove-from-cart-button"]').should("not.exist");
     cy.get('[data-testid="add-another-gift-button"]').should("not.exist");
     cy.get('[data-testid="checkout-button"]').should("not.exist");

@@ -6,6 +6,7 @@ import { campusColors, campusLogos } from "../../data/fundMeta";
  * Description of the search results component.
  */
 export default function FundCard({ result, close }) {
+  console.log()
   return (
     <div className="flex flex-col" data-testid="fund-card-container">
       <div
@@ -26,7 +27,7 @@ export default function FundCard({ result, close }) {
         <img
           data-testid="fund-card-campus"
           src={campusLogos[result.campus]}
-          alt={`${result.campus.label} Logo`}
+          alt={`${result.campus} Logo`}
           style={{ height: '60px' }}
         />
       </div>
