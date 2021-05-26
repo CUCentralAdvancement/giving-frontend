@@ -6,7 +6,6 @@ import { campusColors, campusLogos } from "../../data/fundMeta";
  * Description of the search results component.
  */
 export default function FundCard({ result, close }) {
-  console.log()
   return (
     <div className="flex flex-col" data-testid="fund-card-container">
       <div

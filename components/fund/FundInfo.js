@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 
 export default function FundInfo({ fund }) {
-  // console.log(fund);
   return (
     <div className="flex flex-col p-4 h-full">
       <h1 data-testid="fund-title">

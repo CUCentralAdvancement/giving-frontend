@@ -13,8 +13,6 @@ Fund.propTypes = {
 };
 
 export default function Fund({ fund }) {
-  console.log(fund);
-
   return (
     <Layout>
       <div
