@@ -18,7 +18,7 @@ export default function Cart() {
 
   const removeIt = (item) => {
     const newCart = cart.filter((cartItem) => {
-      return cartItem.allocationCode != item.allocationCode;
+      return cartItem.allocation_code !== item.allocation_code;
     });
     setCart(newCart);
     setGiftSummary(newCart);

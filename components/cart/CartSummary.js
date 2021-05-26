@@ -12,7 +12,7 @@ export default function CartSummary({ cart, removeCallback }) {
   cart.forEach((item) => {
     orderTotal += parseInt(item["giving-amount"]);
   });
-  console.log(cart);
+
   return (
     <>
       <div className="animate-fade-in-up">

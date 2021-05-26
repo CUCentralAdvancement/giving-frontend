@@ -14,7 +14,7 @@ describe("Smoke Test Critical Paths", () => {
 
   it("Loads fund search page with at least one result and navigated to fund", () => {
     cy.visit("/fund-search");
-    cy.contains("Resident Emergency Relief Fund");
+    cy.contains("CU Anschutz Fund for Excellence");
 
     // @todo Add navigation to fund.
   });

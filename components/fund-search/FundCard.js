@@ -26,7 +26,7 @@ export default function FundCard({ result, close }) {
         <img
           data-testid="fund-card-campus"
           src={campusLogos[result.campus]}
-          alt={`${result.campus.label} Logo`}
+          alt={`${result.campus} Logo`}
           style={{ height: '60px' }}
         />
       </div>

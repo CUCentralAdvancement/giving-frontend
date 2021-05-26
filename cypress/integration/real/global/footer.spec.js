@@ -23,36 +23,39 @@ describe("Footer Component Test", () => {
         .and(
           "have.attr",
           "href",
-          "https://giving.cu.edu/about-us/central-cu-advancement"
+          "/about-us/central-cu-advancement"
         );
       cy.contains("a", "CU Foundation")
         .should("be.visible")
         .and(
           "have.attr",
           "href",
-          "https://giving.cu.edu/about-us/university-colorado-foundation"
+          "/about-us/university-colorado-foundation"
         );
       cy.contains("a", "CU Foundation Reports & Financials")
         .should("be.visible")
         .and(
           "have.attr",
           "href",
-          "https://giving.cu.edu/about-us/cu-foundation/cu-foundation-financial-and-investment-documents"
+          "/about-us/cu-foundation/cu-foundation-financial-and-investment-documents"
         );
 
       // Quicklinks links.
       cy.contains("a", "Guide to Giving")
         .should("be.visible")
-        .and("have.attr", "href", "https://giving.cu.edu/guide-giving");
+        .and("have.attr", "href", "/guide-giving");
+      cy.contains("a", "Give by Mail/Check")
+        .should("be.visible")
+        .and("have.attr", "href", "/faq/make-gift-mail");
+      cy.contains("a", "Give by Phone")
+        .should("be.visible")
+        .and("have.attr", "href", "/faq/make-gift-phone");
       cy.contains("a", "FAQs")
         .should("be.visible")
-        .and("have.attr", "href", "https://giving.cu.edu/faq");
+        .and("have.attr", "href", "/faq");
       cy.contains("a", "Careers")
         .should("be.visible")
-        .and("have.attr", "href", "https://giving.cu.edu/about-us/careers");
-      cy.contains("a", "Beta Access")
-        .should("be.visible")
-        .and("have.attr", "href", "https://giving.cu.edu/user");
+        .and("have.attr", "href", "/about-us/careers");
 
       // Campuses.
       cy.contains("a", "Anschutz")
@@ -69,7 +72,7 @@ describe("Footer Component Test", () => {
         .and(
           "have.attr",
           "href",
-          "http://www.ucdenver.edu/about/WhoWeAre/Chancellor/ViceChancellors/Advancement-CUDenver/Pages/default.aspx"
+          "https://www.ucdenver.edu/offices/office-of-advancement"
         );
     });
   });

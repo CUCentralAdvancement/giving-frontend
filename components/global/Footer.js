@@ -41,7 +41,7 @@ const Footer = () => (
             </Link>
           </li>
           <li>
-            <Link href="/about-us/central-cu-advancement">
+            <Link href="/about-us/cu-foundation/cu-foundation-financial-and-investment-documents">
               <a>CU Foundation Reports &amp; Financials</a>
             </Link>
           </li>
@@ -56,22 +56,22 @@ const Footer = () => (
             </Link>
           </li>
           <li>
-            <Link href="/about-us">
+            <Link href="/faq/make-gift-mail">
               <a>Give by Mail/Check</a>
             </Link>
           </li>
           <li>
-            <Link href="/about-us">
+            <Link href="/faq/make-gift-phone">
               <a>Give by Phone</a>
             </Link>
           </li>
           <li>
-            <Link href="/about-us">
+            <Link href="/faq">
               <a>FAQs</a>
             </Link>
           </li>
           <li>
-            <Link href="/about-us">
+            <Link href="/about-us/careers">
               <a>Careers</a>
             </Link>
           </li>

@@ -16,13 +16,13 @@ describe("Checkout Tests", () => {
     // cy.get('[data-testid="order-total"]').should("not.exist");
   });
 
-  it("Correctly navigates to cart from edit button", () => {
+  xit("Correctly navigates to cart from edit button", () => {
     cy.visit("/checkout");
     cy.contains("Edit Gift Basket").click();
     cy.contains("Your gift basket is empty.");
   });
 
-  it("Loads cart, handles form input, and continues to next step", () => {
+  xit("Loads cart, handles form input, and continues to next step", () => {
     setCart();
 
     // Briefly test cart summary. Better tested in cart.spec.js.
@@ -196,7 +196,7 @@ describe("Checkout Tests", () => {
     // );
   });
 
-  it("Handles payment page without a token.", () => {
+  xit("Handles payment page without a token.", () => {
     setCart();
     cy.visit("/checkout/payment");
     cy.contains("Please do not use Refresh or Back buttons on this page.");
@@ -204,7 +204,7 @@ describe("Checkout Tests", () => {
     getIframeBody("add_payment").contains("Missing or invalid token.");
   });
 
-  it("Handles payment completion page.", () => {
+  xit("Handles payment completion page.", () => {
     setCart();
     cy.visit("/checkout/complete");
 
