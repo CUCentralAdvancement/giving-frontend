@@ -40,7 +40,7 @@ describe("Footer Component Test", () => {
           "/about-us/cu-foundation/cu-foundation-financial-and-investment-documents"
         );
 
-      // Quicklinks links.
+      // Quicklinks.
       cy.contains("a", "Guide to Giving")
         .should("be.visible")
         .and("have.attr", "href", "/guide-giving");
@@ -60,13 +60,13 @@ describe("Footer Component Test", () => {
       // Campuses.
       cy.contains("a", "Anschutz")
         .should("be.visible")
-        .and("have.attr", "href", "http://supportcuanschutz.ucdenver.edu/");
+        .and("have.attr", "href", "https://supportcuanschutz.ucdenver.edu/");
       cy.contains("a", "Boulder")
         .should("be.visible")
-        .and("have.attr", "href", "http://www.colorado.edu/advancement/");
+        .and("have.attr", "href", "https://www.colorado.edu/advancement/");
       cy.contains("a", "Colorado Springs")
         .should("be.visible")
-        .and("have.attr", "href", "http://www.uccs.edu/~advancement/");
+        .and("have.attr", "href", "https://www.uccs.edu/~advancement/");
       cy.contains("a", "Denver")
         .should("be.visible")
         .and(

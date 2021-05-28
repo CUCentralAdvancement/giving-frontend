@@ -21,6 +21,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          spec: cypress/integration/real/**/*
+          spec: cypress/integration/**/*
           build: yarn build
           start: yarn start

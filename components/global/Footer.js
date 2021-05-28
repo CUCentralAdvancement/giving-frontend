@@ -81,17 +81,17 @@ const Footer = () => (
         <h3>Campus Offices</h3>
         <ul className="list-none">
           <li>
-            <a href="http://supportcuanschutz.ucdenver.edu/">
+            <a href="https://supportcuanschutz.ucdenver.edu/">
               Anschutz
             </a>
           </li>
           <li>
-            <a href="http://www.colorado.edu/advancement/">
+            <a href="https://www.colorado.edu/advancement/">
               Boulder
             </a>
           </li>
           <li>
-            <a href="http://www.uccs.edu/~advancement/">
+            <a href="https://www.uccs.edu/~advancement/">
               Colorado Springs
             </a>
           </li>
