@@ -40,7 +40,7 @@ describe("Footer Component Test", () => {
           "/about-us/cu-foundation/cu-foundation-financial-and-investment-documents"
         );
 
-      // Quicklinks links.
+      // Quicklinks.
       cy.contains("a", "Guide to Giving")
         .should("be.visible")
         .and("have.attr", "href", "/guide-giving");
