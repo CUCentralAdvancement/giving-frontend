@@ -8,6 +8,19 @@ Fund.propTypes = {
   fund: PropTypes.object,
 };
 
+Fund.defaultProps = {
+  fund: {
+    id: 0,
+    title: "",
+    description: "",
+    marketingContent: "",
+    campus: "",
+    interest: "950",
+    allocation_code: "",
+    fund_type: 'default',
+  },
+};
+
 export default function Fund({ fund }) {
   return (
     <Layout>

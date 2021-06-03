@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import DefaultFundInfo from './DefaultFundInfo';
 import WriteInFundInfo from './WriteInFundInfo';
 
-GivingFormTriage.propTypes = {
+FundInfoTriage.propTypes = {
   fund: PropTypes.object,
 };
 
-export default function GivingFormTriage({fund}) {
-  console.log(fund);
-  switch (fund.fund_type) {
+export default function FundInfoTriage({fund}) {
+  const fundType = (typeof fund.fund_type !== 'undefined') ? fund.fund_type : 'default';
+  switch (fundType) {
     case 'write_in':
       return <WriteInFundInfo fund={fund}/>;
     case 'license_plate':
