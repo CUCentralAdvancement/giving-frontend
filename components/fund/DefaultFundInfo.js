@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-export default function FundInfo({ fund }) {
+export default function DefaultFundInfo({ fund }) {
   return (
     <div className="flex flex-col p-4 h-full">
       <h1 data-testid="fund-title">
@@ -36,7 +36,7 @@ export default function FundInfo({ fund }) {
   );
 }
 
-FundInfo.propTypes = {
+DefaultFundInfo.propTypes = {
   fund: PropTypes.exact({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
@@ -48,7 +48,7 @@ FundInfo.propTypes = {
   }),
 };
 
-FundInfo.defaultProps = {
+DefaultFundInfo.defaultProps = {
   fund: {
     id: 0,
     title: "",

@@ -3,22 +3,21 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { userCart, giftSummaryLog } from "../../data/store";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { campusNames } from "../../data/fundMeta";
 import {
   countryOptionsList,
   giftNamePrefixOptions,
   giftStateOptions,
 } from "../../data/donationForm";
 
-GivingForm.propTypes = {
+DefaultGivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
-export default function GivingForm({ fund }) {
+export default function DefaultGivingForm({ fund }) {
   const [cart, setCart] = useRecoilState(userCart);
   const setGiftSummary = useSetRecoilState(giftSummaryLog);
   const router = useRouter();
-  const { register, handleSubmit, setValue, watch, getValues } = useForm({
+  const { register, handleSubmit,  watch, getValues } = useForm({
     defaultValues: {
       "giving-amount": 50,
       'in-honor-of': 'No',
