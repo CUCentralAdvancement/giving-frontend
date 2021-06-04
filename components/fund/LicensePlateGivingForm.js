@@ -22,7 +22,6 @@ export default function LicensePlateGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = 50.00;
 
-
     setCart([...cart, data]);
     setGiftSummary([...cart, data]);
     window.localStorage.setItem('userCart', JSON.stringify([...cart, data]));
