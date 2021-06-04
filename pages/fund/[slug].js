@@ -1,15 +1,24 @@
 import PropTypes from "prop-types";
 import Layout from "../../components/global/Layout";
-import FundInfo from "../../components/fund/FundInfo";
-import GivingForm from "../../components/fund/GivingForm";
+import FundInfoTriage from "../../components/fund/FundInfoTriage";
 import { baseURL } from "../../data/store";
-
-// const FundTypes = {
-//
-// };
+import GivingFormTriage from '../../components/fund/GivingFormTriage';
 
 Fund.propTypes = {
   fund: PropTypes.object,
+};
+
+Fund.defaultProps = {
+  fund: {
+    id: 0,
+    title: "",
+    description: "",
+    marketingContent: "",
+    campus: "",
+    interest: "950",
+    allocation_code: "",
+    fund_type: 'default',
+  },
 };
 
 export default function Fund({ fund }) {
@@ -30,12 +39,12 @@ export default function Fund({ fund }) {
         <div style={{minHeight: '570px'}}
         className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
           <div>
-            <FundInfo fund={fund} />
+            <FundInfoTriage fund={fund} />
           {/*  @todo Need to add disclaimer body here. It can be derived from the allocation
            code.*/}
           </div>
           <div className="p-4 pl-8">
-            <GivingForm fund={fund} />
+            <GivingFormTriage fund={fund} />
           </div>
         </div>
       </div>

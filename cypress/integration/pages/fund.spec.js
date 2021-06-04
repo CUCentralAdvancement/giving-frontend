@@ -1,6 +1,6 @@
 describe("Fund Detail Page Tests", () => {
   it("Shows proper data for FundInfo component", () => {
-    cy.visit("fund/bridge-forward-scholarship-endowment");
+    cy.visit("fund/bridge-forward-scholarship");
 
     cy.get('[data-testid="fund-title"]').then((title) => {
       expect(title.text()).to.equal("Bridge Forward Scholarship Endowment");
