@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import Link from "next/link";
-import { userCart } from "../../data/store";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
-import { motion, useAnimation } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import Link from 'next/link';
+import { userCart } from '../../data/store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { useAnimation } from 'framer-motion';
 
 export default function Header() {
   const cart = useRecoilValue(userCart);
@@ -16,7 +16,7 @@ export default function Header() {
     controls.start({
       scale: 1,
       transition: {
-        type: "spring",
+        type: 'spring',
         velocity: 70,
         stiffness: 300,
         damping: 100,
@@ -25,32 +25,32 @@ export default function Header() {
   }, [cart.length, controls]);
 
   return (
-    <header role="banner" className="flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3">
-      <div className="p-2 mr-3">
+    <header role='banner' className='flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3'>
+      <div className='p-2 mr-3'>
         <img
-          src="https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg"
+          src='https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg'
           style={{ width: '317px' }}
-          data-testid="header-cu-logo"
-          alt="University of Colorado Logo"
+          data-testid='header-cu-logo'
+          alt='University of Colorado Logo'
         />
       </div>
-      <div className="text-lg uppercase p-2 grid gap-4 grid-cols-3 text-center divide-x divide-gray-100">
-        <Link href="/guide-giving">
-          <a className="hover:underline">Guide to Giving</a>
+      <div className='text-lg uppercase p-2 grid gap-4 grid-cols-3 text-center divide-x divide-gray-100'>
+        <Link href='/guide-giving'>
+          <a className='hover:underline'>Guide to Giving</a>
         </Link>
-        <a className="hover:underline pl-2" href="https://essential.cu.edu" rel="noreferrer" target="_blank">
+        <a className='hover:underline pl-2' href='https://essential.cu.edu' rel='noreferrer' target='_blank'>
           Essential CU
         </a>
-        <Link href="/about-us">
-          <a className="hover:underline text-left pl-3">About Us</a>
+        <Link href='/about-us'>
+          <a className='hover:underline text-left pl-3'>About Us</a>
         </Link>
       </div>
       <div>
-        <div className="flex flex-col items-center justify-items-center">
+        <div className='flex flex-col items-center justify-items-center'>
           <span style={{ marginLeft: '20px', height: '40px' }}>
-            <Link href="/cart">
+            <Link href='/cart'>
               <a
-                className="cart-items-total"
+                className='cart-items-total'
                 style={{
                   textDecoration: 'none',
                   color: '#000',
@@ -62,8 +62,8 @@ export default function Header() {
                 </div>
                 Gift Basket
                 <div
-                  className="ml-2 text-center text-white inline-block align-top"
-                  data-testid="cart-items-total"
+                  className='ml-2 text-center text-white inline-block align-top'
+                  data-testid='cart-items-total'
                   style={{
                     borderRadius: '50%',
                     height: '24px',
@@ -76,9 +76,9 @@ export default function Header() {
               </a>
             </Link>
           </span>
-          <Link href="/fund-search">
+          <Link href='/fund-search'>
             <a>
-              <button className="uppercase bg-gold font-bold cursor-pointer p-2">Give Now</button>
+              <button className='uppercase bg-gold font-bold cursor-pointer p-2'>Give Now</button>
             </a>
           </Link>
         </div>
