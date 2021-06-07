@@ -41,7 +41,7 @@ export default function GuideGiving() {
         <div className="p-4 max-w-screen-lg mx-auto">
           <p className="text-lg p-2">
             There are more than 2,400 distinct funds that benefit people, places and programs throughout the University
-            of Colorado's four campuses. Some gifts enable talented students to afford CU or bolster academic programs.
+            of Colorado&apos;s four campuses. Some gifts enable talented students to afford CU or bolster academic programs.
             Others help us recruit and retain top faculty or spur groundbreaking research. All fill vital needs and
             strengthen CU now and well into the years ahead.
           </p>

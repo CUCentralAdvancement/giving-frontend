@@ -1,0 +1,22 @@
+name: Cypress Tests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_ALGOLIA_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_KEY }}
+      NEXT_PUBLIC_ALGOLIA_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_ID }}
+      NEXT_PUBLIC_AUTHORIZE_LOGIN_ID: ${{ secrets.NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup code
+        run: yarn
+
+      - name: Lint code
+        run: yarn lint
