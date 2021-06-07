@@ -1,11 +1,11 @@
-name: Cypress Tests
+name: eslint the code
 on:
   pull_request:
     branches:
       - main
 jobs:
   cypress-run:
-    name: Cypress run
+    name: Lint Code
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_ALGOLIA_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_KEY }}
