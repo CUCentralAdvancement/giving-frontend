@@ -14,6 +14,11 @@ describe("Smoke Test Critical Paths", () => {
 
   it("Loads fund search page with at least one result and navigated to fund", () => {
     cy.visit("/fund-search");
+
+    // See if search loading is what causes some tests to fail.
+    /* eslint-disable-next-line */
+    cy.wait(3000);
+
     cy.contains("CU Anschutz Fund for Excellence");
 
     // @todo Add navigation to fund.
