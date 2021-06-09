@@ -75,6 +75,10 @@ describe("Cart Tests", () => {
 
     cy.visit("/fund-search");
 
+    // See if search loading is what causes some tests to fail.
+    /* eslint-disable-next-line */
+    cy.wait(3000);
+
     cy.get('[data-testid="search-result"]')
       .first()
       .then((result) => {
