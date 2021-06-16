@@ -11,6 +11,7 @@ describe("Fund Search Tests", () => {
     // Test search inpiut.
     // Bridge yields one result from UCCS.
     cy.get('[data-testid="search-input"]').type("Bridge");
+    cy.wait(1000);
     // cy.get('[data-testid="search-button"]').click();
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
