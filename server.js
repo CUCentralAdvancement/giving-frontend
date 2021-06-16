@@ -14,9 +14,9 @@ app.prepare().then(() => {
   const server = express();
 
   // No homepage yet so the fund search is the homepage.
-  server.get("/", (req, res) => {
-    res.redirect("/fund-search");
-  });
+  // server.get("/", (req, res) => {
+  //   res.redirect("/fund-search");
+  // });
 
   server.all("*", (req, res) => {
     return handle(req, res);

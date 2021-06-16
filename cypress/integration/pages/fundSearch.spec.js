@@ -249,4 +249,8 @@ describe("Fund Search Tests", () => {
       expect(results.length).to.equal(40);
     });
   });
+
+  it('should load default refinements from query parameters', function() {
+
+  });
 });

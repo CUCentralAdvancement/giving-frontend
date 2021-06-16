@@ -3,42 +3,51 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply text-lg;
-  }
-  h1, h2, h3 {
-    @apply font-bold my-3;
-  }
-  h1 {
-    @apply text-3xl;
-  }
-  h2 {
-    @apply text-2xl;
-  }
-  h3 {
-    @apply text-xl;
-  }
-  p {
-    @apply my-4;
-  }
-  ol {
-    @apply list-decimal;
-  }
-  ul {
-    @apply list-disc;
-  }
-  li {
-    @apply ml-6 p-1;
-  }
-  hr {
-    @apply my-4 border-gray-600;
-  }
+    body {
+        @apply text-lg;
+    }
+
+    h1, h2, h3 {
+        @apply font-bold my-3;
+    }
+
+    h1 {
+        @apply text-3xl;
+    }
+
+    h2 {
+        @apply text-2xl;
+    }
+
+    h3 {
+        @apply text-xl;
+    }
+
+    p {
+        @apply my-4;
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+    ul {
+        @apply list-disc;
+    }
+
+    li {
+        @apply ml-6 p-1;
+    }
+
+    hr {
+        @apply my-4 border-gray-600;
+    }
 }
 
 .link-blue-underline a {
-  @apply underline text-blue-500;
+    @apply underline text-blue-500;
 }
 
 select.ais-MenuSelect-select {
-  height: '42px';
+    height: '42px';
 }
