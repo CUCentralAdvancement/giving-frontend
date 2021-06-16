@@ -8,11 +8,12 @@ describe("Fund Search Tests", () => {
       expect(parseInt(result.text())).to.be.lessThan(2000);
     });
 
-    // Test search inpiut.
+    // Test search input.
     // Bridge yields one result from UCCS.
     cy.get('[data-testid="search-input"]').type("Bridge");
+    // Wait a little bit for Algolia.
+    /* eslint-disable-next-line */
     cy.wait(1000);
-    // cy.get('[data-testid="search-button"]').click();
 
     cy.get('[data-testid="search-result-count"]').then((result) => {
       expect(parseInt(result.text())).to.be.greaterThan(0);
