@@ -23,6 +23,10 @@ module.exports = {
       animation: {
         'fade-in-up': 'fade-in-up 0.5s ease-out',
       },
+      // backgroundImage: theme => ({
+      //   'hero-pattern': "url('https://giving.cu.edu/sites/all/themes/themekit/images/campus-Anschutz-Medical.jpg')",
+      //   'another': "url('https://giving.cu.edu/sites/all/themes/themekit/images/campus-Boulder.jpg')",
+      // })
     },
   },
   variants: {

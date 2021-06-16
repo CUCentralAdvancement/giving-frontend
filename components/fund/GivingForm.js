@@ -3,11 +3,11 @@ import DefaultGivingForm from './DefaultGivingForm';
 import WriteInGivingForm from './WriteInGivingForm';
 import LicensePlateGivingForm from './LicensePlateGivingForm';
 
-GivingFormTriage.propTypes = {
+GivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
-export default function GivingFormTriage({fund}) {
+export default function GivingForm({fund}) {
   const fundType = (typeof fund.fund_type !== 'undefined') ? fund.fund_type : 'default';
   switch (fundType) {
     case 'write_in':

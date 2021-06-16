@@ -27,14 +27,18 @@ export default function Header() {
   return (
     <header role='banner' className='flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3'>
       <div className='p-2 mr-3'>
-        <img
-          src='https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg'
-          style={{ width: '317px' }}
-          data-testid='header-cu-logo'
-          alt='University of Colorado Logo'
-        />
+        <Link href="/">
+          <a>
+            <img
+              src='https://giving.cu.edu/sites/all/themes/themekit/images/logo.svg'
+              style={{ width: '317px' }}
+              data-testid='header-cu-logo'
+              alt='University of Colorado Logo'
+            />
+          </a>
+        </Link>
       </div>
-      <div className='text-lg uppercase p-2 grid gap-4 grid-cols-3 text-center divide-x divide-gray-100'>
+      <div className='text-lg uppercase p-2 grid gap-4 grid-cols-3 text-center divide-x divide-gray-400'>
         <Link href='/guide-giving'>
           <a className='hover:underline'>Guide to Giving</a>
         </Link>
@@ -66,8 +70,8 @@ export default function Header() {
                   data-testid='cart-items-total'
                   style={{
                     borderRadius: '50%',
-                    height: '24px',
-                    width: '24px',
+                    height: '27px',
+                    width: '27px',
                     backgroundColor: cartItems > 0 ? '#000' : '#fff',
                   }}
                 >

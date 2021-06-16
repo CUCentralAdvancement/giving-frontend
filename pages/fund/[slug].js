@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import Layout from "../../components/global/Layout";
-import FundInfoTriage from "../../components/fund/FundInfoTriage";
+import FundInfo from "../../components/fund/FundInfo";
 import { baseURL } from "../../data/store";
-import GivingFormTriage from '../../components/fund/GivingFormTriage';
+import GivingForm from '../../components/fund/GivingForm';
 
 Fund.propTypes = {
   fund: PropTypes.object,
@@ -39,12 +39,12 @@ export default function Fund({ fund }) {
         <div style={{minHeight: '570px'}}
         className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-screen-lg mx-auto">
           <div>
-            <FundInfoTriage fund={fund} />
+            <FundInfo fund={fund} />
           {/*  @todo Need to add disclaimer body here. It can be derived from the allocation
            code.*/}
           </div>
           <div className="p-4 pl-8">
-            <GivingFormTriage fund={fund} />
+            <GivingForm fund={fund} />
           </div>
         </div>
       </div>
@@ -55,16 +55,6 @@ export default function Fund({ fund }) {
 export async function getStaticPaths() {
   const res = await fetch(`${baseURL}/paths/fund.json`);
   const pathsList = await res.json();
-
-  // const paths = [];
-  // Object.keys(pathsList).forEach((key) => {
-  //   paths.push({
-  //     params: { slug: pathsList[key] },
-  //   });
-  // });
-
-  // const paths = require('../../data/fund-paths.json');
-
   return {
     paths: pathsList.map((el) => `/fund/${el}`),
     fallback: true,
@@ -79,7 +69,5 @@ export async function getStaticProps({ params }) {
   // currently uses "/fund".
   const res = await fetch(new URL(`${baseURL}/funds/${slug}.json`));
   const fund = await res.json();
-  // const fund = require(`../../data/funds/${slug}.json`);
-
   return { props: { fund } };
 }
