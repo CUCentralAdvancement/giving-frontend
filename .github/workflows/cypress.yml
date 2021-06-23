@@ -1,3 +1,5 @@
+# More examples: https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml
+
 name: Cypress Tests
 on:
   pull_request:
@@ -11,6 +13,8 @@ jobs:
       NEXT_PUBLIC_ALGOLIA_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_KEY }}
       NEXT_PUBLIC_ALGOLIA_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_ID }}
       NEXT_PUBLIC_AUTHORIZE_LOGIN_ID: ${{ secrets.NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY }}
+      CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,3 +28,7 @@ jobs:
           spec: cypress/integration/**/*
           build: yarn build
           start: yarn start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
