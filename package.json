@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node server.js -p $PORT",
     "test": "lint && cy:run",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --spec 'cypress/integration/**/*'",
+    "cy:run": "cypress run --spec 'cypress/integration/**/*' --record --key $CYPRESS_RECORD_KEY",
     "lint": "eslint ."
   },
   "dependencies": {
