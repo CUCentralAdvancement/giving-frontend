@@ -9,10 +9,10 @@ export default async (req, res) => {
 
   var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
   merchantAuthenticationType.setName(
-    process.env.NEXT_PUBLIC_AUTHORIZE_LOGIN_ID
+    process.env.AUTHORIZE_LOGIN_ID
   );
   merchantAuthenticationType.setTransactionKey(
-    process.env.NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY
+    process.env.AUTHORIZE_TRANSACTION_KEY
   );
 
   var transactionRequest = new ApiContracts.TransactionRequestType();
