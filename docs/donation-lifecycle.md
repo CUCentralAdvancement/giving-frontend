@@ -1,12 +1,18 @@
 # Donation Lifecycle
 
-This doc describes the lifecycle of an online donation. We have decided to represent it as a state machine using the AASM module syntax for Ruby (with some liberties taken). You can [view the AASM documentation here](https://github.com/aasm/aasm) and [check out this blog post](https://medium.com/geogo-in/state-machines-in-rails-5-45259a4f42da), but the general format is as follows:
-
+This doc describes the lifecycle of an online donation. We have decided to represent it as a state machine using the AASM module syntax for Ruby (with some liberties taken). The general format is as follows:
 - define all possible **_states_**
 - define **_events_** together with their supported **_transitions_** (state changes)
 - _events_ and _transitions_ can have one or more **_guards_**, or conditionals, that must return `true` or the event/transition will be denied.
   - We have used `if:` for these and not AASM's `guard:`. Both are technically supported, though.
 - **_Callbacks_** can be added to _states_, _events_ and _transitions_ and triggered at various points in the event, like entering/exiting a state or after event has run.
+
+**References**
+- [i482 - Order lifecycle documentation](https://github.com/CUCentralAdvancement/giving-frontend/issues/482)
+- [AASM documentation](https://github.com/aasm/aasm)
+- [State machines in Rails 5 (blog post)](https://medium.com/geogo-in/state-machines-in-rails-5-45259a4f42da)
+
+## Donation lifecycle state machine
 
 ```ruby
 class Donation
@@ -131,7 +137,7 @@ end
 # --RUN EVENTS AND VALIDATE RESPONSE--
 
 # CREATE NEW ORDER
-donation = Order.new
+donation = Donation.new
 donation.aasm.current_state # => gift_basket
 donation.may_modify_gifts? # => true
 donation.may_checkout?  # => true
