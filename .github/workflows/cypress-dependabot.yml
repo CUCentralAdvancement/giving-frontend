@@ -2,14 +2,14 @@
 
 name: Cypress Tests
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
 jobs:
   cypress-run:
     name: Cypress run
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     env:
       NEXT_PUBLIC_ALGOLIA_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_KEY }}
       NEXT_PUBLIC_ALGOLIA_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_ID }}
