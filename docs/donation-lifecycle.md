@@ -12,6 +12,10 @@ This doc describes the lifecycle of an online donation. We have decided to repre
 - [AASM documentation](https://github.com/aasm/aasm)
 - [State machines in Rails 5 (blog post)](https://medium.com/geogo-in/state-machines-in-rails-5-45259a4f42da)
 
+## Donation lifecycle diagram
+([draw.io file here](https://cu0.sharepoint.com/:f:/r/teams/AdvDigitalTeam/Shared%20Documents/General/NextGen%20%26%20Giving%202.0/Architecture/Donation%20Lifecycle))
+![Donation_Lifecycle_Diagram_v1](https://user-images.githubusercontent.com/64887812/126689899-7b685b89-8687-42f2-9eb0-f99636fd4bf9.png)
+
 ## Donation lifecycle state machine
 
 ```ruby
