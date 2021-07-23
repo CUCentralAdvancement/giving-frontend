@@ -4,7 +4,6 @@ const ApiContracts = require('authorizenet').APIContracts;
 const ApiControllers = require('authorizenet').APIControllers;
 
 export default async (req, res) => {
-  console.log(req);
   const data = req.body;
 
   const merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();

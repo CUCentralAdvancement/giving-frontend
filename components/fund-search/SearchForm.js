@@ -12,7 +12,6 @@ const SearchBox = connectSearchBox(CustomSearch);
 
 export default function SearchForm() {
   const { query } = useRouter();
-  console.log(query);
   function handleSubmit() {
     console.log("submitted form");
   }
