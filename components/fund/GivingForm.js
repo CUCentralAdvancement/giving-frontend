@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import DefaultGivingForm from './DefaultGivingForm';
 import WriteInGivingForm from './WriteInGivingForm';
 import LicensePlateGivingForm from './LicensePlateGivingForm';

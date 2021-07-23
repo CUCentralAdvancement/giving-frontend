@@ -7,7 +7,7 @@ import {
   giftNamePrefixOptions,
   giftStateOptions,
 } from '../../data/donationForm';
-import DonationButton, { updateTheButton } from '../forms/DonationButton';
+import DonationButton from '../forms/DonationButton';
 import { fundProps } from '../../data/types';
 import { useState } from 'react';
 
