@@ -1,89 +1,81 @@
-"use strict";
+'use strict';
 
-var ApiContracts = require("authorizenet").APIContracts;
-var ApiControllers = require("authorizenet").APIControllers;
+const ApiContracts = require('authorizenet').APIContracts;
+const ApiControllers = require('authorizenet').APIControllers;
 
 export default async (req, res) => {
-  // console.log(req);
+  console.log(req);
   const data = req.body;
 
-  var merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
-  merchantAuthenticationType.setName(
-    process.env.AUTHORIZE_LOGIN_ID
-  );
-  merchantAuthenticationType.setTransactionKey(
-    process.env.AUTHORIZE_TRANSACTION_KEY
-  );
+  const merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
+  merchantAuthenticationType.setName(process.env.AUTHORIZE_LOGIN_ID);
+  merchantAuthenticationType.setTransactionKey(process.env.AUTHORIZE_TRANSACTION_KEY);
 
-  var transactionRequest = new ApiContracts.TransactionRequestType();
-  transactionRequest.setTransactionType(
-    ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION
-  );
+  const transactionRequest = new ApiContracts.TransactionRequestType();
+  transactionRequest.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
   transactionRequest.setAmount(data.amount);
   transactionRequest.setOrder({
     invoiceNumber: data.invoiceNumber,
     description: data.description,
   });
   transactionRequest.setBillTo({
-    firstName: data.firstName,
-    lastName: data.lastName,
-    company: data.companyName,
-    address: data.addressLine1,
-    city: data.addressCity,
-    state: data.addressState,
-    zip: data.addressZip,
-    country: data.addressCountry,
-    phoneNumber: data.preferredPhone,
+    firstName: data['first-name'],
+    lastName: data['last-name'],
+    company: data['company-name'],
+    address: data['address-one'],
+    city: data['address-city'],
+    state: data['address-state'],
+    zip: data['address-zip'],
+    country: data['address-country'],
+    phoneNumber: data['preferred-phone'],
   });
 
-  var setting1 = new ApiContracts.SettingType();
-  setting1.setSettingName("hostedPaymentButtonOptions");
-  setting1.setSettingValue('{"text": "Pay"}');
+  const buttonOptions = new ApiContracts.SettingType();
+  buttonOptions.setSettingName('hostedPaymentButtonOptions');
+  buttonOptions.setSettingValue('{"text": "Pay"}');
 
-  var setting2 = new ApiContracts.SettingType();
-  setting2.setSettingName("hostedPaymentOrderOptions");
-  setting2.setSettingValue('{"show": true}');
+  const orderOptions = new ApiContracts.SettingType();
+  orderOptions.setSettingName('hostedPaymentOrderOptions');
+  orderOptions.setSettingValue('{"show": true}');
 
   // @todo Add bgColor for gold highlights?
 
-  var returnOptions = new ApiContracts.SettingType();
   const host = req.headers.host;
-  returnOptions.setSettingName("hostedPaymentReturnOptions");
+  const returnOptions = new ApiContracts.SettingType();
+  returnOptions.setSettingName('hostedPaymentReturnOptions');
   returnOptions.setSettingValue(
-    `{"showReceipt": false, "url": "https://${host}/checkout/complete", "cancelUrl": "https://${host}/checkout", "cancelUrlText": "Back to previous step"}`
+    `{"showReceipt": false, "url": "https://${host}/checkout/complete", "cancelUrl": "https://${host}/checkout", "cancelUrlText": "Back to previous step"}`,
   );
 
-  var iframeCommURL = new ApiContracts.SettingType();
-  iframeCommURL.setSettingName("hostedPaymentIFrameCommunicatorUrl");
-  iframeCommURL.setSettingValue(`{"url": "https://${host}/cator.html"}`);
+  const iframeCommURL = new ApiContracts.SettingType();
+  iframeCommURL.setSettingName('hostedPaymentIFrameCommunicatorUrl');
+  let iframeCommunicatorURL = process.env.AUTHORIZE_IFRAME_COMMUNICATOR_URL ?? 'https://localhost:3000/cator.html';
+  iframeCommURL.setSettingValue(`{"url": "${iframeCommunicatorURL}"}`);
 
-  var settingList = [];
-  settingList.push(setting1);
-  settingList.push(setting2);
+  const settingList = [];
+  settingList.push(buttonOptions);
+  settingList.push(orderOptions);
   settingList.push(iframeCommURL);
   settingList.push(returnOptions);
 
-  var alist = new ApiContracts.ArrayOfSetting();
+  const alist = new ApiContracts.ArrayOfSetting();
   alist.setSetting(settingList);
 
-  var getRequest = new ApiContracts.GetHostedPaymentPageRequest();
+  const getRequest = new ApiContracts.GetHostedPaymentPageRequest();
   getRequest.setMerchantAuthentication(merchantAuthenticationType);
   getRequest.setTransactionRequest(transactionRequest);
   getRequest.setHostedPaymentSettings(alist);
 
-  var ctrl = new ApiControllers.GetHostedPaymentPageController(
-    getRequest.getJSON()
+  const ctrl = new ApiControllers.GetHostedPaymentPageController(
+    getRequest.getJSON(),
   );
 
-  ctrl.execute(function () {
-    var apiResponse = ctrl.getResponse();
-    var response = new ApiContracts.GetHostedPaymentPageResponse(apiResponse);
+  ctrl.execute(function() {
+    const apiResponse = ctrl.getResponse();
+    const response = new ApiContracts.GetHostedPaymentPageResponse(apiResponse);
 
     if (response != null) {
-      if (
-        response.getMessages().getResultCode() ==
-        ApiContracts.MessageTypeEnum.OK
-      ) {
+      if (response.getMessages().getResultCode() === ApiContracts.MessageTypeEnum.OK) {
         // console.log("Hosted payment page token :");
         // console.log(response);
         const token = response.getToken();
@@ -91,15 +83,11 @@ export default async (req, res) => {
         res.json({ token: token });
       } else {
         //console.log('Result Code: ' + response.getMessages().getResultCode());
-        console.log(
-          "Error Code: " + response.getMessages().getMessage()[0].getCode()
-        );
-        console.log(
-          "Error message: " + response.getMessages().getMessage()[0].getText()
-        );
+        console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+        console.log('Error message: ' + response.getMessages().getMessage()[0].getText(),);
       }
     } else {
-      console.log("Null response received");
+      console.log('Null response received');
     }
   });
 };

@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import DefaultGivingForm from './DefaultGivingForm';
 import WriteInGivingForm from './WriteInGivingForm';
 import LicensePlateGivingForm from './LicensePlateGivingForm';
+import { fundProps } from '../../data/types';
 
 GivingForm.propTypes = {
-  fund: PropTypes.object,
+  fund: fundProps,
 };
 
 export default function GivingForm({fund}) {

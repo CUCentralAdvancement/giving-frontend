@@ -52,35 +52,35 @@ describe('Homepage tests', function() {
     // Alumni Programs.
     cy.visit('/');
     cy.get('a[data-testid="alumni-programs-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Alumni%20Programs');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Alumni%20Programs');
     cy.get('span[data-testid="result-interest"]').contains('Alumni Programs').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Arts & Culture.
     cy.visit('/');
     cy.get('a[data-testid="arts-culture-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Arts%20%26%20Culture');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Arts%20%26%20Culture');
     cy.get('span[data-testid="result-interest"]').contains('Arts & Culture').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Athletics & Recreation.
     cy.visit('/');
     cy.get('a[data-testid="athletics-recreation-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Athletics%20%26%20Recreation');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Athletics%20%26%20Recreation');
     cy.get('span[data-testid="result-interest"]').contains('Athletics & Recreation').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Community & Society.
     cy.visit('/');
     cy.get('a[data-testid="community-society-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Community%20%26%20Society');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Community%20%26%20Society');
     cy.get('span[data-testid="result-interest"]').contains('Community & Society').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Enterprise & Entrepreneurship.
     cy.visit('/');
     cy.get('a[data-testid="enterprise-entrepr-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Enterprise%20%26%20Entrepreneurship');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Enterprise%20%26%20Entrepreneurship');
     // None of these in the current search results...should up the funds seed.
     // cy.get('span[data-testid="result-interest"]').contains('Enterprise & Entrepreneurship').should('be.visible');
     // cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
@@ -88,21 +88,21 @@ describe('Homepage tests', function() {
     // Health & Wellness.
     cy.visit('/');
     cy.get('a[data-testid="health-wellness-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Health%20%26%20Wellness');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Health%20%26%20Wellness');
     cy.get('span[data-testid="result-interest"]').contains('Health & Wellness').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Scholarships & Student Success.
     cy.visit('/');
     cy.get('a[data-testid="scholarships-student-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Scholarships%20%26%20Student%20Success');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Scholarships%20%26%20Student%20Success');
     cy.get('span[data-testid="result-interest"]').contains('Scholarships & Student Success').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('not.exist');
 
     // Science, Research & Innovation.
     cy.visit('/');
     cy.get('a[data-testid="science-research-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?interest=Science,%20Research%20%26%20Innovation');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_fund_interests=Science,%20Research%20%26%20Innovation');
     cy.get('span[data-testid="result-interest"]').contains('Science, Research & Innovation').should('be.visible');
     cy.get('span[data-testid="result-interest"]').contains('Health & Wellness').should('not.exist');
 

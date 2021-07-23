@@ -16,14 +16,14 @@ export default function Cart() {
   const setGiftSummary = useSetRecoilState(giftSummaryLog);
   // console.log(cart);
 
-  const removeIt = (item) => {
+  function removeIt(item) {
     const newCart = cart.filter((cartItem) => {
       return cartItem.allocation_code !== item.allocation_code;
     });
     setCart(newCart);
     setGiftSummary(newCart);
     window.localStorage.setItem("userCart", JSON.stringify(newCart));
-  };
+  }
 
   return (
     <Layout>

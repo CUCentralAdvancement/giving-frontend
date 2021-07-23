@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import DefaultFundInfo from './DefaultFundInfo';
 import WriteInFundInfo from './WriteInFundInfo';
+import { fundProps } from '../../data/types';
 
 FundInfo.propTypes = {
-  fund: PropTypes.object,
+  fund: fundProps,
 };
 
 export default function FundInfo({fund}) {

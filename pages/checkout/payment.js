@@ -10,33 +10,37 @@ export default function Payment() {
   const router = useRouter();
 
   useEffect(() => {
+    // Don't run this code on the server.
     if (typeof document !== "undefined") {
+      // Submits the form with token received from the Authorize API.
       document.querySelector("#send_token").submit();
 
       if (!window.AuthorizeNetIFrame) {
         window.AuthorizeNetIFrame = {};
         window.AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
-          var params = parseQueryString(querystr);
-          let ifrm = {};
+          const params = parseQueryString(querystr);
+          let iframe = {};
+          let w = 0;
+          let h = 0;
           switch (params["action"]) {
             case "successfulSave":
               break;
             case "cancel":
-              router.push("/checkout");
+              router.push("/checkout").then(r => console.log(r));
               break;
             case "resizeWindow":
-              var w = parseInt(params["width"]);
-              var h = parseInt(params["height"]);
-              ifrm = document.getElementById("add_payment");
-              ifrm.style.width = w.toString() + "px";
-              ifrm.style.height = h.toString() + "px";
+              w = parseInt(params["width"]);
+              h = parseInt(params["height"]);
+              iframe = document.getElementById("add_payment");
+              iframe.style.width = w.toString() + "px";
+              iframe.style.height = h.toString() + "px";
               break;
             case "transactResponse":
-              ifrm = document.getElementById("add_payment");
-              ifrm.style.display = "none";
+              iframe = document.getElementById("add_payment");
+              iframe.style.display = "none";
 
               setTransactionDetails(JSON.parse(params["response"]));
-              router.push("/checkout/complete");
+              router.push("/checkout/complete").then(r => console.log(r));
           }
         };
       }
@@ -54,7 +58,7 @@ export default function Payment() {
           <img
             src="https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg"
             className="mr-2"
-            sx={{ height: "25px" }}
+            style={{ height: "25px" }}
             alt="Warning Icon"
           />
           <span> Please do not use Refresh or Back buttons on this page.</span>
