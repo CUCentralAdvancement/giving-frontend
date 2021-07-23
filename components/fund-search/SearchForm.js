@@ -32,7 +32,7 @@ export default function SearchForm() {
           <div className="w-full px-2 pt-2" data-testid="interests-select-list">
             <MenuSelect
               attribute="interest"
-              defaultRefinement={query.interest ? query.interest : ''}
+              defaultRefinement={query.field_fund_interests ? decodeURIComponent(query.field_fund_interests) : ''}
               translations={{
                 seeAllOption: 'All Interests',
               }}
@@ -85,7 +85,7 @@ function CustomRefine({ refine, items }) {
         type="reset"
         data-testid="search-reset"
         onClick={() => refine(items)}
-        isDisabled={!items.length}
+        disabled={!items.length}
       >
         Reset
       </button>

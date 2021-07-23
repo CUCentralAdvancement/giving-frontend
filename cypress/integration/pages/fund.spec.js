@@ -1,4 +1,4 @@
-describe("Fund Detail Page Tests", () => {
+describe("Fund Info Tests", () => {
   it("Shows proper data for FundInfo component", () => {
     cy.visit("fund/bridge-forward-scholarship");
 
@@ -57,11 +57,17 @@ describe("Fund Detail Page Tests", () => {
     cy.get('[data-testid="fund-allocation-code"]').should('not.exist');
     cy.get('[data-testid="fund-interest"]').should('not.exist');
 
-    cy.get('input[name="giving-amount"]').should('be.visible');
+    cy.get('[data-testid="giving-amount-options"]').should('be.visible');
     // Extra comment section for write-in fund.
     cy.get('textarea[data-testid="comments-textarea"]').should('be.visible');
 
     // No license plate form field..
     cy.get('input[name="name-on-title"]').should('not.exist');
+  });
+});
+
+describe("Giving Form Tests", () => {
+  it('should ', function() {
+
   });
 });

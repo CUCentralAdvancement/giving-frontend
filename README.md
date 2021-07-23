@@ -7,6 +7,8 @@ fancy client-side caching to provide the best UX possible.
 - [Getting Started](#getting-started)
 - [Font Awesome Icons](#font-awesome)
 - [Authorize.net Payment Flow](docs/authorize-payment-flow.md)
+- [Testing](#testing)
+- [Deployments](#deployment)
 
 ## Dumb Note About Todo Tasks
 
@@ -22,8 +24,8 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. It will
-default to loading the fund search page
-at: [http://localhost:3000/fund-search](http://localhost:3000/fund-search). You'll be able to view
+default to loading the fund search page at: 
+[http://localhost:3000/fund-search](http://localhost:3000/fund-search). You'll be able to view
 the basic app but several parts won't properly function until you've added local environmental
 variables and enabled SSL support.
 
@@ -52,18 +54,22 @@ The `.env.example` file has a set of placeholder for the API keys you will need 
 run the app, provide logging, handle search, and handle payments.
 
 ```ini
+# All needed credentials are available from the Heroku admin "reveal config vars" button.
+
+# Algolia is a hosted search service.
 NEXT_PUBLIC_ALGOLIA_KEY=
 NEXT_PUBLIC_ALGOLIA_ID=
 
-NEXT_PUBLIC_AUTHORIZE_LOGIN_ID=
-NEXT_PUBLIC_AUTHORIZE_TRANSACTION_KEY=
+# Authorize.net provides a hosted payment form via an iframe.
+AUTHORIZE_LOGIN_ID=
+AUTHORIZE_TRANSACTION_KEY=
 
-NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME=
-NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY=
+# This is "https://localhost:3000/cator.html" but cert no good locally.
+AUTHORIZE_IFRAME_COMMUNICATOR_URL=http://localhost:3000/cator.html
 ```
 
-Fill those in by asking your coworkers for the proper credentials and do so in a `.env.local` file.
-Just like the SSL cert and key, the `.env.local` file isn't tracked by version control in order to
+Fill those in by asking your coworkers for the proper credentials and do so in a `.env` file.
+Just like the SSL cert and key, the `.env` file isn't tracked by version control in order to
 not reveal sensitive information to the world.
 
 After filling in those credentials, you should be able to view and use the entire application.
@@ -81,6 +87,7 @@ The Giving Frontend application is built with the following tech stack:
 - **Cypress -** Test runner
 - **Travis CI -** CI tool
 - **Heroku -** Hosting environment
+- **Tailwind CSS -** CSS styling framework
 
 ## Testing
 
@@ -102,22 +109,28 @@ yarn cy:run
 yarn cy:open
 ```
 
-The tests run on Travis CI for pull requests to the `master` branch and merges into master. The test
-run is different that doing it locally since the server needs to be automatically started and
-checked before the tests can run.
+The tests run on GitHub when pull requests are made to the `main` branch. The test run is different from 
+doing it locally since the server needs to be automatically started and checked before the tests can run. 
+Cypress provides a nice GitHub Action that allows you to start and wait on the server before running tests.
 
 ```yaml
-script:
-  # Wake up API for testing
-  - nc -zvv 385-i-cu-giving.pantheonsite.io 80; out=$?; while [[ $out -ne 0 ]]; do echo "Retry waking up 385-i-cu-giving.pantheonsite.io..."; nc -zvv 385-i-cu-giving.pantheonsite.io 80; out=$?; sleep 5; done
-  - yarn build
-  - yarn start > /dev/null 2>&1 &
-  - nc -zvv 127.0.0.1 3000; out=$?; while [[ $out -ne 0 ]]; do echo "Retry hit port 3000..."; nc -zvv localhost 3000; out=$?; sleep 5; done
-  - yarn cy:run
+  - name: Cypress run
+    uses: cypress-io/github-action@v2
+    with:
+      spec: cypress/integration/**/*
+      build: yarn build
+      start: yarn start
+      wait-on: "http://localhost:3000"
+      wait-on-timeout: 120
+      browser: chrome
+      record: true
+    env:
+      CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 ```
 
-The `nc` commands wake up the test API service before building the app and wait for the app to
-compile before running the tests.
+Cypress Dashboard is used on this project for debugging purposes, but the integration isn't well 
+established enough to write about in this readme. 
 
 ### Writing Tests
 
@@ -144,8 +157,7 @@ it("Loads fund search page with correct results", () => {
 });
 ```
 
-In their
-docs, [Cypress suggests to chain assertions together](https://docs.cypress.io/guides/references/best-practices.html#Creating-%E2%80%9Ctiny%E2%80%9D-tests-with-a-single-assertion)
+In their docs, [Cypress suggests to chain assertions together](https://docs.cypress.io/guides/references/best-practices.html#Creating-%E2%80%9Ctiny%E2%80%9D-tests-with-a-single-assertion)
 so that you don't slow down your tests. It is always easy to see what broke in a Cypress test so no
 need to add a bunch of separate tests with clever names. For interactive tests or tests that follow
 a user's conversion journey, it would be a real pain to separate out tests leading up to each step

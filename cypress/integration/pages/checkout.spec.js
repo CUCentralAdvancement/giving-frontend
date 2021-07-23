@@ -16,13 +16,13 @@ describe("Checkout Tests", () => {
     // cy.get('[data-testid="order-total"]').should("not.exist");
   });
 
-  xit("Correctly navigates to cart from edit button", () => {
+  it("Correctly navigates to cart from edit button", () => {
     cy.visit("/checkout");
     cy.contains("Edit Gift Basket").click();
     cy.contains("Your gift basket is empty.");
   });
 
-  xit("Loads cart, handles form input, and continues to next step", () => {
+  it("Loads cart, handles form input, and continues to next step", () => {
     setCart();
 
     // Briefly test cart summary. Better tested in cart.spec.js.
@@ -35,79 +35,53 @@ describe("Checkout Tests", () => {
       .then((total) => {
         expect(total.text()).to.equal("$300");
       });
-    cy.get('[data-testid="remove-from-cart-button"]').should("not.exist");
+    cy.get('[data-testid="remove-from-cart-button"]').should("not.be.visible");
 
     // Test Contact Information form.
-    cy.get('input[name="companyName"]').should("not.exist");
+    cy.get('input[name="company-name"]').should("not.be.visible");
     cy.contains("Company/Organization").click();
-    cy.get('input[name="companyName"]').should("be.visible").type("ACME Corp.");
+    cy.get('input[name="company-name"]').should("be.visible").type("ACME Corp.");
 
     // Set title select to "Ms.".
-    cy.get('label[for="title"]')
-      .next()
-      .click()
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="title"]').should("have.attr", "value", "Ms.");
+    cy.get('select[name="title"]').select('Ms.');
 
     // Set first and last name.
-    cy.get('input[name="firstName"]').type("John");
-    cy.get('input[name="lastName"]').type("Doe");
+    cy.get('input[name="first-name"]').type("John");
+    cy.get('input[name="last-name"]').type("Doe");
 
     // Set address type to "Work".
-    cy.get('label[for="addressType"]')
-      .next()
-      .click()
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="addressType"]').should("have.attr", "value", "work");
+    cy.get('select[name="address-type"]').select('Work');
 
     // Set country to "Afghanistan".
-    cy.get('label[for="addressCountry"]')
-      .next()
-      .click()
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="addressCountry"]').should("have.attr", "value", "AF");
+    cy.get('select[name="address-country"]').select('Afghanistan');
 
     // Set address and city.
-    cy.get('input[name="addressLine1"]').type("123 High St.");
-    cy.get('input[name="addressCity"]').type("London");
+    cy.get('input[name="address-one"]').type("123 High St.");
+    cy.get('input[name="address-city"]').type("London");
 
     // Set state to "Alabama".
-    cy.get('label[for="addressState"]')
-      .next()
-      .click()
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="addressState"]').should("have.attr", "value", "AL");
+    cy.get('select[name="address-state"]').select('Alabama');
 
     // Set postal code.
-    cy.get('input[name="addressZip"]').type("43210");
+    cy.get('input[name="address-zip"]').type("43210");
 
     // Set phone type to "Work".
-    cy.get('label[for="phoneType"]')
-      .next()
-      .click()
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 40, which: 40 })
-      .trigger("keydown", { keyCode: 13, which: 13 });
-    cy.get('input[name="phoneType"]').should("have.attr", "value", "work");
+    cy.get('select[name="phone-type"]').select('Work');
 
-    cy.get('input[name="preferredPhone"]').type("555-555-5555");
+    cy.get('input[name="preferred-phone"]').type("555-555-5555");
 
     // @todo Add email validation tests.
     cy.get('input[name="email"]').type("john.doe@gmail.com");
 
     // Spouse/partner.
-    cy.get('input[name="spouseName"]').should("not.exist");
-    cy.get('input[name="includeSpouse"]').check({ force: true });
-    cy.get('input[name="spouseName"]').should("be.visible").type("Jane Doe");
+    cy.get('input[name="spouse-name"]').should("not.be.visible");
+    cy.get('input[name="include-spouse"]').check({ force: true });
+    cy.get('input[name="spouse-name"]').should("be.visible").type("Jane Doe");
 
     // Matching gifts.
-    cy.get('input[name="employerName"]').should("not.exist");
+    cy.get('input[name="employer-name"]').should("not.be.visible");
     cy.get('[data-testid="matching-gifts-radios"]').contains("Yes").click();
-    cy.get('input[name="employerName"]')
+    cy.get('input[name="employer-name"]')
       .should("be.visible")
       .type("ACME Corp.");
 
@@ -118,10 +92,14 @@ describe("Checkout Tests", () => {
 
     // Tax receipt and update profile.
     cy.get('[data-testid="tax-receipt-radios"]').contains("Mail").click();
-    cy.get('input[name="updateProfile"]').check({ force: true });
+    cy.get('input[name="update-profile"]').check({ force: true });
 
     // Continue to next page.
     cy.get('[data-testid="continue-button"]').click();
+
+    // Wait a little bit for Authorize iframe.
+    /* eslint-disable-next-line */
+    cy.wait(6000);
 
     cy.url().should("include", "checkout/payment");
     cy.contains("Please do not use Refresh or Back buttons on this page.");
@@ -196,7 +174,7 @@ describe("Checkout Tests", () => {
     // );
   });
 
-  xit("Handles payment page without a token.", () => {
+  it("Handles payment page without a token.", () => {
     setCart();
     cy.visit("/checkout/payment");
     cy.contains("Please do not use Refresh or Back buttons on this page.");
@@ -204,7 +182,7 @@ describe("Checkout Tests", () => {
     getIframeBody("add_payment").contains("Missing or invalid token.");
   });
 
-  xit("Handles payment completion page.", () => {
+  it("Handles payment completion page.", () => {
     setCart();
     cy.visit("/checkout/complete");
 
@@ -243,18 +221,18 @@ function setCart() {
     "userCart",
     JSON.stringify([
       {
-        allocationCode: "0321793",
-        fundCampus: "CU Denver",
-        fundRoute: "/fund/office-student-life-food-pantry-fund",
-        fundTitle: "Office of Student Life Food Pantry Fund",
-        "giving-amount": 50,
+        allocation_code: "0321793",
+        fund_campus: "CU Denver",
+        fund_route: "/fund/office-student-life-food-pantry-fund",
+        fund_title: "Office of Student Life Food Pantry Fund",
+        "giving-amount": "50",
         inHonorOf: 0,
       },
       {
-        allocationCode: "0430106",
-        fundCampus: "UCCS",
-        fundRoute: "/fund/bridge-forward-scholarship",
-        fundTitle: "Bridge Forward Scholarship Endowment",
+        allocation_code: "0430106",
+        fund_campus: "UCCS",
+        fund_route: "/fund/bridge-forward-scholarship",
+        fund_title: "Bridge Forward Scholarship Endowment",
         "giving-amount": "250",
         inHonorOf: 0,
       },

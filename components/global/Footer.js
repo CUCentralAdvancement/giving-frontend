@@ -6,7 +6,7 @@ const Footer = () => (
       <div className="flex flex-col items-center text-center">
         <Link href="/fund-search">
           <a>
-            <button className="p-3 text-black font-bold bg-gold text-lg" data-testid="footer-give-button">
+            <button className="p-3 text-black font-bold bg-gold text-lg uppercase" data-testid="footer-give-button">
               Give Now
             </button>
           </a>

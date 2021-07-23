@@ -8,6 +8,8 @@ import {
   giftNamePrefixOptions,
   giftStateOptions,
 } from '../../data/donationForm';
+import DonationButton from '../forms/DonationButton';
+import { useState } from 'react';
 
 WriteInGivingForm.propTypes = {
   fund: PropTypes.object,
@@ -25,10 +27,21 @@ export default function WriteInGivingForm({ fund }) {
       'gift-country': 'US',
     },
   });
-  const givingAmount = watch('giving-amount');
-  const inHonorOf = watch('in-honor-of');
+  const [givingAmount, setGivingAmount] = useState(fund.suggested_amount ?? '50');
+  const [inHonorOf, setInHonorOf] = useState('No');
   const honorMemorySelect = watch('honor-memory-select');
   const recurringGift = watch('recurring-gift');
+
+  function updateTheButton(name, value) {
+    switch (name) {
+      case 'giving-amount':
+        setGivingAmount(value);
+        break;
+      case 'in-honor-of':
+        setInHonorOf(value);
+        break;
+    }
+  }
 
   function submitHandler(action) {
     let data = getValues();
@@ -36,10 +49,7 @@ export default function WriteInGivingForm({ fund }) {
     data.fund_route = router.asPath;
     data.fund_title = fund.title;
     data.fund_campus = fund.campus;
-
-    if (data['giving-amount'] === 'other') {
-      data['giving-amount'] = data['other-amount'];
-    }
+    data['giving-amount'] = givingAmount;
 
     setCart([...cart, data]);
     setGiftSummary([...cart, data]);
@@ -62,38 +72,41 @@ export default function WriteInGivingForm({ fund }) {
   return (
     <form onSubmit={handleSubmit(dummySubmit)}>
       <h3 className='mb-3 text-xl'>I would like to give:</h3>
-      <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
+      <div data-testid="giving-amount-options"
+           className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
         {['50', '100', '250', '500'].map((value) => (
-          <DonationRadio
+          <DonationButton
             key={value}
             name='giving-amount'
             label={`$${value}`}
             value={value}
-            selected={givingAmount == value}
-            register={register}
+            selected={givingAmount === value}
+            updateButton={updateTheButton}
           />
         ))}
       </div>
-      <DonationRadio
+      <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
+      <DonationButton
         key='other'
         name='giving-amount'
         label='Other'
         value='other'
-        selected={givingAmount == 'other'}
-        register={register}
+        selected={givingAmount === 'other'}
+        updateButton={updateTheButton}
       />
       <input
         {...register('other-amount')}
-        className={givingAmount === 'other' ? 'visible' : 'hidden'}
+        className={givingAmount === 'other' ? 'visible col-span-3' : 'hidden'}
         type='text'
         placeholder='Other Amount'
       />
+      </div>
       <div className='my-2'>
         <label>
           <input {...register('recurring-gift')} className='mr-2' type='checkbox' />
           Make this a recurring gift
         </label>
-        <div className={'mt-2 ' + (recurringGift == true ? 'visible' : 'hidden')}>
+        <div className={'mt-2 ' + (recurringGift === true ? 'visible' : 'hidden')}>
           <select {...register('recurring-gift-frequency')} className='w-full'>
             <option value='_none'>How Often?</option>
             <option value='monthly'>Monthly</option>
@@ -115,17 +128,17 @@ export default function WriteInGivingForm({ fund }) {
         <label htmlFor='inHonorOf'>Is this gift in honor of or in memory of someone?</label>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-2 my-2'>
           {['No', 'Yes'].map((value) => (
-            <DonationRadio
+            <DonationButton
               key={value}
               name='in-honor-of'
               label={value}
               value={value}
-              selected={inHonorOf == value}
-              register={register}
+              selected={inHonorOf === value}
+              updateButton={updateTheButton}
             />
           ))}
         </div>
-        <div className={inHonorOf == 'Yes' ? 'visible' : 'hidden'}>
+        <div className={inHonorOf === 'Yes' ? 'visible' : 'hidden'}>
           <select {...register('honor-memory-select')} className='w-full'>
             <option value='memory'>In memory of</option>
             <option value='honor'>In honor of</option>
@@ -137,11 +150,11 @@ export default function WriteInGivingForm({ fund }) {
           <input
             {...register('honoree-name')}
             type='text'
-            className={'w-full ' + (honorMemorySelect == 'memory' ? 'visible' : 'hidden')}
+            className={'w-full ' + (honorMemorySelect === 'memory' ? 'visible' : 'hidden')}
             placeholder="Honoree's Name"
           />
           <h3 className='mt-3'>
-            {honorMemorySelect == 'honor' ? 'Honoree\'s Information' : 'Next of Kin/Contact Information'}
+            {honorMemorySelect === 'honor' ? 'Honoree\'s Information' : 'Next of Kin/Contact Information'}
           </h3>
           <div className='grid grid-cols-1 gap-2 my-2'>
             <select {...register('gift-name-prefix')}>
@@ -207,43 +220,5 @@ export default function WriteInGivingForm({ fund }) {
         </div>
       </div>
     </form>
-  );
-}
-
-DonationRadio.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.string,
-  selected: PropTypes.bool,
-  register: PropTypes.func,
-};
-
-function DonationRadio({ name, label, value, selected, register }) {
-  return (
-    <div className='hover:scale-110'>
-      <label
-        htmlFor={value}
-        className='inline-block pt-1 text-center font-medium hover:border-gray-800 hover:text-gray-800'
-        style={{
-          border: selected ? '#231F20 solid 2px' : '#A0A3A6 solid 2px',
-          color: selected ? '#231F20' : '#A0A3A6',
-          backgroundColor: selected ? '#D4D5D5' : 'white',
-          width: '90px',
-          height: '40px',
-        }}
-      >
-        <input
-          type='radio'
-          {...register(name)}
-          value={value}
-          // style={{
-          //   opacity: 0,
-          //   position: 'fixed',
-          //   width: 0,
-          // }}
-        />
-        {label}
-      </label>
-    </div>
   );
 }
