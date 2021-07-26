@@ -1,62 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 // import Link from "next/link";
-import dynamic from "next/dynamic";
-import Layout from "../../components/global/Layout";
-import {
-  userCart,
-  giftSummaryLog,
-  transactionDetails,
-  givingFormInfo,
-  baseURL,
-} from "../../data/store";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import dynamic from 'next/dynamic';
+import Layout from '../../components/global/Layout';
+import { UserContext } from '../../data/contexts/UserContext';
 
-const CartSummary = dynamic(() => import("../../components/cart/CartSummary"), {
+const CartSummary = dynamic(() => import('../../components/cart/CartSummary'), {
   ssr: false,
 });
 
 export default function Complete() {
-  const setCart = useSetRecoilState(userCart);
-  const transaction = useRecoilValue(transactionDetails);
-  const giftSummary = useRecoilValue(giftSummaryLog);
-  const givingInfo = useRecoilValue(givingFormInfo);
+  const { user, dispatch } = useContext(UserContext);
+  const transaction = user.transaction;
+  const giftBasketCopy = user.giftBasketCopy;
 
   useEffect(() => {
-    setCart([]);
-    window.localStorage.setItem("userCart", JSON.stringify([]));
+    dispatch({ type: 'reset_gift_basket', payload: null });
 
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Content-Type', 'application/json');
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({
-        givingInfo: givingInfo,
-        giftSummary: giftSummary,
-        transaction: transaction,
-      }),
-      mode: "no-cors",
-      // redirect: "follow",
-    };
-
-    const url = `${baseURL}/api/order/create?${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME}=${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY}`;
-    fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }, [giftSummary, givingInfo, setCart, transaction]);
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: JSON.stringify({
+    //     givingInfo: givingInfo,
+    //     giftSummary: giftSummary,
+    //     transaction: transaction,
+    //   }),
+    //   mode: 'no-cors',
+    // };
+    //
+    // const url = `${baseURL}/api/order/create?${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY_NAME}=${process.env.NEXT_PUBLIC_AUTHORIZE_ORDER_API_KEY}`;
+    // fetch(url, requestOptions)
+    //   .then((response) => response.text())
+    //   .then((result) => console.log(result))
+    //   .catch((error) => console.log('error', error));
+  }, [dispatch]);
 
   return (
     <Layout>
-      <div className="grid grid-cols-1 gap-2 max-w-screen-lg mx-auto py-4">
+      <div className='grid grid-cols-1 gap-2 max-w-screen-lg mx-auto py-4'>
         <h1>Gift Summary</h1>
         <hr />
-        <CartSummary cart={giftSummary} removeCallback={null} />
-        <div className="flex flex-row justify-end font-bold">
-          <span className="pr-3">
+        <CartSummary cart={giftBasketCopy} removeCallback={null} />
+        <div className='flex flex-row justify-end font-bold'>
+          <span className='pr-3'>
             Transaction ID:&nbsp;
-            <span data-test-id="gift-id">{transaction.transId}</span>
+            <span data-test-id='gift-id'>{transaction.transId}</span>
             <br />
             Invoice Number:&nbsp;
             {transaction.orderInvoiceNumber}
@@ -78,15 +68,15 @@ export default function Complete() {
           Foundation, whose tax ID is 84-6049811. You should receive email
           confirmation of your gift shortly, and your gift receipt for tax
           purposes will be sent to you within two business days. If you do not
-          receive either of these, please contact us at{" "}
-          <a href="tel:+13035411290">303-541-1290</a>.
+          receive either of these, please contact us at{' '}
+          <a href='tel:+13035411290'>303-541-1290</a>.
         </p>
         <p>
-          We&apos;d also love to know what you think of the new site!{" "}
+          We&apos;d also love to know what you think of the new site!{' '}
           <a
-            href="https://www.surveymonkey.com/r/36QSBRZ"
-            target="_blank"
-            rel="noreferrer"
+            href='https://www.surveymonkey.com/r/36QSBRZ'
+            target='_blank'
+            rel='noreferrer'
           >
             Click here to fill out our survey &gt;
           </a>
@@ -130,10 +120,10 @@ export default function Complete() {
         </h3>
         <p>
           <strong>Comments: </strong>
-          <br /> {givingInfo.giftComments}
+          <br /> {user.givingInfo['gift-comments']}
         </p>
         <p>
-          <strong>Receive tax receipt by:</strong>&nbsp;{givingInfo.taxReceipt}
+          <strong>Receive tax receipt by:</strong>&nbsp;{user.givingInfo['tax-receipt']}
         </p>
       </div>
     </Layout>

@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import { userCart } from '../../data/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { useAnimation } from 'framer-motion';
+import { UserContext } from '../../data/contexts/UserContext';
 
 export default function Header() {
-  const cart = useRecoilValue(userCart);
+  const { user } = useContext(UserContext);
   const [cartItems, setCartItems] = useState(0);
   const controls = useAnimation();
 
   useEffect(() => {
-    setCartItems(parseInt(cart.length));
+    setCartItems(parseInt(user.giftBasket.length));
     controls.start({
       scale: 1,
       transition: {
@@ -22,7 +21,7 @@ export default function Header() {
         damping: 100,
       },
     });
-  }, [cart.length, controls]);
+  }, [user.giftBasket.length, controls]);
 
   return (
     <header role='banner' className='flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3'>

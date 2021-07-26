@@ -1,9 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-// import App from 'next/app'
-// import { StateProvider } from "../data/store";
-import { RecoilRoot } from "recoil";
-import "../components/fund-search/algolia.css";
+import React, { useReducer } from 'react';
+import PropTypes from 'prop-types';
+import { UserContext, userReducer, initialState } from '../data/contexts/UserContext';
+import '../components/fund-search/algolia.css';
 import '../styles/global.css';
 
 MyApp.propTypes = {
@@ -12,14 +10,15 @@ MyApp.propTypes = {
 };
 
 function MyApp({ Component, pageProps }) {
+  const [user, dispatch] = useReducer(userReducer, initialState);
   return (
     <React.StrictMode>
-      <RecoilRoot>
+      <UserContext.Provider value={{ user: user, dispatch: dispatch }}>
         <>
           <Component {...pageProps} />
-          <div id="portal-root"></div>
+          <div id='portal-root'></div>
         </>
-      </RecoilRoot>
+      </UserContext.Provider>
     </React.StrictMode>
   );
 }
