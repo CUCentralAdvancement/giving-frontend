@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { userCart, giftSummaryLog } from '../../data/store';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   countryOptionsList,
   giftNamePrefixOptions,
@@ -9,15 +7,15 @@ import {
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
 import { fundProps } from '../../data/types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../data/contexts/UserContext';
 
 DefaultGivingForm.propTypes = {
   fund: fundProps,
 };
 
 export default function DefaultGivingForm({ fund }) {
-  const [cart, setCart] = useRecoilState(userCart);
-  const setGiftSummary = useSetRecoilState(giftSummaryLog);
+  const { dispatch } = useContext(UserContext);
   const router = useRouter();
   const { register, handleSubmit, watch, getValues } = useForm({
     defaultValues: {
@@ -51,15 +49,13 @@ export default function DefaultGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = givingAmount;
 
-    setCart([...cart, data]);
-    setGiftSummary([...cart, data]);
-    window.localStorage.setItem('userCart', JSON.stringify([...cart, data]));
+    dispatch({ type: 'add_to_gift_basket', payload: data });
 
     switch (action) {
-      case 'add to basket':
+      case 'add_to_basket':
         router.push('/cart');
         break;
-      case 'give now':
+      case 'give_now':
         router.push('/checkout');
         break;
     }
@@ -72,7 +68,7 @@ export default function DefaultGivingForm({ fund }) {
   return (
     <form onSubmit={handleSubmit(dummySubmit)}>
       <h3 className='mb-3 text-xl'>I would like to give:</h3>
-      <div data-testid="giving-amount-options"
+      <div data-testid='giving-amount-options'
            className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
         {['50', '100', '250', '500'].map((value) => (
           <DonationButton
@@ -197,7 +193,7 @@ export default function DefaultGivingForm({ fund }) {
           className='bg-black text-white p-2'
           data-testid='add-to-basket-button'
           onClick={() => {
-            submitHandler('add to basket');
+            submitHandler('add_to_basket');
           }}
         >
           Add to Basket
@@ -206,7 +202,7 @@ export default function DefaultGivingForm({ fund }) {
           className='bg-black text-white p-2'
           data-testid='give-now-button'
           onClick={() => {
-            submitHandler('give now');
+            submitHandler('give_now');
           }}
         >
           Give Now

@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { userCart, giftSummaryLog } from '../../data/store';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { UserContext } from '../../data/contexts/UserContext';
+import { useContext } from 'react';
 
 LicensePlateGivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
 export default function LicensePlateGivingForm({ fund }) {
-  const [cart, setCart] = useRecoilState(userCart);
-  const setGiftSummary = useSetRecoilState(giftSummaryLog);
+  const { dispatch } = useContext(UserContext);
   const router = useRouter();
   const { register, handleSubmit, getValues } = useForm();
 
@@ -22,9 +21,7 @@ export default function LicensePlateGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = 50.00;
 
-    setCart([...cart, data]);
-    setGiftSummary([...cart, data]);
-    window.localStorage.setItem('userCart', JSON.stringify([...cart, data]));
+    dispatch({ type: 'add_to_gift_basket', payload: data });
 
     switch (action) {
       case 'add to basket':

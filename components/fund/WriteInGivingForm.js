@@ -1,23 +1,21 @@
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { userCart, giftSummaryLog } from '../../data/store';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   countryOptionsList,
   giftNamePrefixOptions,
   giftStateOptions,
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../data/contexts/UserContext';
 
 WriteInGivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
 export default function WriteInGivingForm({ fund }) {
-  const [cart, setCart] = useRecoilState(userCart);
-  const setGiftSummary = useSetRecoilState(giftSummaryLog);
+  const { dispatch } = useContext(UserContext);
   const router = useRouter();
   const { register, handleSubmit, watch, getValues } = useForm({
     defaultValues: {
@@ -51,9 +49,7 @@ export default function WriteInGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = givingAmount;
 
-    setCart([...cart, data]);
-    setGiftSummary([...cart, data]);
-    window.localStorage.setItem('userCart', JSON.stringify([...cart, data]));
+    dispatch({ type: 'add_to_gift_basket', payload: data });
 
     switch (action) {
       case 'add to basket':
@@ -72,7 +68,7 @@ export default function WriteInGivingForm({ fund }) {
   return (
     <form onSubmit={handleSubmit(dummySubmit)}>
       <h3 className='mb-3 text-xl'>I would like to give:</h3>
-      <div data-testid="giving-amount-options"
+      <div data-testid='giving-amount-options'
            className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
         {['50', '100', '250', '500'].map((value) => (
           <DonationButton
@@ -86,20 +82,20 @@ export default function WriteInGivingForm({ fund }) {
         ))}
       </div>
       <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
-      <DonationButton
-        key='other'
-        name='giving-amount'
-        label='Other'
-        value='other'
-        selected={givingAmount === 'other'}
-        updateButton={updateTheButton}
-      />
-      <input
-        {...register('other-amount')}
-        className={givingAmount === 'other' ? 'visible col-span-3' : 'hidden'}
-        type='text'
-        placeholder='Other Amount'
-      />
+        <DonationButton
+          key='other'
+          name='giving-amount'
+          label='Other'
+          value='other'
+          selected={givingAmount === 'other'}
+          updateButton={updateTheButton}
+        />
+        <input
+          {...register('other-amount')}
+          className={givingAmount === 'other' ? 'visible col-span-3' : 'hidden'}
+          type='text'
+          placeholder='Other Amount'
+        />
       </div>
       <div className='my-2'>
         <label>
@@ -196,7 +192,7 @@ export default function WriteInGivingForm({ fund }) {
           <span className='text-sm italic'>
             Please include any information about the intended fund in the comments box below.
           </span>
-          <textarea {...register('gift-comments')} rows='4' data-testid='comments-textarea' className="w-full" />
+          <textarea {...register('gift-comments')} rows='4' data-testid='comments-textarea' className='w-full' />
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 mt-3 gap-4'>
           <button
