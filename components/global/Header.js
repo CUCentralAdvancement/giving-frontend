@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { useAnimation } from 'framer-motion';
-import { UserContext } from '../../data/contexts/UserContext';
+import { useDonor } from '../../data/contexts/DonorContext';
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { giftBasket,  } = useDonor();
   const [cartItems, setCartItems] = useState(0);
   const controls = useAnimation();
 
   useEffect(() => {
-    setCartItems(parseInt(user.giftBasket.length));
+    setCartItems(parseInt(giftBasket?.length));
     controls.start({
       scale: 1,
       transition: {
@@ -21,7 +21,7 @@ export default function Header() {
         damping: 100,
       },
     });
-  }, [user.giftBasket.length, controls]);
+  }, [giftBasket, controls]);
 
   return (
     <header role='banner' className='flex flex-row max-w-screen-lg mx-auto items-center justify-between pt-3'>

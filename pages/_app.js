@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { UserContext, userReducer, initialState } from '../data/contexts/UserContext';
+import { DonorProvider } from '../data/contexts/DonorContext';
 import '../components/fund-search/algolia.css';
 import '../styles/global.css';
 
@@ -10,15 +10,14 @@ MyApp.propTypes = {
 };
 
 function MyApp({ Component, pageProps }) {
-  const [user, dispatch] = useReducer(userReducer, initialState);
   return (
     <React.StrictMode>
-      <UserContext.Provider value={{ user: user, dispatch: dispatch }}>
+      <DonorProvider>
         <>
           <Component {...pageProps} />
           <div id='portal-root'></div>
         </>
-      </UserContext.Provider>
+      </DonorProvider>
     </React.StrictMode>
   );
 }

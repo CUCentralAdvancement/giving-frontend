@@ -7,15 +7,15 @@ import {
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
 import { fundProps } from '../../data/types';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../data/contexts/UserContext';
+import { useState } from 'react';
+import { useDonor } from '../../data/contexts/DonorContext';
 
 DefaultGivingForm.propTypes = {
   fund: fundProps,
 };
 
 export default function DefaultGivingForm({ fund }) {
-  const { dispatch } = useContext(UserContext);
+  const { addToGiftBasket } = useDonor();
   const router = useRouter();
   const { register, handleSubmit, watch, getValues } = useForm({
     defaultValues: {
@@ -49,8 +49,10 @@ export default function DefaultGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = givingAmount;
 
-    dispatch({ type: 'add_to_gift_basket', payload: data });
+    addToGiftBasket(data);
 
+    // TODO: This routing should be delegated to the 
+    // Donor Context as its own command dispatch.
     switch (action) {
       case 'add_to_basket':
         router.push('/cart');

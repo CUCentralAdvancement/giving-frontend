@@ -7,15 +7,15 @@ import {
   giftStateOptions,
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../data/contexts/UserContext';
+import { useState } from 'react';
+import { useDonor } from '../../data/contexts/DonorContext';
 
 WriteInGivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
 export default function WriteInGivingForm({ fund }) {
-  const { dispatch } = useContext(UserContext);
+  const { addToGiftBasket } = useDonor();
   const router = useRouter();
   const { register, handleSubmit, watch, getValues } = useForm({
     defaultValues: {
@@ -49,7 +49,7 @@ export default function WriteInGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = givingAmount;
 
-    dispatch({ type: 'add_to_gift_basket', payload: data });
+    addToGiftBasket(data);
 
     switch (action) {
       case 'add to basket':

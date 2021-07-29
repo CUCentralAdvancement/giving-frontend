@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { UserContext } from '../../data/contexts/UserContext';
-import { useContext } from 'react';
+import { useDonor } from '../../data/contexts/DonorContext';
 
 LicensePlateGivingForm.propTypes = {
   fund: PropTypes.object,
 };
 
 export default function LicensePlateGivingForm({ fund }) {
-  const { dispatch } = useContext(UserContext);
+  const { addToGiftBasket } = useDonor();
   const router = useRouter();
   const { register, handleSubmit, getValues } = useForm();
 
@@ -21,7 +20,7 @@ export default function LicensePlateGivingForm({ fund }) {
     data.fund_campus = fund.campus;
     data['giving-amount'] = 50.00;
 
-    dispatch({ type: 'add_to_gift_basket', payload: data });
+    addToGiftBasket(data);
 
     switch (action) {
       case 'add to basket':

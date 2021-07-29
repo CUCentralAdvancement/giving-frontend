@@ -1,19 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Layout from '../components/global/Layout';
-import { UserContext } from '../data/contexts/UserContext';
+import { useDonor } from '../data/contexts/DonorContext';
 
 const CartSummary = dynamic(() => import('../components/cart/CartSummary'), {
   ssr: false,
 });
 
 export default function Cart() {
-  const { user, dispatch } = useContext(UserContext);
-
-  function removeIt(item) {
-    dispatch({ type: 'remove_from_gift_basket', payload: item });
-  }
+  // const { user, dispatch } = useContext(UserContext);
+  const { giftBasket, removeFromGiftBasket } = useDonor()
 
   return (
     <Layout>
@@ -24,13 +21,13 @@ export default function Cart() {
         </div>
       </div>
       <div className='flex flex-col max-w-screen-lg mx-auto p-4'>
-        {user.giftBasket.length === 0 ? (
+        { giftBasket?.length === 0 ? (
           <span>Your gift basket is empty.</span>
         ) : (
           <>
             <h1>Gift Basket Summary</h1>
             <hr />
-            <CartSummary cart={user.giftBasket} removeCallback={removeIt} />
+            <CartSummary cart={giftBasket} removeCallback={removeFromGiftBasket} />
             <p>
               All gifts in support of the university are processed and receipted
               by the University of Colorado Foundation, a 501(c)(3) charitable
