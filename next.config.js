@@ -6,4 +6,16 @@ module.exports = {
     // Node.js entirely...just a thought.
     ignoreDuringBuilds: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/confirmation',
+        destination: 'http://localhost:4000/api/confirmation'
+      },
+      {
+        source: '/api/graphql',
+        destination: 'http://localhost:4000/graphql'
+      },
+    ]
+  }
 }
