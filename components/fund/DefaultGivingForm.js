@@ -7,7 +7,7 @@ import {
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
 import { fundProps } from '../../data/types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../data/contexts/UserContext';
 
 DefaultGivingForm.propTypes = {
@@ -15,24 +15,45 @@ DefaultGivingForm.propTypes = {
 };
 
 export default function DefaultGivingForm({ fund }) {
+  const { query } = useRouter();
   const { dispatch } = useContext(UserContext);
   const router = useRouter();
-  const { register, handleSubmit, watch, getValues } = useForm({
+  const { register, handleSubmit, watch, getValues, setValue } = useForm({
     defaultValues: {
-      'giving-amount': 50,
+      'giving-amount': query.amount ?? '50',
       'in-honor-of': 'No',
       'honor-memory-select': 'memory',
       'gift-country': 'US',
+      'recurring-gift': typeof query.recurring !== 'undefined',
     },
   });
-  const [givingAmount, setGivingAmount] = useState(fund.suggested_amount ?? '50');
+  const [givingAmount, setGivingAmount] = useState(query.amount ?? fund.suggested_amount ?? '50');
+  const [suggestedAmount, setSuggestedAmount] = useState(fund.suggested_amount);
+  const [defaultGivingAmounts, setDefaultGivingAmounts] = useState(['50', '100', '250', '500']);
   const [inHonorOf, setInHonorOf] = useState('No');
   const honorMemorySelect = watch('honor-memory-select');
   const recurringGift = watch('recurring-gift');
 
+  // Set form values from query parameters.
+  useEffect(() => {
+    if (query.amount) {
+      // Remove the amount from the list and place in "suggested amount".
+      if (defaultGivingAmounts.includes(query.amount)) {
+        setDefaultGivingAmounts(defaultGivingAmounts.filter((el) => el !== query.amount));
+      }
+      setSuggestedAmount(query.amount);
+      setGivingAmount(query.amount);
+    }
+    if (query.recurring) {
+      setValue('recurring-gift', true);
+      setValue('recurring-gift-frequency', query.recurring);
+    }
+  }, [defaultGivingAmounts, query.amount, query.recurring, setValue]);
+
   function updateTheButton(name, value) {
     switch (name) {
       case 'giving-amount':
+      case 'suggested-amount':
         setGivingAmount(value);
         break;
       case 'in-honor-of':
@@ -47,7 +68,13 @@ export default function DefaultGivingForm({ fund }) {
     data.fund_route = router.asPath;
     data.fund_title = fund.title;
     data.fund_campus = fund.campus;
-    data['giving-amount'] = givingAmount;
+
+    // Two conditions for the amount. Suggested amount always === givingAmount.
+    if (data['other-amount'] !== '') {
+      data['giving-amount'] = data['other-amount'];
+    } else {
+      data['giving-amount'] = givingAmount;
+    }
 
     dispatch({ type: 'add_to_gift_basket', payload: data });
 
@@ -68,23 +95,40 @@ export default function DefaultGivingForm({ fund }) {
   return (
     <form onSubmit={handleSubmit(dummySubmit)}>
       <h3 className='mb-3 text-xl'>I would like to give:</h3>
-      <div data-testid='giving-amount-options'
-           className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
-        {['50', '100', '250', '500'].map((value) => (
-          <DonationButton
-            key={value}
-            name='giving-amount'
-            label={`$${value}`}
-            value={value}
-            selected={givingAmount === value}
-            updateButton={updateTheButton}
-          />
-        ))}
+      <div data-testid='giving-amount-options'>
+        <div className={suggestedAmount !== null
+          ? 'visible grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'
+          : 'hidden grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'}>
+            <DonationButton
+              key='other'
+              name='suggested-amount'
+              testId="suggested-amount"
+              label={`$${suggestedAmount}`}
+              value={suggestedAmount}
+              selected={suggestedAmount === givingAmount}
+              updateButton={updateTheButton}
+            />
+          <span className="col-span-3 text-xl font-bold pt-2 text-gray-600">Suggested Amount</span>
+        </div>
+        <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
+          {defaultGivingAmounts.map((value) => (
+            <DonationButton
+              key={value}
+              name='giving-amount'
+              testId={`giving-amount-${value}`}
+              label={`$${value}`}
+              value={value}
+              selected={givingAmount === value}
+              updateButton={updateTheButton}
+            />
+          ))}
+        </div>
       </div>
       <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
         <DonationButton
           key='other'
           name='giving-amount'
+          testId="other-amount"
           label='Other'
           value='other'
           selected={givingAmount === 'other'}
@@ -103,7 +147,7 @@ export default function DefaultGivingForm({ fund }) {
           Make this a recurring gift
         </label>
         <div className={'mt-2 ' + (recurringGift === true ? 'visible' : 'hidden')}>
-          <select {...register('recurring-gift-frequency')} className='w-full'>
+          <select {...register('recurring-gift-frequency')} className='w-full' data-testid="recurring-gift-frequency">
             <option value='_none'>How Often?</option>
             <option value='monthly'>Monthly</option>
             <option value='quarterly'>Quarterly (every 3 months)</option>
@@ -127,6 +171,7 @@ export default function DefaultGivingForm({ fund }) {
             <DonationButton
               key={value}
               name='in-honor-of'
+              testId={`in-honor-of-${value}`}
               label={value}
               value={value}
               selected={inHonorOf === value}

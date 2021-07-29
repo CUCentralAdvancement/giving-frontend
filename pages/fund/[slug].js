@@ -1,27 +1,19 @@
-import PropTypes from 'prop-types';
 import Layout from '../../components/global/Layout';
 import FundInfo from '../../components/fund/FundInfo';
 import { baseURL } from '../../data/store';
 import GivingForm from '../../components/fund/GivingForm';
+import { defaultFundProps, fundProps } from '../../data/types';
 
 Fund.propTypes = {
-  fund: PropTypes.object,
+  fund: fundProps,
 };
 
 Fund.defaultProps = {
-  fund: {
-    id: 0,
-    title: '',
-    description: '',
-    marketingContent: '',
-    campus: '',
-    interest: '950',
-    allocation_code: '',
-    fund_type: 'default',
-  },
+  fund: defaultFundProps
 };
 
 export default function Fund({ fund }) {
+
   return (
     <Layout>
       <div

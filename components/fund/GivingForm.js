@@ -7,14 +7,14 @@ GivingForm.propTypes = {
   fund: fundProps,
 };
 
-export default function GivingForm({fund}) {
+export default function GivingForm({ fund }) {
   const fundType = (typeof fund.fund_type !== 'undefined') ? fund.fund_type : 'default';
   switch (fundType) {
     case 'write_in':
-      return <WriteInGivingForm fund={fund}/>;
+      return <WriteInGivingForm fund={fund} />;
     case 'license_plate':
-      return <LicensePlateGivingForm fund={fund}/>;
+      return <LicensePlateGivingForm fund={fund} />;
     default:
-      return <DefaultGivingForm fund={fund}/>;
+      return <DefaultGivingForm fund={fund} />;
   }
 }
