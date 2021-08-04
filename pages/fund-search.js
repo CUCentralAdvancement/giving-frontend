@@ -16,7 +16,7 @@ const searchClient = algoliasearch(
 export default function FundSearch() {
   return (
     <Layout>
-      <InstantSearch searchClient={searchClient} indexName="Fund">
+      <InstantSearch searchClient={searchClient} indexName="funds">
         <div className="flex flex-col">
           <div className="bg-gray-300 w-full">
             <div className="p-4 max-w-screen-lg mx-auto">

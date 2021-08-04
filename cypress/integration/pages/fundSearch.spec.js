@@ -29,7 +29,7 @@ describe("Fund Search Tests", () => {
     // Text campus selector.
     cy.get('[data-testid="campus-select-list"]')
       .find("select")
-      .select("CU Anschutz");
+      .select("Anschutz");
 
     /* eslint-disable-next-line */
     cy.wait(500);
@@ -45,7 +45,7 @@ describe("Fund Search Tests", () => {
       .within(() => {
         cy.get('[data-testid="featured-fund"]').should("be.visible");
         cy.get('[data-testid="result-campus"]').should("be.visible");
-        cy.contains("CU Anschutz");
+        cy.contains("Anschutz");
       });
 
     cy.get('[data-testid="search-reset"]').click();
@@ -70,10 +70,10 @@ describe("Fund Search Tests", () => {
       .within(() => {
         cy.get('[data-testid="featured-fund"]').should("be.visible");
         cy.get('[data-testid="result-campus"]').should("be.visible");
-        cy.contains("CU Anschutz");
+        cy.contains("Anschutz");
       });
     cy.get('[data-testid="search-result"]').within(() => {
-      cy.contains("CU Boulder").should("be.visible");
+      cy.contains("Boulder").should("be.visible");
     });
 
     cy.get('[data-testid="search-reset"]').click();
@@ -112,9 +112,9 @@ describe("Fund Search Tests", () => {
     cy.contains("Bridge Forward Scholarship Endowment");
 
     // Make sure there is at least one result from each campus in the results.
-    cy.contains("CU Anschutz"); // maybe add a .get() for targeting where the text should be...if .get()
-    cy.contains("CU Boulder");
-    cy.contains("CU Denver");
+    cy.contains("Anschutz"); // maybe add a .get() for targeting where the text should be...if .get()
+    cy.contains("Boulder");
+    cy.contains("Denver");
     cy.contains("UCCS");
 
     // Test for write-in fund link.

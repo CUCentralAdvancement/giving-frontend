@@ -16,11 +16,12 @@ WriteInGivingForm.propTypes = {
 
 export default function WriteInGivingForm({ fund }) {
   const { dispatch } = useContext(UserContext);
+  const { query } = useRouter();
   const router = useRouter();
   const { register, handleSubmit, watch, getValues } = useForm({
     defaultValues: {
-      'giving-amount': 50,
-      'in-honor-of': 'No',
+      'giving-amount': query.amount ?? 50,
+      'in-honor-of':  'No',
       'honor-memory-select': 'memory',
       'gift-country': 'US',
     },

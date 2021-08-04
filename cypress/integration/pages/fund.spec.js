@@ -35,7 +35,7 @@ describe("Fund Info Tests", () => {
     cy.contains('Obtaining a CU license plate in the state of Colorado is a three step process.');
 
     // Fund should still have the same categories listed as default funds.
-    cy.get('[data-testid="fund-campus"]').contains('CU Boulder');
+    cy.get('[data-testid="fund-campus"]').contains('Boulder');
     cy.get('[data-testid="fund-allocation-code"]').contains('0122509');
     cy.get('[data-testid="fund-interest"]').contains('Alumni Programs');
 
@@ -66,8 +66,59 @@ describe("Fund Info Tests", () => {
   });
 });
 
-describe("Giving Form Tests", () => {
-  it('should ', function() {
+describe("Giving Form Query Parameters Modifications", () => {
+  it('show defaults without query parameters', function() {
+    // @todo Make a `defaultFund` variable so tests can visit `defaultFund.url` instead of a string.
+    // For instance, this fund does not have a suggested amount, but "/fund/bridge-forward-scholarship"
+    // does have a suggested donation amount.
+    cy.visit("fund/cancer-research-general-fund");
+    cy.contains('Suggested Amount').should('not.be.visible');
+  });
 
+  it('show suggested amount with the fund\'s suggested_amount field', function() {
+    cy.visit("/fund/bridge-forward-scholarship");
+    cy.contains('Suggested Amount').should('be.visible');
+    cy.get('[data-testid="giving-amount-100"]').should('exist');
+    cy.get('[data-testid="suggested-amount"]').contains('$26.00');
+  });
+
+  it('show suggested amount with `amount` from  `defaultGivingOptions`', function() {
+    cy.visit("/fund/bridge-forward-scholarship?amount=100");
+    cy.contains('Suggested Amount').should('be.visible');
+    cy.get('[data-testid="giving-amount-100"]').should('not.exist');
+    cy.get('[data-testid="suggested-amount"]').contains('$100');
+  });
+
+  it('show suggested amount with `amount` from `other-amount`', function() {
+    cy.visit("/fund/bridge-forward-scholarship?amount=25.50");
+    cy.contains('Suggested Amount').should('be.visible');
+    cy.get('[data-testid="giving-amount-100"]').should('exist');
+    cy.get('[data-testid="suggested-amount"]').contains('$25.50');
+  });
+
+  it('show recurring schedule with annually', function() {
+    cy.visit("/fund/cancer-research-general-fund?recurring=annually");
+    cy.contains('Suggested Amount').should('not.be.visible');
+    cy.get('[data-testid="recurring-gift-frequency"').should('have.value', 'annually');
+  });
+
+  it('show recurring schedule with quarterly', function() {
+    cy.visit("/fund/cancer-research-general-fund?recurring=quarterly");
+    cy.contains('Suggested Amount').should('not.be.visible');
+    cy.get('[data-testid="recurring-gift-frequency"').should('have.value', 'quarterly');
+  });
+
+  it('show recurring schedule with monthly', function() {
+    cy.visit("/fund/cancer-research-general-fund?recurring=monthly");
+    cy.contains('Suggested Amount').should('not.be.visible');
+    cy.get('[data-testid="recurring-gift-frequency"').should('have.value', 'monthly');
+  });
+
+  it('shows all the things!...in relation to query param modifications', function() {
+    cy.visit("/fund/bridge-forward-scholarship?amount=25.50&recurring=monthly");
+    cy.contains('Suggested Amount').should('be.visible');
+    cy.get('[data-testid="giving-amount-100"]').should('exist');
+    cy.get('[data-testid="suggested-amount"]').contains('$25.50');
+    cy.get('[data-testid="recurring-gift-frequency"').should('have.value', 'monthly');
   });
 });

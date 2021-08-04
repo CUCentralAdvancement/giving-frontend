@@ -6,11 +6,13 @@ DonationButton.propTypes = {
   value: PropTypes.string,
   selected: PropTypes.bool,
   updateButton: PropTypes.func,
+  testId: PropTypes.string,
 };
 
-export default function DonationButton({ name, label, value, selected, updateButton }) {
+export default function DonationButton({ name, label, value, selected, updateButton, testId }) {
   return (
     <button
+      data-testid={testId}
       onClick={() => updateButton(name, value)}
       className={selected ?
         'inline-block text-center font-medium border-2 border-black text-black bg-gray-300 px-3' +

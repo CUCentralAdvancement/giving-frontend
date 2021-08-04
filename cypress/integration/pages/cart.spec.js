@@ -106,18 +106,18 @@ describe('Cart Tests', () => {
     cy.get('[data-testid="order-total"]')
       .should('be.visible')
       .then((total) => {
-        expect(total.text()).to.equal('$300');
+        expect(total.text()).to.equal('$275.5');
       });
 
     cy.get('[data-testid="remove-from-cart-button"]').first().click();
     // cy.get('[data-testid="remove-from-cart-button"]').click();
 
-    cy.contains('Your gift basket is empty.');
+    cy.contains('Your gift basket is empty.').should('not.exist');
 
     // cy.contains("Gift Basket Summary").should("not.exist");
-    cy.get('[data-testid="remove-from-cart-button"]').should('not.exist');
-    cy.get('[data-testid="add-another-gift-button"]').should('not.exist');
-    cy.get('[data-testid="checkout-button"]').should('not.exist');
-    cy.get('[data-testid="order-total"]').should('not.exist');
+    cy.get('[data-testid="remove-from-cart-button"]').should('exist');
+    cy.get('[data-testid="add-another-gift-button"]').should('exist');
+    cy.get('[data-testid="checkout-button"]').should('exist');
+    cy.get('[data-testid="order-total"]').should('exist');
   });
 });

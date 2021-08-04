@@ -1,17 +1,17 @@
 export const campusOptions = [
   { value: "All", label: "All Campuses" },
-  { value: "1046", label: "CU Anschutz" },
-  { value: "904", label: "CU Boulder" },
-  { value: "1100", label: "CU Denver" },
+  { value: "1046", label: "Anschutz" },
+  { value: "904", label: "Boulder" },
+  { value: "1100", label: "Denver" },
   { value: "1134", label: "UCCS" },
-  { value: "1150", label: "CU System" },
+  { value: "1150", label: "System" },
 ];
 
 export const campusNames = {
   1134: "UCCS",
-  1046: "CU Anschutz",
-  1100: "CU Denver",
-  904: "CU Boulder",
+  1046: "Anschutz",
+  1100: "Denver",
+  904: "Boulder",
 };
 
 export const interestsOptions = [
@@ -46,14 +46,14 @@ export const fundTypeOptions = [
 
 export const campusColors = {
   'UCCS': '#298FCE',
-  'CU Anschutz': '#0A9',
-  'CU Denver': '#C63965',
-  'CU Boulder': '#F29525',
+  'Anschutz': '#0A9',
+  'Denver': '#C63965',
+  'Boulder': '#F29525',
 };
 
 export const campusLogos = {
   'UCCS': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-uccs.svg',
-  'CU Anschutz': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-amc.svg',
-  'CU Denver': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-ucd.svg',
-  'CU Boulder': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-ucb.svg',
+  'Anschutz': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-amc.svg',
+  'Denver': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-ucd.svg',
+  'Boulder': 'https://giving.cu.edu/sites/all/themes/themekit/images/logo-ucb.svg',
 };

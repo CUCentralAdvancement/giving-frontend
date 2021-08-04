@@ -40,7 +40,6 @@ export function userReducer(state, action) {
       window.localStorage.setItem('user', JSON.stringify(data));
       return data;
     case GIFT_BASKET_ADD:
-      console.log('adding to basket');
       data = {
         ...state,
         giftBasket: [...state.giftBasket, action.payload],

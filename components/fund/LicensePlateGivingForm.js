@@ -10,8 +10,13 @@ LicensePlateGivingForm.propTypes = {
 
 export default function LicensePlateGivingForm({ fund }) {
   const { dispatch } = useContext(UserContext);
+  const { query } = useRouter();
   const router = useRouter();
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit, getValues } = useForm({
+    defaultValues: {
+      'name-on-title': query['name-on-title'],
+    },
+  });
 
   function submitHandler(action) {
     let data = getValues();

@@ -1,27 +1,19 @@
-import PropTypes from 'prop-types';
 import Layout from '../../components/global/Layout';
 import FundInfo from '../../components/fund/FundInfo';
 import { baseURL } from '../../data/store';
 import GivingForm from '../../components/fund/GivingForm';
+import { defaultFundProps, fundProps } from '../../data/types';
 
 Fund.propTypes = {
-  fund: PropTypes.object,
+  fund: fundProps,
 };
 
 Fund.defaultProps = {
-  fund: {
-    id: 0,
-    title: '',
-    description: '',
-    marketingContent: '',
-    campus: '',
-    interest: '950',
-    allocation_code: '',
-    fund_type: 'default',
-  },
+  fund: defaultFundProps
 };
 
 export default function Fund({ fund }) {
+
   return (
     <Layout>
       <div
@@ -53,7 +45,7 @@ export default function Fund({ fund }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${baseURL}/paths/fund.json`);
+  const res = await fetch(`${baseURL}/api/paths/fund`);
   const pathsList = await res.json();
   return {
     paths: pathsList.map((el) => `/fund/${el}`),
@@ -67,7 +59,7 @@ export async function getStaticProps({ params }) {
 
   // Need to fetch at "/funds" since Rails defaults models to plural whereas the giving site
   // currently uses "/fund".
-  const res = await fetch(new URL(`${baseURL}/funds/${slug}.json`));
+  const res = await fetch(new URL(`${baseURL}/api/funds/${slug}`));
   const fund = await res.json();
   return { props: { fund } };
 }
