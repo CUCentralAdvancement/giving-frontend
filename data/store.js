@@ -1,5 +1,5 @@
-// export const baseURL = "http://localhost:3000";
-export const baseURL = 'https://giving-backend-staging.herokuapp.com';
+// export const baseURL = 'https://the-cms-staging.herokuapp.com';
+export const baseURL = 'http://the-cms.lndo.site';
 
 export const transaction = {
   accountType: 'Visa',
@@ -16,7 +16,6 @@ export const transaction = {
     state: 'CO',
     zip: '80301',
     country: 'US',
-
     orderDescription: 'Bridge Forward Scholarship Endowment (0430106)',
     totalAmount: '50.00',
     orderInvoiceNumber: 'c2028d50',

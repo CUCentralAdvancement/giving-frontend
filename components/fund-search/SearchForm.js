@@ -23,7 +23,7 @@ export default function SearchForm() {
           <div className="w-full px-2 pt-2" data-testid="campus-select-list">
             <MenuSelect
               attribute="campus"
-              defaultRefinement={query.campus ? query.campus : ''}
+              defaultRefinement={query.field_campus ? query.field_campus : ''}
               translations={{
                 seeAllOption: 'All Campuses',
               }}

@@ -45,7 +45,7 @@ export default function Fund({ fund }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${baseURL}/paths/fund.json`);
+  const res = await fetch(`${baseURL}/api/paths/fund`);
   const pathsList = await res.json();
   return {
     paths: pathsList.map((el) => `/fund/${el}`),
@@ -59,7 +59,7 @@ export async function getStaticProps({ params }) {
 
   // Need to fetch at "/funds" since Rails defaults models to plural whereas the giving site
   // currently uses "/fund".
-  const res = await fetch(new URL(`${baseURL}/funds/${slug}.json`));
+  const res = await fetch(new URL(`${baseURL}/api/funds/${slug}`));
   const fund = await res.json();
   return { props: { fund } };
 }

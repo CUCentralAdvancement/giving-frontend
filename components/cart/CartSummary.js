@@ -9,10 +9,10 @@ CartSummary.propTypes = {
 
 export default function CartSummary({ cart = [], removeCallback }) {
 
-  let orderTotal = 0;
+  let orderTotal = 0.00;
   console.log(cart);
   cart.forEach((item) => {
-    orderTotal += parseInt(item['giving-amount']);
+    orderTotal += parseFloat(item['giving-amount']);
   });
 
 

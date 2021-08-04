@@ -14,7 +14,7 @@ export const defaultFundProps = {
     created_at: '',
     updated_at: '',
     fund_type: 'default',
-    url: '',
+    slug: '',
   };
 
 export const fundProps = PropTypes.exact({
@@ -26,10 +26,10 @@ export const fundProps = PropTypes.exact({
   interest: PropTypes.string,
   keywords: PropTypes.string,
   suggested_amount: PropTypes.string,
-  marketing_content: PropTypes.object,
+  marketing_content: PropTypes.string,
   created_at: PropTypes.string.isRequired,
   updated_at: PropTypes.string.isRequired,
   fund_type: PropTypes.string.isRequired,
   allocation_code: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 });

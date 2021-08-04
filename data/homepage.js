@@ -13,28 +13,28 @@ export const campusList = [
   {
     name: 'CU Anschutz',
     image: 'https://giving.cu.edu/sites/all/themes/themekit/images/campus-Anschutz-Medical.jpg',
-    href: '/fund-search?campus=CU%20Anschutz',
+    href: '/fund-search?field_campus=Anschutz',
     testid: 'anschutz-fund-search-link',
     bg: 'green-500'
   },
   {
     name: 'CU Boulder',
     image: 'https://giving.cu.edu/sites/all/themes/themekit/images/campus-Boulder.jpg',
-    href: '/fund-search?campus=CU%20Boulder',
+    href: '/fund-search?field_campus=Boulder',
     testid: 'boulder-fund-search-link',
     bg: 'yellow-500'
   },
   {
     name: 'CU Denver',
     image: 'https://giving.cu.edu/sites/all/themes/themekit/images/campus-Denver.jpg',
-    href: '/fund-search?campus=CU%20Denver',
+    href: '/fund-search?field_campus=Denver',
     testid: 'denver-fund-search-link',
     bg: 'pink-500'
   },
   {
     name: 'UCCS',
     image: 'https://giving.cu.edu/sites/all/themes/themekit/images/campus-Colorado-Springs.jpg',
-    href: '/fund-search?campus=UCCS',
+    href: '/fund-search?field_campus=UCCS',
     testid: 'uccs-fund-search-link',
     bg: 'blue-500'
   },

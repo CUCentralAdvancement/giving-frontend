@@ -11,9 +11,9 @@ export default function DefaultFundInfo({ fund }) {
       <h1 data-testid='fund-title'>
         {fund.title}
       </h1>
-      <div className='flex-grow'>
-        <p data-testid='fund-description'>{fund.description}</p>
-        <div data-testid='fund-marketing-content' dangerouslySetInnerHTML={{ __html: fund.marketingContent }}/>
+      <div className='flex-grow link-blue-underline'>
+        <div data-testid='fund-description' dangerouslySetInnerHTML={{ __html: fund.description }}/>
+        <div data-testid='fund-marketing-content' dangerouslySetInnerHTML={{ __html: fund.marketing_content }}/>
       </div>
       <div className='pt-2'>
         <span className='inline-block'>Campus:&nbsp;</span>

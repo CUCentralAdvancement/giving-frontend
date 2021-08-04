@@ -20,30 +20,30 @@ describe('Homepage tests', function() {
     // CU Anschutz.
     cy.visit('/');
     cy.get('a[data-testid="anschutz-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?campus=CU%20Anschutz');
-    cy.get('span[data-testid="result-campus"]').contains('CU Anschutz').should('be.visible');
-    cy.get('span[data-testid="result-campus"]').contains('CU Boulder').should('not.exist');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_campus=Anschutz');
+    cy.get('span[data-testid="result-campus"]').contains('Anschutz').should('be.visible');
+    cy.get('span[data-testid="result-campus"]').contains('Boulder').should('not.exist');
 
     // CU Boulder.
     cy.visit('/');
     cy.get('a[data-testid="boulder-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?campus=CU%20Boulder');
-    cy.get('span[data-testid="result-campus"]').contains('CU Boulder').should('be.visible');
-    cy.get('span[data-testid="result-campus"]').contains('CU Anschutz').should('not.exist');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_campus=Boulder');
+    cy.get('span[data-testid="result-campus"]').contains('Boulder').should('be.visible');
+    cy.get('span[data-testid="result-campus"]').contains('Anschutz').should('not.exist');
 
     // CU Denver.
     cy.visit('/');
     cy.get('a[data-testid="denver-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?campus=CU%20Denver');
-    cy.get('span[data-testid="result-campus"]').contains('CU Denver').should('be.visible');
-    cy.get('span[data-testid="result-campus"]').contains('CU Anschutz').should('not.exist');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_campus=Denver');
+    cy.get('span[data-testid="result-campus"]').contains('Denver').should('be.visible');
+    cy.get('span[data-testid="result-campus"]').contains('Anschutz').should('not.exist');
 
     // UCCS.
     cy.visit('/');
     cy.get('a[data-testid="uccs-fund-search-link"]').click();
-    cy.url().should('equal', 'http://localhost:3000/fund-search?campus=UCCS');
+    cy.url().should('equal', 'http://localhost:3000/fund-search?field_campus=UCCS');
     cy.get('span[data-testid="result-campus"]').contains('UCCS').should('be.visible');
-    cy.get('span[data-testid="result-campus"]').contains('CU Anschutz').should('not.exist');
+    cy.get('span[data-testid="result-campus"]').contains('Anschutz').should('not.exist');
 
   });
 

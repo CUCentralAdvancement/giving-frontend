@@ -35,7 +35,7 @@ describe("Fund Info Tests", () => {
     cy.contains('Obtaining a CU license plate in the state of Colorado is a three step process.');
 
     // Fund should still have the same categories listed as default funds.
-    cy.get('[data-testid="fund-campus"]').contains('CU Boulder');
+    cy.get('[data-testid="fund-campus"]').contains('Boulder');
     cy.get('[data-testid="fund-allocation-code"]').contains('0122509');
     cy.get('[data-testid="fund-interest"]').contains('Alumni Programs');
 
@@ -79,7 +79,7 @@ describe("Giving Form Query Parameters Modifications", () => {
     cy.visit("/fund/bridge-forward-scholarship");
     cy.contains('Suggested Amount').should('be.visible');
     cy.get('[data-testid="giving-amount-100"]').should('exist');
-    cy.get('[data-testid="suggested-amount"]').contains('$26');
+    cy.get('[data-testid="suggested-amount"]').contains('$26.00');
   });
 
   it('show suggested amount with `amount` from  `defaultGivingOptions`', function() {
