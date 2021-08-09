@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
 
 export const defaultFundProps = {
-    id: 0,
-    title: '',
-    description: '',
-    // marketingContent: '',
-    campus: '',
-    interest: '950',
-    allocation_code: '',
-    keywords: '',
-    suggested_amount: '50',
-    marketing_content: {},
-    created_at: '',
-    updated_at: '',
-    fund_type: 'default',
-    slug: '',
-  };
+  id: 0,
+  title: '',
+  description: '',
+  // marketingContent: '',
+  campus: '',
+  interest: '950',
+  allocation_code: '',
+  keywords: '',
+  suggested_amount: '50',
+  marketing_content: {},
+  created_at: '',
+  updated_at: '',
+  fund_type: 'default',
+  slug: '',
+};
 
 export const fundProps = PropTypes.exact({
   id: PropTypes.number,
@@ -33,3 +33,36 @@ export const fundProps = PropTypes.exact({
   allocation_code: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
 });
+
+
+export const faqsProps = PropTypes.arrayOf({
+  question: PropTypes.string.isRequired,
+  answer: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  detailed_question: PropTypes.string,
+});
+
+export const defaultFaqsProps = [{
+  question: 'What is the purpose of life?',
+  answer: 'To die gracefully.',
+  category: 'Angst',
+  slug: 'faq/wwjd',
+  detailed_question: null,
+}];
+
+export const faqProps = {
+  question: PropTypes.string.isRequired,
+  answer: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  detailed_question: PropTypes.string,
+};
+
+export const defaultFaqProps = {
+  question: 'What is the purpose of life?',
+  answer: 'To die gracefully.',
+  category: 'Angst',
+  slug: 'faq/wwjd',
+  detailed_question: null,
+};
