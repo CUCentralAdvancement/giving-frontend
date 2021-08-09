@@ -24,7 +24,7 @@ export default function Faq({ faq }) {
         <div className='max-w-screen-lg mx-auto link-blue-underline'>
           <h1 className=''>{faq.question}</h1>
           <Link href='/faqs'>
-            <a>{`<--Back to All Faqs`}</a>
+            <a data-testid="back-to-all-faqs-link">{`<--Back to All Faqs`}</a>
           </Link>
           <div data-testid='fund-description' dangerouslySetInnerHTML={{ __html: faq.answer }} />
           {faq.detailed_question && <p>{faq.detailed_question}</p>}
