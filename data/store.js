@@ -1,5 +1,5 @@
-// export const baseURL = 'https://the-cms-staging.herokuapp.com';
-export const baseURL = 'http://the-cms.lndo.site';
+export const baseURL = 'https://the-cms-staging.herokuapp.com';
+// export const baseURL = 'http://the-cms.lndo.site';
 
 export const transaction = {
   accountType: 'Visa',

@@ -34,23 +34,6 @@ export const fundProps = PropTypes.exact({
   slug: PropTypes.string.isRequired,
 });
 
-
-export const faqsProps = PropTypes.arrayOf({
-  question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  detailed_question: PropTypes.string,
-});
-
-export const defaultFaqsProps = [{
-  question: 'What is the purpose of life?',
-  answer: 'To die gracefully.',
-  category: 'Angst',
-  slug: 'faq/wwjd',
-  detailed_question: null,
-}];
-
 export const faqProps = {
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
@@ -66,3 +49,6 @@ export const defaultFaqProps = {
   slug: 'faq/wwjd',
   detailed_question: null,
 };
+
+export const faqsProps = PropTypes.arrayOf(faqProps);
+export const defaultFaqsProps = [defaultFaqProps];

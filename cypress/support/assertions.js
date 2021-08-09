@@ -1,5 +1,7 @@
 // Taken from https://github.com/cypress-io/cypress/issues/877#issuecomment-657583222
+// eslint-disable-next-line no-unused-vars
 const isInViewport = (_chai, utils) => {
+  // eslint-disable-next-line no-unused-vars
   function assertIsInViewport(options) {
     const subject = this._obj
 

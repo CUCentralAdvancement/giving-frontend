@@ -13,7 +13,6 @@ Faq.defaultProps = {
 };
 
 export default function Faq({ faq }) {
-  console.log(faq);
   return (
     <Layout>
       <div className='flex flex-col'>
