@@ -53,7 +53,6 @@ export async function getStaticPaths() {
   };
 }
 
-// This gets called on every request
 export async function getStaticProps({ params }) {
   const slug = params.slug || null;
 
