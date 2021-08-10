@@ -4,6 +4,11 @@ import { useDonorReducer, DONOR_ACTIONS } from './DonorState';
 
 export const DonorContext = createContext({});
 
+const dev = process.env.NODE_ENV !== 'production';
+const GIVING_GATEWAY_URL = dev
+  ? process.env.NEXT_PUBLIC_GIVING_GATEWAY_DEV
+  : process.env.NEXT_PUBLIC_GIVING_GATEWAY_PROD;
+
 const fetchGiftBasket = async () => {
   const requestOptions = {
     method: 'POST',
@@ -22,7 +27,7 @@ const fetchGiftBasket = async () => {
     }),
   };
   try {
-    const response = await fetch('/api/graphql', requestOptions).then((res) => res.json());
+    const response = await fetch(GIVING_GATEWAY_URL, requestOptions).then((res) => res.json());
     const data = response.data;
     return data?.getGiftBasket ?? [{ fundCode: 'FAKE', designationName: 'NOTREAL', amount: 56.0 }];
   } catch (e) {
