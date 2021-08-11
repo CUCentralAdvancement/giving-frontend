@@ -82,11 +82,27 @@ const useProvideDonor = () => {
     donorDispatch({ type: DONOR_ACTIONS.GIFT_BASKET_REMOVE, payload: item });
   };
 
+  const resetGiftBasket = () => {
+    donorDispatch({ type: DONOR_ACTIONS.GIFT_BASKET_RESET });
+  };
+
+  const addGivingInfo = (payload) => {
+    donorDispatch({ type: DONOR_ACTIONS.GIVING_INFO_ADD, payload });
+  };
+
+  const addAuthToken = (token) => donorDispatch({ type: DONOR_ACTIONS.AUTH_TOKEN_ADD, payload: token });
+
+  const setTransaction = (payload) => donorDispatch({ type: DONOR_ACTIONS.TRANSACTION_SET, payload });
+
   return {
     ...donorState,
     sendMessageRequest,
     addToGiftBasket,
     removeFromGiftBasket,
+    resetGiftBasket,
+    addGivingInfo,
+    addAuthToken,
+    setTransaction,
   };
 };
 

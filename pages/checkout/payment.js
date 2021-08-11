@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/global/Layout';
-import { UserContext } from '../../data/contexts/UserContext';
+import { useDonor } from '../../data/contexts/DonorContext';
 
 export default function Payment() {
-  const { user, dispatch } = useContext(UserContext);
+  const { authToken, setTransaction } = useDonor();
   const router = useRouter();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Payment() {
 
       if (!window.AuthorizeNetIFrame) {
         window.AuthorizeNetIFrame = {};
-        window.AuthorizeNetIFrame.onReceiveCommunication = function(querystr) {
+        window.AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
           const params = parseQueryString(querystr);
           let iframe = {};
           let w = 0;
@@ -24,7 +24,7 @@ export default function Payment() {
             case 'successfulSave':
               break;
             case 'cancel':
-              router.push('/checkout').then(r => console.log(r));
+              router.push('/checkout').then((r) => console.log(r));
               break;
             case 'resizeWindow':
               w = parseInt(params['width']);
@@ -37,62 +37,54 @@ export default function Payment() {
               iframe = document.getElementById('add_payment');
               iframe.style.display = 'none';
 
-              dispatch({ type: 'set_transaction', payload: JSON.parse(params['response']) });
-              router.push('/checkout/complete').then(r => console.log(r));
+              setTransaction(JSON.parse(params['response']));
+              router.push('/checkout/complete').then((r) => console.log(r));
           }
         };
       }
     }
-  }, [router, dispatch]);
+  }, [router, setTransaction]);
   return (
     <Layout>
-      <div className='flex flex-col max-w-screen-lg mx-auto my-3'>
-        <div className='flex flex-row p-3 mb-2 justify-center'
-             style={{
-               bg: '#FFFFE0',
-               border: '2px solid #F0E5C5',
-             }}
+      <div className="flex flex-col max-w-screen-lg mx-auto my-3">
+        <div
+          className="flex flex-row p-3 mb-2 justify-center"
+          style={{
+            bg: '#FFFFE0',
+            border: '2px solid #F0E5C5',
+          }}
         >
           <img
-            src='https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg'
-            className='mr-2'
+            src="https://giving-test.cu.edu/sites/all/themes/themekit/images/warning.svg"
+            className="mr-2"
             style={{ height: '25px' }}
-            alt='Warning Icon'
+            alt="Warning Icon"
           />
           <span> Please do not use Refresh or Back buttons on this page.</span>
         </div>
-        <div
-          id='iframe_holder'
-          className='center-block'
-          style={{ width: '90%', maxWidth: '1020px', height: '640px' }}
-        >
+        <div id="iframe_holder" className="center-block" style={{ width: '90%', maxWidth: '1020px', height: '640px' }}>
           <iframe
-            id='add_payment'
-            data-cy='add_payment'
-            className='embed-responsive-item panel'
-            name='add_payment'
-            width='100%'
-            height='100%'
-            frameBorder='0'
-            scrolling='yes'
+            id="add_payment"
+            data-cy="add_payment"
+            className="embed-responsive-item panel"
+            name="add_payment"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            scrolling="yes"
             // hidden="true"
-            title='Authorize.net Payment Form'
+            title="Authorize.net Payment Form"
           ></iframe>
         </div>
         <img
-          src='https://giving-test.cu.edu/sites/all/themes/themekit/images/verified-auth-net.png'
-          className='mx-auto mt-2'
+          src="https://giving-test.cu.edu/sites/all/themes/themekit/images/verified-auth-net.png"
+          className="mx-auto mt-2"
           style={{ width: '135px' }}
-          alt='Verified by Authorize.net'
+          alt="Verified by Authorize.net"
         />
       </div>
-      <form
-        id='send_token'
-        action='https://test.authorize.net/payment/payment'
-        method='post'
-        target='add_payment'
-      >
-        <input type='hidden' name='token' value={user.authToken} />
+      <form id="send_token" action="https://test.authorize.net/payment/payment" method="post" target="add_payment">
+        <input type="hidden" name="token" value={authToken} />
       </form>
     </Layout>
   );
