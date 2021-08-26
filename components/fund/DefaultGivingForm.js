@@ -4,6 +4,7 @@ import {
   countryOptionsList,
   giftNamePrefixOptions,
   giftStateOptions,
+  reocurringGiftFrequencyOptions,
 } from '../../data/donationForm';
 import DonationButton from '../forms/DonationButton';
 import { fundProps } from '../../data/types';
@@ -44,9 +45,10 @@ export default function DefaultGivingForm({ fund }) {
       setSuggestedAmount(query.amount);
       setGivingAmount(query.amount);
     }
+
     if (query.recurring) {
       setValue('recurring-gift', true);
-      setValue('recurring-gift-frequency', query.recurring);
+      setValue('recurring-gift-frequency', reocurringGiftFrequencyOptions.map(el => el.value).includes(query.recurring) ? query.recurring : '_none');
     }
   }, [defaultGivingAmounts, query.amount, query.recurring, setValue]);
 
@@ -99,16 +101,16 @@ export default function DefaultGivingForm({ fund }) {
         <div className={suggestedAmount !== null
           ? 'visible grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'
           : 'hidden grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'}>
-            <DonationButton
-              key='other'
-              name='suggested-amount'
-              testId="suggested-amount"
-              label={`$${suggestedAmount}`}
-              value={suggestedAmount}
-              selected={suggestedAmount === givingAmount}
-              updateButton={updateTheButton}
-            />
-          <span className="col-span-3 text-xl font-bold pt-2 text-gray-600">Suggested Amount</span>
+          <DonationButton
+            key='other'
+            name='suggested-amount'
+            testId='suggested-amount'
+            label={`$${suggestedAmount}`}
+            value={suggestedAmount}
+            selected={suggestedAmount === givingAmount}
+            updateButton={updateTheButton}
+          />
+          <span className='col-span-3 text-xl font-bold pt-2 text-gray-600'>Suggested Amount</span>
         </div>
         <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2'>
           {defaultGivingAmounts.map((value) => (
@@ -128,7 +130,7 @@ export default function DefaultGivingForm({ fund }) {
         <DonationButton
           key='other'
           name='giving-amount'
-          testId="other-amount"
+          testId='other-amount'
           label='Other'
           value='other'
           selected={givingAmount === 'other'}
@@ -147,11 +149,10 @@ export default function DefaultGivingForm({ fund }) {
           Make this a recurring gift
         </label>
         <div className={'mt-2 ' + (recurringGift === true ? 'visible' : 'hidden')}>
-          <select {...register('recurring-gift-frequency')} className='w-full' data-testid="recurring-gift-frequency">
-            <option value='_none'>How Often?</option>
-            <option value='monthly'>Monthly</option>
-            <option value='quarterly'>Quarterly (every 3 months)</option>
-            <option value='annually'>Annually</option>
+          <select {...register('recurring-gift-frequency')} className='w-full' data-testid='recurring-gift-frequency'>
+            {reocurringGiftFrequencyOptions.map((el, ind) => {
+              return <option key={ind} value={el.value}>{el.label}</option>;
+            })}
           </select>
           <div className='italic my-2 p-1 text-sm'>
             Please note: This will apply to all gifts in your Gift Basket. To make a separate one-time gift, or one
